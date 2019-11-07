@@ -1,11 +1,23 @@
 import 'package:flutter/widgets.dart';
 
-class ScaleConfig {
-  static double widthScaling;
-  static double heightScaling;
+class Scale {
+  static double screenHeight;
+  static double screenWidth;
+  static double blockSizeHeight;
+  static double blockSizeWidth;
 
-  void init(BuildContext context) {
-    widthScaling = MediaQuery.of(context).size.width/100;
-    heightScaling = MediaQuery.of(context).size.height/100;
+  void init(BuildContext context, String mode) {
+    if(mode == "landscape") {
+      screenHeight = MediaQuery.of(context).size.height;
+      screenWidth = MediaQuery.of(context).size.width;
+      blockSizeHeight = screenHeight/100;
+      blockSizeWidth = screenWidth/100;
+    }
+    else {
+      screenHeight = MediaQuery.of(context).size.width;
+      screenWidth = MediaQuery.of(context).size.height;
+      blockSizeHeight = screenWidth/100;
+      blockSizeWidth = screenHeight/100;
+    }
   }
 }

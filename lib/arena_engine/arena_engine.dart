@@ -1,33 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/arena_engine/asset.dart';
+import 'package:smashlike/arena_engine/scale.dart';
 import 'package:smashlike/arena_engine/arena.dart';
+import 'package:smashlike/arena_engine/asset.dart';
 
-class ArenaEngine extends StatelessWidget {
-  bool _isRunning;
-  Arena arena;
-
-  ArenaEngine(Arena arena) {
-    this._isRunning = false;
-    this.arena = arena;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: arena,
-      ),
-    );
-  }
+class ArenaEngine {
+  bool _isRunning = false;
+  Arena _arena;
 
   // Game loop
-  void run() {
-    _isRunning = true;
+  void run(Arena arena) {
+    this._arena = arena;
+    this._isRunning = true;
     while(_isRunning) {
-      update();
-      render();
+      _update();
+      _render();
     }
   }
 
@@ -36,13 +22,23 @@ class ArenaEngine extends StatelessWidget {
     // reset arena
   }
 
-  void update() {
+  void _update() {
     // read inputs
     // game logic update
     // engine update
   }
 
-  void render() {
+  void _render() {
     // rebuild the widgets
+  }
+
+  Widget widgetDisplay() {
+    return Scaffold(
+      body: Container(
+          height: Scale.screenHeight, // TODO check scaling init
+          width: Scale.screenWidth,
+          child: _arena,
+      ),
+    );
   }
 }

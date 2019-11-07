@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:smashlike/arena_engine/arena_engine.dart';
-import 'package:smashlike/arena_engine/arena.dart';
+import 'package:smashlike/assets/arena_factory.dart';
 
-class Game extends StatelessWidget { // TODO might be stateful
-  ArenaEngine arenaEngine;
-
-  Game() {
-    this.arenaEngine = new ArenaEngine(new DebugArena());
-  }
+class Game extends StatelessWidget {
+  final ArenaEngine _arenaEngine = new ArenaEngine();
 
   @override
   Widget build(BuildContext context) {
-    return arenaEngine;
+    return _arenaEngine.widgetDisplay();
   }
 
   void play() {
-    arenaEngine.run();
+    _arenaEngine.run(ArenaFactory().build("debug"));
   }
 }

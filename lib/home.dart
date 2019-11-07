@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:smashlike/arena_engine/scale.dart';
 import 'package:smashlike/game.dart';
@@ -7,6 +8,14 @@ void main() => runApp(new App());
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // set landscape orientation
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    // hide status bar
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    // root widget
     return MaterialApp(
       title: 'Smash Like',
       home: HomePage(),
@@ -17,18 +26,19 @@ class App extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Scale().init(context, "landscape");
     return Scaffold(
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        /*height: Scale.screenHeight,
+        width: Scale.screenWidth,*/
         child: Stack(
           children: [
             Align(
-              alignment: Alignment(0.0, 0.05),
+              alignment: Alignment(0, 0.15),
               child: PlayButton(),
             ),
             Align(
-              alignment: Alignment(0.0, -0.55),
+              alignment: Alignment(0, -0.55),
               child: Title(),
             ),
           ],
@@ -41,13 +51,12 @@ class HomePage extends StatelessWidget {
 class Title extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ScaleConfig().init(context);
     return Container(
-      height: ScaleConfig.heightScaling * 10,
-      width: ScaleConfig.widthScaling * 60,
+      height: Scale.blockSizeHeight * 15,
+      width: Scale.blockSizeWidth * 35,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('lib/assets/smash-like.png'),
+          image: AssetImage('lib/assets/images/smash-like.png'),
           fit: BoxFit.fill,
         ),
       ),
@@ -58,13 +67,12 @@ class Title extends StatelessWidget {
 class PlayButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ScaleConfig().init(context);
     return Container(
-      height: ScaleConfig.heightScaling * 10,
-      width: ScaleConfig.widthScaling * 40,
+      height: Scale.blockSizeHeight * 15,
+      width: Scale.blockSizeWidth * 20,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('lib/assets/play.png'),
+          image: AssetImage('lib/assets/images/play.png'),
           fit: BoxFit.fill,
         ),
       ),

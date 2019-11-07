@@ -2,14 +2,20 @@ import 'package:smashlike/arena_engine/asset.dart';
 import 'package:flutter/material.dart';
 
 class Arena extends StatefulWidget {
-  int width, height;
+  final ArenaState _state = ArenaState();
+
+  Arena(List<Asset> assets) {
+    this._state._assets = assets;
+  }
+
+  List<Asset> get assets => _state._assets;
 
   @override
-  ArenaState createState() => ArenaState();
+  ArenaState createState() => _state;
 }
 
 class ArenaState extends State<Arena> {
-  List<Asset> _assets;
+  List<Asset> _assets = new List<Asset>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +23,4 @@ class ArenaState extends State<Arena> {
         children: _assets
     );
   }
-}
-
-class DebugArena extends Arena {
-
 }

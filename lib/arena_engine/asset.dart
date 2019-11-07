@@ -1,32 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:smashlike/arena_engine/scale.dart';
 
 class Asset extends StatefulWidget {
+  final AssetState state = AssetState();
+
   @override
-  AssetState createState() => AssetState();
+  AssetState createState() => state;
 }
 
 class AssetState extends State<Asset> {
-  int type = 0; // dynamic or static
-  bool gravity = true;
+  // physical properties
+  int type = 0; // static or dynamic
+  bool gravity = false;
+  // position and velocity
   double velocityX = 0;
   double velocityY = 0;
-  int posX = 0;
-  int posY = 0;
-  int hitboxX = 0;
-  int hitboxY = 0;
-
+  double posX = 0;
+  double posY = 0;
+  double hitboxX = 0;
+  double hitboxY = 0;
+  // image file
   String imageFile = '';
   double imageHeight = 0;
   double imageWidth = 0;
 
   void render() {
-    //call setstates
+    setState(() {
+      // update pos ?
+      // update image dimension
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-        alignment: Alignment(0.5, 0.5),
+    return Positioned( // TODO check
+        bottom: Scale.blockSizeHeight*posY - imageHeight/2,
+        left: Scale.blockSizeWidth*posX - imageWidth/2,
         child: Container(
             child: Image.asset(
               imageFile,
@@ -36,8 +45,4 @@ class AssetState extends State<Asset> {
         ),
     );
   }
-}
-
-class Fighter extends Asset {
-  
 }

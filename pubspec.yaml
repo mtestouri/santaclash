@@ -38,8 +38,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/assets/play.png
-    - lib/assets/smash-like.png
+    - lib/assets/images/play.png
+    - lib/assets/images/smash-like.png
+    - lib/assets/images/player.png
+    - lib/assets/images/platform.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
