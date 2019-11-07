@@ -11,10 +11,10 @@ class ArenaEngine {
   void run(Arena arena) {
     this._arena = arena;
     this._isRunning = true;
-    while(_isRunning) {
+    /*while(_isRunning) {
       _update();
       _render();
-    }
+    }*/
   }
 
   void stop() {
@@ -35,7 +35,7 @@ class ArenaEngine {
   Widget widgetDisplay() {
     return Scaffold(
       body: Container(
-          height: Scale.screenHeight, // TODO check scaling init
+          height: Scale.screenHeight, // TODO check singleton
           width: Scale.screenWidth,
           child: _arena,
       ),

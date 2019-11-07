@@ -29,8 +29,14 @@ class HomePage extends StatelessWidget {
     Scale().init(context, "landscape");
     return Scaffold(
       body: Container(
-        /*height: Scale.screenHeight,
-        width: Scale.screenWidth,*/
+        height: Scale.screenHeight,
+        width: Scale.screenWidth,
+        decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('lib/assets/images/homepage.png'),
+          fit: BoxFit.fill,
+        ),
+      ),
         child: Stack(
           children: [
             Align(

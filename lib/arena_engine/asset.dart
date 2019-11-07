@@ -26,8 +26,7 @@ class AssetState extends State<Asset> {
 
   void render() {
     setState(() {
-      // update pos ?
-      // update image dimension
+      // do nothing for now
     });
   }
 
@@ -36,12 +35,12 @@ class AssetState extends State<Asset> {
     return Positioned( // TODO check
         bottom: Scale.blockSizeHeight*posY - imageHeight/2,
         left: Scale.blockSizeWidth*posX - imageWidth/2,
+        width: imageWidth,
+        height: imageHeight,
         child: Container(
-            child: Image.asset(
-              imageFile,
-              height: imageHeight,
-              width: imageWidth,
-            ),
+          child: Image.asset(
+            imageFile,
+          ),
         ),
     );
   }
