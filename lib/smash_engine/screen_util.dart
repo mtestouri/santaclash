@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-class Scale {
+class ScreenUtil {
   static double screenHeight;
   static double screenWidth;
   static double blockSizeHeight;

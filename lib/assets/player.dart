@@ -1,29 +1,23 @@
-import 'package:smashlike/arena_engine/asset.dart';
-import 'package:smashlike/arena_engine/scale.dart';
+import 'package:smashlike/smash_engine/asset.dart';
+import 'package:smashlike/smash_engine/screen_util.dart';
 
 class Player extends Asset {
-  final PlayerState state = PlayerState();
+  double damage = 0;
+  double ultimate = 0;
 
   Player(double initPosX, double initPosY) {
     // physical properties
-    this.state.type = 1; // dynamic type
-    this.state.gravity = true;
-    // position and velocity
-    this.state.velocityX = 0;
-    this.state.velocityY = 0;
-    this.state.posX = initPosX;
-    this.state.posY = initPosY;
+    type = 1; // dynamic type
+    gravity = true;
+    // position
+    posX = initPosX;
+    posY = initPosY;
     // image file
-    this.state.imageFile = 'lib/assets/images/player.png';
+    imageFile = 'assets/images/player.png';
     // dimensions
-    this.state.imageWidth = Scale.blockSizeWidth*10;
-    this.state.imageHeight = Scale.blockSizeHeight*20;
-    this.state.hitboxX = this.state.imageWidth; // TODO the hitbox should be slightly smaller than the image
-    this.state.hitboxY = this.state.imageHeight;
+    imageWidth = ScreenUtil.blockSizeWidth*100;
+    imageHeight = ScreenUtil.blockSizeHeight*10;
+    hitboxX = imageWidth; // TODO the hitbox should be slightly smaller than the image
+    hitboxY = imageHeight;
   }
-}
-
-class PlayerState extends AssetState {
-  double damage;
-  double ultimate;
 }

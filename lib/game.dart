@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/arena_engine/arena_engine.dart';
-import 'package:smashlike/assets/arena_factory.dart';
+import 'package:smashlike/assets/assets_factory.dart';
+import 'package:smashlike/smash_engine/smash_engine.dart';
+import 'package:smashlike/smash_engine/screen_util.dart';
 
 class Game extends StatelessWidget {
-  final ArenaEngine _arenaEngine = new ArenaEngine();
-
   @override
   Widget build(BuildContext context) {
-    return _arenaEngine.widgetDisplay();
-  }
-
-  void play() {
-    _arenaEngine.run(ArenaFactory().build("debug"));
+    return Scaffold(
+      body: Container(
+        height: ScreenUtil.screenHeight, // TODO check singleton
+        width: ScreenUtil.screenWidth,
+        child: SmashEngine(
+          assets: AssetsFactory.build("debug"),
+        ),
+      ),
+    );
   }
 }
