@@ -27,15 +27,19 @@ class Asset {
     return Positioned( // TODO check
         bottom: ScreenUtil.blockSizeHeight*posY - imageHeight/2,
         left: ScreenUtil.blockSizeWidth*posX - imageWidth/2,
-        width: imageWidth,
-        height: imageHeight,
         child: Container(
-          decoration: BoxDecoration(
+          height: imageHeight,
+          width: imageWidth,
+          child: FittedBox(
+            child: Image.asset(imageFile),
+            fit: BoxFit.fill,
+          ),
+          /*decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(imageFile),
             fit: BoxFit.fill,
             )
-          ),
+          ),*/
         ),
     );
   }

@@ -15,7 +15,7 @@ class AssetsFactory {
   static List<Asset> debug() {
     List<Asset> assets = List();
     assets.add(Player(50,50));
-    assets.add(Platform(50,10));
+    assets.add(Platform(50,20));
     return assets;
   }
 }

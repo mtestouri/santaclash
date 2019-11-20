@@ -9,8 +9,8 @@ class Platform extends Asset {
     // image file
     imageFile = 'assets/images/platform.png';
     // dimensions
-    imageWidth = ScreenUtil.blockSizeWidth*50;
-    imageHeight = ScreenUtil.blockSizeHeight*100;
+    imageWidth = ScreenUtil.blockSizeWidth*100;//ScreenUtil.screenWidth;
+    imageHeight = ScreenUtil.blockSizeHeight*30;//ScreenUtil.screenHeight;
     hitboxX = imageWidth;
     hitboxY = imageHeight;
   }

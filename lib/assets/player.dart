@@ -15,7 +15,7 @@ class Player extends Asset {
     // image file
     imageFile = 'assets/images/player.png';
     // dimensions
-    imageWidth = ScreenUtil.blockSizeWidth*100;
+    imageWidth = ScreenUtil.blockSizeWidth*5;
     imageHeight = ScreenUtil.blockSizeHeight*10;
     hitboxX = imageWidth; // TODO the hitbox should be slightly smaller than the image
     hitboxY = imageHeight;

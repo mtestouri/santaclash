@@ -40,11 +40,11 @@ class HomePage extends StatelessWidget {
         child: Stack(
           children: [
             Align(
-              alignment: Alignment(0, 0.15),
+              alignment: Alignment(0, 0.30),
               child: PlayButton(),
             ),
             Align(
-              alignment: Alignment(0, -0.55),
+              alignment: Alignment(0, -0.45),
               child: Title(),
             ),
           ],
@@ -60,11 +60,9 @@ class Title extends StatelessWidget {
     return Container(
       height: ScreenUtil.blockSizeHeight * 15,
       width: ScreenUtil.blockSizeWidth * 35,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/smash-like.png'),
-          fit: BoxFit.fill,
-        ),
+      child: FittedBox(
+        child: Image.asset('assets/images/smash-like.png'),
+        fit: BoxFit.fill,
       ),
     );
   }

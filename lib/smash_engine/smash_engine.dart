@@ -75,6 +75,12 @@ class SmashEngineState extends State<SmashEngine> with SingleTickerProviderState
     );
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   void gameLoop() {
     // update assets
     //_updateAssets();
