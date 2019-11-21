@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/assets/assets_factory.dart';
+import 'package:smashlike/game/factory.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 
@@ -8,9 +8,10 @@ class Game extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: ScreenUtil.screenHeight, // TODO check singleton
+        height: ScreenUtil.screenHeight,
         width: ScreenUtil.screenWidth,
         child: SmashEngine(
+          inputGestures: InputGesturesFactory.build("debug"),
           assets: AssetsFactory.build("debug"),
         ),
       ),
