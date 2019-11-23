@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/gesture.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 
-// TODO : const value for actions and ids
+class CircularButton extends StatelessWidget {
+  final IconData iconData;
+  final String text;
 
-class CircularButton extends InputGesture {
-  final IconData _iconData;
-  CircularButton(this._iconData);
+  CircularButton({this.iconData, @required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,18 @@ class CircularButton extends InputGesture {
         color: Colors.blueGrey,
         shape: BoxShape.circle,
       ),
-      child: Icon(
-        _iconData,
-        color: Colors.white,
+      child: Stack(
+        alignment: Alignment(0.0, 0.0),
+        children: [
+          Icon(
+            iconData,
+            color: Colors.white,
+          ),
+          Text(
+            text,
+            style: TextStyle(color: Colors.white),
+          ),
+        ],
       ),
     );
   }
@@ -29,16 +38,19 @@ class ButtonLeft extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*10,
-      left: ScreenUtil.blockSizeWidth*10,
+      bottom: ScreenUtil.blockSizeHeight*7,
+      left: ScreenUtil.blockSizeWidth*7,
       child: GestureDetector(
-        onLongPressStart: (LongPressStartDetails details) {
-          this.pushInput(context, Input("Left", "pressStart"));
+        onTapDown: (details) {
+          this.pushInput(context, "press_left_start");
         },
-        onLongPressEnd: (LongPressEndDetails details) {
-          this.pushInput(context, Input("Left", "pressEnd"));
+        onTapCancel: () {
+          this.pushInput(context, "press_left_end");
         },
-        child: CircularButton(Icons.arrow_back),
+        onTapUp: (details) {
+          this.pushInput(context, "press_left_end");
+        },
+        child: CircularButton(iconData: Icons.arrow_back, text: ''),
       )
     );
   }
@@ -48,16 +60,19 @@ class ButtonRight extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*10,
-      left: ScreenUtil.blockSizeWidth*24,
+      bottom: ScreenUtil.blockSizeHeight*7,
+      left: ScreenUtil.blockSizeWidth*19,
       child: GestureDetector(
-        onLongPressStart: (LongPressStartDetails details) {
-          this.pushInput(context, Input("Right", "pressStart"));
+        onTapDown: (details) {
+          this.pushInput(context, "press_right_start");
         },
-        onLongPressEnd: (LongPressEndDetails details) {
-          this.pushInput(context, Input("Right", "pressEnd"));
+        onTapCancel: () {
+          this.pushInput(context, "press_right_end");
         },
-        child: CircularButton(Icons.arrow_forward),
+        onTapUp: (details) {
+          this.pushInput(context, "press_right_end");
+        },
+        child: CircularButton(iconData: Icons.arrow_forward, text: ''),
       )
     );
   }
@@ -67,17 +82,13 @@ class ButtonUp extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*10,
-      left: ScreenUtil.blockSizeWidth*60,
-      child: FloatingActionButton(
-        heroTag: "Up",
-        backgroundColor: Colors.blueGrey,
-        elevation: 0,
-        child: Icon(
-          Icons.arrow_upward,
-          color: Colors.white,
-        ),
-        onPressed: () {this.pushInput(context, Input("Up", "pressed"));},
+      bottom: ScreenUtil.blockSizeHeight*7,
+      left: ScreenUtil.blockSizeWidth*31,
+      child: GestureDetector(
+        onTapDown: (details) {
+          this.pushInput(context, "press_up");
+        },
+        child: CircularButton(iconData: Icons.arrow_upward, text: ''),
       )
     );
   }
@@ -87,15 +98,17 @@ class ButtonA extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*10,
-      left: ScreenUtil.blockSizeWidth*72,
-      child: FloatingActionButton(
-        heroTag: "A",
-        backgroundColor: Colors.blueGrey,
-        elevation: 0,
-        child: Text("A"),
-        onPressed: () {this.pushInput(context, Input("A", "pressed"));},
-      )
+      bottom: ScreenUtil.blockSizeHeight*7,
+      left: ScreenUtil.blockSizeWidth*62,
+      child: GestureDetector(
+        onTapDown: (details) {
+          this.pushInput(context, "press_a");
+        },
+        onLongPress: () {
+          this.pushInput(context, "long_press_a");
+        },
+        child: CircularButton(text: "A")
+      ),
     );
   }
 }
@@ -104,15 +117,36 @@ class ButtonB extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*10,
-      left: ScreenUtil.blockSizeWidth*84,
-      child: FloatingActionButton(
-        heroTag: "B",
-        backgroundColor: Colors.blueGrey,
-        elevation: 0,
-        child: Text("B"),
-        onPressed: () {this.pushInput(context, Input("B", "pressed"));},
-      )
+      bottom: ScreenUtil.blockSizeHeight*7,
+      left: ScreenUtil.blockSizeWidth*74,
+      child: GestureDetector(
+        onTapDown: (details) {
+          this.pushInput(context, "press_b_start");
+        },
+        onTapCancel: () {
+          this.pushInput(context, "press_b_end");
+        },
+        onTapUp: (details) {
+          this.pushInput(context, "press_b_end");
+        },
+        child: CircularButton(text: "B")
+      ),
+    );
+  }
+}
+
+class ButtonFireball extends InputGesture {
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: ScreenUtil.blockSizeHeight*7,
+      left: ScreenUtil.blockSizeWidth*86,
+      child: GestureDetector(
+        onTapDown: (details) {
+          this.pushInput(context, "press_fireball");
+        },
+        child: CircularButton(iconData: Icons.brightness_low, text: ''),
+      ),
     );
   }
 }

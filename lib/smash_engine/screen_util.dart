@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-class ScreenUtil {
+class ScreenUtil { // TODO put rotations of screen here
   static double screenHeight;
   static double screenWidth;
   static double blockSizeHeight;

@@ -16,13 +16,7 @@ class Gesture extends StatelessWidget {
 }
 
 abstract class InputGesture extends StatelessWidget {
-  void pushInput(BuildContext context, Input input) {
+  void pushInput(BuildContext context, String input) {
     SmashEngine.of(context).inputs.add(input);
   }
-}
-
-class Input {
-  String id;
-  String action;
-  Input(this.id, this.action);
 }

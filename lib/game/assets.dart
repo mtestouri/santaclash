@@ -1,4 +1,4 @@
-import 'package:smashlike/smash_engine/renderer.dart';
+import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 
 class Player extends PhysicalAsset {
@@ -13,12 +13,172 @@ class Player extends PhysicalAsset {
     posX = initPosX;
     posY = initPosY;
     // image file
-    imageFile = 'assets/images/player.png';
+    imageFile = 'assets/images/player/idle_r_1.png';
     // dimensions
-    imageWidth = ScreenUtil.blockSizeWidth*5;
-    imageHeight = ScreenUtil.blockSizeHeight*14;
-    hitboxX = 5;
-    hitboxY = 12;
+    imageWidth = ScreenUtil.blockSizeWidth*8;
+    imageHeight = ScreenUtil.blockSizeHeight*17;
+    hitboxX = 6;
+    hitboxY = 11;
+  }
+
+  @override
+  Map<String, Map<int, String>> animationsFactory() {
+    Map<String, Map<int, String>> animationsMap = new Map();
+    var framesMap;
+
+    // TODO directory value ?
+
+    // idle left
+    framesMap = {
+      0:'assets/images/player/idle_l_1.png'
+    };
+    animationsMap["idle_left"] = framesMap;
+
+    // idle right
+    framesMap = {
+      0:'assets/images/player/idle_r_1.png'
+    };
+    animationsMap["idle_right"] = framesMap;
+
+    // move left
+    framesMap = {
+      0:'assets/images/player/move_l_1.png',
+      5:'assets/images/player/move_l_2.png',
+      10:'assets/images/player/move_l_3.png',
+      15:'assets/images/player/move_l_4.png',
+      20:'assets/images/player/move_l_5.png',
+      25:'assets/images/player/move_l_6.png',
+      30:'assets/images/player/move_l_7.png',
+      35:'assets/images/player/move_l_8.png'
+    };
+    animationsMap["move_left"] = framesMap;
+    
+    // move right
+    framesMap = {
+      0:'assets/images/player/move_r_1.png',
+      5:'assets/images/player/move_r_2.png',
+      10:'assets/images/player/move_r_3.png',
+      15:'assets/images/player/move_r_4.png',
+      20:'assets/images/player/move_r_5.png',
+      25:'assets/images/player/move_r_6.png',
+      30:'assets/images/player/move_r_7.png',
+      35:'assets/images/player/move_r_8.png'
+    };
+    animationsMap["move_right"] = framesMap;
+    
+    // jump left
+    framesMap = {
+      0:'assets/images/player/jump_l_1.png',
+      5:'assets/images/player/jump_l_2.png',
+      10:'assets/images/player/jump_l_3.png',
+      15:'assets/images/player/jump_l_4.png',
+      20:'assets/images/player/jump_l_5.png',
+      25:'assets/images/player/jump_l_6.png'
+    };
+    animationsMap["jump_left"] = framesMap;
+    
+    // jump right
+    framesMap = {
+      0:'assets/images/player/jump_r_1.png',
+      5:'assets/images/player/jump_r_2.png',
+      10:'assets/images/player/jump_r_3.png',
+      15:'assets/images/player/jump_r_4.png',
+      20:'assets/images/player/jump_r_5.png',
+      25:'assets/images/player/jump_r_6.png'
+    };
+    animationsMap["jump_right"] = framesMap;
+
+    // attack left
+    framesMap = {
+      0:'assets/images/player/attack_l_1.png',
+      5:'assets/images/player/attack_l_2.png',
+      10:'assets/images/player/attack_l_3.png',
+      15:'assets/images/player/attack_l_4.png',
+      20:'assets/images/player/attack_l_5.png'
+    };
+    animationsMap["attack_left"] = framesMap;
+
+    // attack right
+    framesMap = {
+      0:'assets/images/player/attack_r_1.png',
+      5:'assets/images/player/attack_r_2.png',
+      10:'assets/images/player/attack_r_3.png',
+      15:'assets/images/player/attack_r_4.png',
+      20:'assets/images/player/attack_r_5.png'
+    };
+    animationsMap["attack_right"] = framesMap;
+
+    // smash attack left
+    framesMap = {
+      0:'assets/images/player/smash_attack_l_1.png',
+      5:'assets/images/player/smash_attack_l_2.png',
+      10:'assets/images/player/smash_attack_l_3.png',
+      15:'assets/images/player/smash_attack_l_4.png',
+      20:'assets/images/player/smash_attack_l_5.png',
+      25:'assets/images/player/smash_attack_l_6.png',
+      30:'assets/images/player/smash_attack_l_7.png',
+      35:'assets/images/player/smash_attack_l_8.png',
+      40:'assets/images/player/smash_attack_l_9.png'
+    };
+    animationsMap["smash_attack_left"] = framesMap;
+
+    // smash attack right
+    framesMap = {
+      0:'assets/images/player/smash_attack_r_1.png',
+      5:'assets/images/player/smash_attack_r_2.png',
+      10:'assets/images/player/smash_attack_r_3.png',
+      15:'assets/images/player/smash_attack_r_4.png',
+      20:'assets/images/player/smash_attack_r_5.png',
+      25:'assets/images/player/smash_attack_r_6.png',
+      30:'assets/images/player/smash_attack_r_7.png',
+      35:'assets/images/player/smash_attack_r_8.png',
+      40:'assets/images/player/smash_attack_r_9.png'
+    };
+    animationsMap["smash_attack_right"] = framesMap;
+
+    // block left
+    framesMap = {
+      0:'assets/images/player/block_l_1.png'
+    };
+    animationsMap["block_left"] = framesMap;
+
+    // block right
+    framesMap = {
+      0:'assets/images/player/block_r_1.png'
+    };
+    animationsMap["block_right"] = framesMap;
+
+    // fireball left
+    framesMap = {
+      0:'assets/images/player/fireball_l_1.png',
+      5:'assets/images/player/fireball_l_2.png',
+      10:'assets/images/player/fireball_l_3.png',
+      15:'assets/images/player/fireball_l_4.png',
+      20:'assets/images/player/fireball_l_5.png',
+      25:'assets/images/player/fireball_l_6.png',
+      30:'assets/images/player/fireball_l_7.png',
+      35:'assets/images/player/fireball_l_8.png',
+      40:'assets/images/player/fireball_l_9.png',
+      45:'assets/images/player/fireball_l_10.png'
+    };
+    animationsMap["fireball_left"] = framesMap;
+
+    // fireball right
+    framesMap = {
+      0:'assets/images/player/fireball_r_1.png',
+      5:'assets/images/player/fireball_r_2.png',
+      10:'assets/images/player/fireball_r_3.png',
+      15:'assets/images/player/fireball_r_4.png',
+      20:'assets/images/player/fireball_r_5.png',
+      25:'assets/images/player/fireball_r_6.png',
+      30:'assets/images/player/fireball_r_7.png',
+      35:'assets/images/player/fireball_r_8.png',
+      40:'assets/images/player/fireball_r_9.png',
+      45:'assets/images/player/fireball_r_10.png'
+    };
+    animationsMap["fireball_right"] = framesMap;
+  
+    return animationsMap;
   }
 }
 
@@ -34,5 +194,19 @@ class Platform extends PhysicalAsset {
     imageHeight = ScreenUtil.blockSizeHeight*30;
     hitboxX = 100;
     hitboxY = 30;
+  }
+
+  @override
+  Map<String, Map<int, String>> animationsFactory() {
+    return null;
+  }
+}
+
+class Background extends Asset {
+  
+
+  @override
+  Map<String, Map<int, String>> animationsFactory() {
+    return null;
   }
 }
