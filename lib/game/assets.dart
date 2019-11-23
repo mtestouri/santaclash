@@ -183,17 +183,18 @@ class Player extends PhysicalAsset {
 }
 
 class Platform extends PhysicalAsset {
-  Platform(double posX, double posY) {
+  Platform(String image, double width, double height,
+           double hitboxX, double hitboxY, double posX, double posY) {
+    // image file
+    this.imageFile = image;
+    // dimensions
+    this.imageWidth = ScreenUtil.blockSizeWidth*width;
+    this.imageHeight = ScreenUtil.blockSizeHeight*height;
+    this.hitboxX = hitboxX;
+    this.hitboxY = hitboxY;
     // position
     this.posX = posX;
     this.posY = posY;
-    // image file
-    imageFile = 'assets/images/platform.png';
-    // dimensions
-    imageWidth = ScreenUtil.blockSizeWidth*100;
-    imageHeight = ScreenUtil.blockSizeHeight*30;
-    hitboxX = 100;
-    hitboxY = 30;
   }
 
   @override
@@ -203,7 +204,16 @@ class Platform extends PhysicalAsset {
 }
 
 class Background extends Asset {
-  
+  Background(String image) {
+    // image file
+    imageFile = image;
+    // dimensions
+    imageWidth = ScreenUtil.blockSizeWidth*100;
+    imageHeight = ScreenUtil.blockSizeHeight*100;
+    // position
+    posX = 50;
+    posY = 50;
+  }
 
   @override
   Map<String, Map<int, String>> animationsFactory() {

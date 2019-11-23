@@ -48,7 +48,7 @@ abstract class Asset {
           _framesMap = null;
       }
     }
-    // build widget
+    // build widget // TODO display hitboxes for debug
     if(imageFile != '') {
       return Positioned(
         bottom: ScreenUtil.blockSizeHeight*posY - imageHeight/2,
@@ -63,7 +63,7 @@ abstract class Asset {
         ),
       );
     }
-    return null;
+    return Container(); // TODO change, 0 size ?
   }
 }
 
