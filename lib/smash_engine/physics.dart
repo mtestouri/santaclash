@@ -2,13 +2,11 @@ import 'dart:math';
 import 'package:smashlike/smash_engine/asset.dart';
 
 class Physics {
-  // TODO parameters, singleton ?
   // TODO pos just before collision
   double _currFps = 60;
   double _gravity = -98.1;
 
   static final Physics _inst = Physics._internal();
-  
   Physics._internal();
 
   set currFps(double value) => _currFps = value;

@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/game.dart';
@@ -8,13 +7,8 @@ void main() => runApp(new App());
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // set landscape orientation
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    // hide status bar
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    ScreenUtil.setScreenOrientation("landscape");
+    ScreenUtil.hideStatusBar();
     // root widget
     return MaterialApp(
       title: 'Smash Like',
@@ -26,7 +20,7 @@ class App extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil().init(context, "landscape");
+    ScreenUtil.init(context, screenOrientation: "landscape");
     return Scaffold(
       body: Container(
         height: ScreenUtil.screenHeight,

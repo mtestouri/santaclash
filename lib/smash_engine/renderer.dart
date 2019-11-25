@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smashlike/game/assets.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/physics.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
@@ -102,6 +103,10 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
     for(var asset in _assets)
       assetWidgets.add(asset.toWidget());
 
+    // draw hitboxes and hurtboxes
+    _drawHitboxes(_assets, assetWidgets);
+    _drawHurtboxes(_assets, assetWidgets);
+
     // display FPS
     assetWidgets.add(Positioned(
       top: ScreenUtil.blockSizeHeight*5,
@@ -118,5 +123,76 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _drawHitboxes(List<Asset> assets, List<Widget> assetWidgets) {
+    for(var a in assets) {
+      if(a is PhysicalAsset) {
+        assetWidgets.add(Box(
+          posX: a.posX,
+          posY: a.posY,
+          width: a.hitboxX,
+          height: a.hitboxY,
+          color: Colors.redAccent,
+        ));
+      }
+    }
+  }
+
+  void _drawHurtboxes(List<Asset> assets, List<Widget> assetWidgets) {
+    for(var asset in assets) {
+      if(asset is Player) {
+        Player a = asset;
+        assetWidgets.add(Box( // basic attack
+          posX: a.posX + a.hurtBasicOffsetX,
+          posY: a.posY + a.hurtBasicOffsetY,
+          width: a.hurtBasicX,
+          height: a.hurtBasicY,
+          color: Colors.blueAccent,
+        ));
+        assetWidgets.add(Box( // smash attack
+          posX: a.posX + a.hurtSmashOffsetX,
+          posY: a.posY + a.hurtSmashOffsetY,
+          width: a.hurtSmashX,
+          height: a.hurtSmashY,
+          color: Colors.blueAccent,
+        ));
+      }
+    }
+  }
+}
+
+class Box extends StatelessWidget {
+  final double _posX;
+  final double _posY;
+  final double _width;
+  final double _height;
+  final MaterialAccentColor _color;
+
+  Box({
+    @required double posX,
+    @required double posY,
+    @required double width,
+    @required double height,
+    @required MaterialAccentColor color
+  }) : this._posX = ScreenUtil.blockSizeWidth*posX,
+       this._posY = ScreenUtil.blockSizeHeight*posY,
+       this._width = ScreenUtil.blockSizeWidth*width,
+       this._height = ScreenUtil.blockSizeHeight*height,
+       this._color = color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: _posX - _width/2,
+      bottom: _posY - _height/2,
+      child: Container(
+        width: _width,
+        height: _height,
+        decoration: BoxDecoration(
+          border: Border.all(color: _color)
+        ),
+      ),
+    );
   }
 }

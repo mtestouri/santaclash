@@ -7,9 +7,6 @@ import 'package:smashlike/smash_engine/smash_engine.dart';
 class SmashLike extends GameLogic {
   Physics _physics = Physics();
 
-  String playerOrientation = "right"; // TODO move to asset
-  bool isMoving = false;
-
   // 1. read apply inputs
   // 2. game updates
 
@@ -27,9 +24,9 @@ class SmashLike extends GameLogic {
     while(inputs.length > 0) {
       switch(inputs.removeFirst()) {
         case "press_left_start": {
-          playerOrientation = "left";
+          player.orientation = Player.LEFT;
           player.velX = -20;
-          isMoving = true;
+          player.isMoving = true;
           if(_physics.isOnGround(player, physicalAssets))
             player.startAnimation("move_left", repeat: true);
           else
@@ -39,15 +36,15 @@ class SmashLike extends GameLogic {
 
         case "press_left_end": {
           player.velX = 0;
-          isMoving = false;
+          player.isMoving = false;
           player.startAnimation("idle_left");
         }
         break;
 
         case "press_right_start": {
-          playerOrientation = "right";
+          player.orientation = Player.RIGHT;
           player.velX = 20;
-          isMoving = true;
+          player.isMoving = true;
           if(_physics.isOnGround(player, physicalAssets))
             player.startAnimation("move_right", repeat: true);
           else
@@ -57,14 +54,14 @@ class SmashLike extends GameLogic {
 
         case "press_right_end": {
           player.velX = 0;
-          isMoving = false;
+          player.isMoving = false;
           player.startAnimation("idle_right");
         }
         break;
 
         case "press_up": {
           player.velY += 50;
-          if(playerOrientation == "left")
+          if(player.orientation == Player.LEFT)
             player.startAnimation("jump_left");
           else
             player.startAnimation("jump_right");
@@ -72,7 +69,7 @@ class SmashLike extends GameLogic {
         break;
 
         case "press_a": {
-          if(playerOrientation == "left")
+          if(player.orientation == Player.LEFT)
             player.startAnimation("attack_left");
           else
             player.startAnimation("attack_right");  
@@ -80,7 +77,7 @@ class SmashLike extends GameLogic {
         break;
 
         case "long_press_a": {
-          if(playerOrientation == "left")
+          if(player.orientation == Player.LEFT)
             player.startAnimation("smash_attack_left");
           else
             player.startAnimation("smash_attack_right");  
@@ -88,7 +85,7 @@ class SmashLike extends GameLogic {
         break;
         
         case "press_b_start": {
-          if(playerOrientation == "left")
+          if(player.orientation == Player.LEFT)
             player.startAnimation("block_left");
           else
             player.startAnimation("block_right");  
@@ -96,7 +93,7 @@ class SmashLike extends GameLogic {
         break;
 
         case "press_b_end": {
-          if(playerOrientation == "left")
+          if(player.orientation == Player.LEFT)
             player.startAnimation("idle_left");
           else
             player.startAnimation("idle_right");
@@ -104,7 +101,8 @@ class SmashLike extends GameLogic {
         break;
         
         case "press_fireball": {
-          if(playerOrientation == "left") {
+          // TODO wait for animation
+          if(player.orientation == Player.LEFT) {
             player.startAnimation("fireball_left");
             assets.add(Fireball(player.posX - 1, player.posY, -20, 0));
           }

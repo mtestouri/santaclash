@@ -2,10 +2,49 @@ import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 
 class Player extends PhysicalAsset {
+  String spritesPath;
+  
+  // motion
+  static const int RIGHT = 0;
+  static const int LEFT = 1;
+  int orientation = RIGHT;
+  bool isMoving = false;
+  // combat
   double damage = 0;
   double ultimate = 0;
+  // basic attack
+  double _hurtBasicOffsetX = 2;
+  double get hurtBasicOffsetX {
+    if(orientation == LEFT)
+      return -1*_hurtBasicOffsetX;
+    return _hurtBasicOffsetX;
+  }
+  double hurtBasicOffsetY = 0.25;
+  double hurtBasicX = 4;
+  double hurtBasicY = 4;
+  double get hurtBasicLeft => (posX + hurtBasicOffsetX - hurtBasicX/2);
+  double get hurtBasicRight => (posX + hurtBasicOffsetX + hurtBasicX/2);
+  double get hurtBasicTop => (posY + hurtBasicOffsetY + hurtBasicY/2);
+  double get hurtBasicBottom => (posY + hurtBasicOffsetY - hurtBasicY/2);
+  // smash attack
+  double _hurtSmashOffsetX = 2;
+  double get hurtSmashOffsetX {
+    if(orientation == LEFT)
+      return -1*_hurtSmashOffsetX;
+    return _hurtSmashOffsetX;
+  }
+  double hurtSmashOffsetY = -2;
+  double hurtSmashX = 4;
+  double hurtSmashY = 4;
+  double get hurtSmashLeft => (posX + hurtSmashOffsetX - hurtSmashX/2);
+  double get hurtSmashRight => (posX + hurtSmashOffsetX + hurtSmashX/2);
+  double get hurtSmashTop => (posY + hurtSmashOffsetY + hurtSmashY/2);
+  double get hurtSmashBottom => (posY + hurtSmashOffsetY - hurtSmashY/2);
 
   Player(double initPosX, double initPosY) {
+    
+    //this.spritesPath = spritesPath; // TODO directory value
+    
     // image file
     imageFile = 'assets/images/player/idle_r_1.png';
     // dimensions
@@ -25,8 +64,6 @@ class Player extends PhysicalAsset {
   Map<String, Map<int, String>> animationsFactory() {
     Map<String, Map<int, String>> animationsMap = new Map();
     var framesMap;
-
-    // TODO directory value ?
 
     // idle left
     framesMap = {
