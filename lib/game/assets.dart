@@ -6,19 +6,19 @@ class Player extends PhysicalAsset {
   double ultimate = 0;
 
   Player(double initPosX, double initPosY) {
-    // physical properties
-    type = PhysicalAsset.DYNAMIC;
-    gravity = true;
-    // position
-    posX = initPosX;
-    posY = initPosY;
     // image file
     imageFile = 'assets/images/player/idle_r_1.png';
     // dimensions
     imageWidth = ScreenUtil.blockSizeWidth*8;
     imageHeight = ScreenUtil.blockSizeHeight*17;
+    // physical properties
+    type = PhysicalAsset.DYNAMIC;
+    gravity = true;
     hitboxX = 6;
     hitboxY = 11;
+    // position
+    posX = initPosX;
+    posY = initPosY;
   }
 
   @override
@@ -179,6 +179,32 @@ class Player extends PhysicalAsset {
     animationsMap["fireball_right"] = framesMap;
   
     return animationsMap;
+  }
+}
+
+class Fireball extends PhysicalAsset {
+  Fireball(double initPosX, double initPosY, double velX, double velY) {
+    // image file
+    imageFile = 'assets/images/player/fireball.png';
+    // dimensions
+    imageWidth = ScreenUtil.blockSizeWidth*2;
+    imageHeight = ScreenUtil.blockSizeHeight*4;
+    // physical properties
+    type = PhysicalAsset.DYNAMIC;
+    gravity = false;
+    hitboxX = 2;
+    hitboxY = 4;
+    // position
+    posX = initPosX;
+    posY = initPosY;
+    // velocities
+    this.velX = velX;
+    this.velY = velY;
+  }
+
+  @override
+  Map<String, Map<int, String>> animationsFactory() {
+    return null;
   }
 }
 

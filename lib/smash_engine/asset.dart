@@ -70,7 +70,7 @@ abstract class Asset {
 abstract class PhysicalAsset extends Asset {
   // physical properties
   static const STATIC = 0;
-  static const DYNAMIC = 0;
+  static const DYNAMIC = 1;
   int type = STATIC;
   bool gravity = false;
   // velocities

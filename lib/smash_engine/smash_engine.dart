@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/gesture.dart';
+import 'package:smashlike/smash_engine/physics.dart';
 import 'package:smashlike/smash_engine/renderer.dart';
 
 
@@ -19,6 +20,7 @@ class SmashEngine extends InheritedWidget {
   })  : super(child : Stack(
         children : [
           Renderer(
+            physics: Physics(),
             assets : assets, 
             gameLogic: gameLogic
           ),

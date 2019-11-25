@@ -5,11 +5,15 @@ import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 class Renderer extends StatefulWidget {
+  final Physics _physics;
   final List<Asset> _assets;
   final GameLogic _gameLogic;
 
-  Renderer({List<Asset> assets, GameLogic gameLogic})
-    : this._assets = assets,
+  Renderer({@required Physics physics, 
+            @required List<Asset> assets, 
+            @required GameLogic gameLogic})
+    : this._physics = physics,
+      this._assets = assets,
       this._gameLogic = gameLogic;
 
   @override
@@ -17,6 +21,7 @@ class Renderer extends StatefulWidget {
 }
 
 class RendererState extends State<Renderer> with SingleTickerProviderStateMixin {
+  Physics _physics;
   List<Asset> _assets;
   GameLogic _gameLogic;
   
@@ -35,6 +40,7 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
   void initState() {
     super.initState();
 
+    _physics = widget._physics;
     _assets = widget._assets;
     _gameLogic = widget._gameLogic;
     
@@ -72,6 +78,9 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
       _sumFps = 0;
     }
 
+    // update FPS in physics
+    _physics.currFps = _currFps;
+
     // render the frame
     setState(() {});
   }
@@ -86,7 +95,7 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
       if(asset is PhysicalAsset)
         physicalAssets.add(asset);
     }
-    Physics.update(physicalAssets, _currFps);
+    _physics.update(physicalAssets);
 
     // display assets
     List<Widget> assetWidgets = new List();

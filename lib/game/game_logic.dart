@@ -1,26 +1,45 @@
 import 'dart:collection';
 import 'package:smashlike/game/assets.dart';
 import 'package:smashlike/smash_engine/asset.dart';
+import 'package:smashlike/smash_engine/physics.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 class SmashLike extends GameLogic {
-  String playerOrientation = "right";
+  Physics _physics = Physics();
+
+  String playerOrientation = "right"; // TODO move to asset
+  bool isMoving = false;
+
+  // 1. read apply inputs
+  // 2. game updates
 
   @override
   void update(Queue<String> inputs, List<Asset> assets) {
     Player player = assets.singleWhere((asset) => asset is Player);
+
+    // TODO might change
+    List<PhysicalAsset> physicalAssets = new List();
+    for(var asset in assets) {
+      if(asset is PhysicalAsset)
+        physicalAssets.add(asset);
+    }
 
     while(inputs.length > 0) {
       switch(inputs.removeFirst()) {
         case "press_left_start": {
           playerOrientation = "left";
           player.velX = -20;
-          player.startAnimation("move_left", repeat: true);
+          isMoving = true;
+          if(_physics.isOnGround(player, physicalAssets))
+            player.startAnimation("move_left", repeat: true);
+          else
+            player.startAnimation("jump_left", repeat: true);
         }
         break;
 
         case "press_left_end": {
           player.velX = 0;
+          isMoving = false;
           player.startAnimation("idle_left");
         }
         break;
@@ -28,12 +47,17 @@ class SmashLike extends GameLogic {
         case "press_right_start": {
           playerOrientation = "right";
           player.velX = 20;
-          player.startAnimation("move_right", repeat: true);
+          isMoving = true;
+          if(_physics.isOnGround(player, physicalAssets))
+            player.startAnimation("move_right", repeat: true);
+          else
+            player.startAnimation("jump_right", repeat: true);
         }
         break;
 
         case "press_right_end": {
           player.velX = 0;
+          isMoving = false;
           player.startAnimation("idle_right");
         }
         break;
@@ -43,7 +67,7 @@ class SmashLike extends GameLogic {
           if(playerOrientation == "left")
             player.startAnimation("jump_left");
           else
-            player.startAnimation("jump_right");  
+            player.startAnimation("jump_right");
         }
         break;
 
@@ -75,15 +99,19 @@ class SmashLike extends GameLogic {
           if(playerOrientation == "left")
             player.startAnimation("idle_left");
           else
-            player.startAnimation("idle_right");  
+            player.startAnimation("idle_right");
         }
         break;
         
         case "press_fireball": {
-          if(playerOrientation == "left")
+          if(playerOrientation == "left") {
             player.startAnimation("fireball_left");
-          else
-            player.startAnimation("fireball_right");  
+            assets.add(Fireball(player.posX - 1, player.posY, -20, 0));
+          }
+          else {
+            player.startAnimation("fireball_right");
+            assets.add(Fireball(player.posX + 1, player.posY, 20, 0));
+          }
         }
         break;
 
