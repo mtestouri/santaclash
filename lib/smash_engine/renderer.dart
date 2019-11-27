@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/game/assets.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/physics.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
+import 'package:smashlike/game/fighters_assets.dart'; // TODO Fighter shouldn't be here
 
 class Renderer extends StatefulWidget {
   final Physics _physics;
@@ -141,8 +141,8 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
 
   void _drawHurtboxes(List<Asset> assets, List<Widget> assetWidgets) {
     for(var asset in assets) {
-      if(asset is Player) {
-        Player a = asset;
+      if(asset is Fighter) {
+        Fighter a = asset;
         assetWidgets.add(Box( // basic attack
           posX: a.posX + a.hurtBasicOffsetX,
           posY: a.posY + a.hurtBasicOffsetY,

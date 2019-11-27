@@ -51,11 +51,13 @@ abstract class Asset {
     // build widget
     if(imageFile != '') {
       return Positioned(
-        bottom: ScreenUtil.blockSizeHeight*posY - imageHeight/2,
-        left: ScreenUtil.blockSizeWidth*posX - imageWidth/2,
+        bottom: ScreenUtil.blockSizeHeight*posY 
+                - (ScreenUtil.blockSizeHeight*imageHeight)/2,
+        left: ScreenUtil.blockSizeWidth*posX 
+              - (ScreenUtil.blockSizeWidth*imageWidth)/2,
         child: Container(
-          height: imageHeight,
-          width: imageWidth,
+          height: ScreenUtil.blockSizeHeight*imageHeight,
+          width: ScreenUtil.blockSizeWidth*imageWidth,
           child: FittedBox(
             child: Image.asset(imageFile),
             fit: BoxFit.fill,
@@ -77,9 +79,9 @@ abstract class PhysicalAsset extends Asset {
   // velocities
   double velX = 0;
   double velY = 0;
+  // hitboxe
   double hitboxX = 0;
   double hitboxY = 0;
-  // hitboxes
   double get hitboxLeft => (posX - hitboxX/2);
   double get hitboxRight => (posX + hitboxX/2);
   double get hitboxTop => (posY + hitboxY/2);
