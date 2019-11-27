@@ -1,6 +1,9 @@
 import 'package:smashlike/smash_engine/asset.dart';
 
 abstract class Fighter extends PhysicalAsset {
+  // id
+  static const int PLAYER = 1;
+  int id = 0;
   // physical properties
   int type = PhysicalAsset.DYNAMIC;
   bool gravity = true;
@@ -46,7 +49,9 @@ class SantaClaus extends Fighter {
   // sprites path
   String spritesPath = 'assets/images/fighters/santaclaus/';
   
-  SantaClaus(double posX, double posY) {
+  SantaClaus(int id, double posX, double posY) {
+    // id
+    this.id = id;
     // visual properties
     this.imageFile = spritesPath + 'idle_r_1.png';
     imageWidth = 8;

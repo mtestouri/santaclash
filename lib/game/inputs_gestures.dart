@@ -82,8 +82,8 @@ class ButtonUp extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*7,
-      left: ScreenUtil.blockSizeWidth*31,
+      bottom: ScreenUtil.blockSizeHeight*24,
+      left: ScreenUtil.blockSizeWidth*80,
       child: GestureDetector(
         onTapDown: (details) {
           this.pushInput(context, "press_up");

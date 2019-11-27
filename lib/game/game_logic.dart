@@ -4,6 +4,11 @@ import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/physics.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
+// TODO
+// UI & inputs
+// Assets structure (to list, get physical..)
+// bluetooth ?
+
 class SmashLike extends GameLogic {
   Physics _physics = Physics();
 

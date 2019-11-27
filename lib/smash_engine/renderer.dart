@@ -3,7 +3,9 @@ import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/physics.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
-import 'package:smashlike/game/fighters_assets.dart'; // TODO Fighter shouldn't be here
+import 'package:smashlike/game/fighters_assets.dart';
+// TODO Fighter shouldn't be here
+// add hurtbox in game logic ?
 
 class Renderer extends StatefulWidget {
   final Physics _physics;
@@ -109,8 +111,8 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
 
     // display FPS
     assetWidgets.add(Positioned(
-      top: ScreenUtil.blockSizeHeight*5,
       left: ScreenUtil.blockSizeWidth*5,
+      bottom: ScreenUtil.blockSizeHeight*90,
       child: Text(_avgFps.round().toString()),
     ));
 
