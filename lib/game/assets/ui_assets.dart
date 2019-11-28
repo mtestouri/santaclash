@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/game/fighters_assets.dart';
+import 'package:smashlike/game/assets/fighters_assets.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 
@@ -15,8 +15,8 @@ class DamageIndicator extends Asset {
   @override
   Widget toWidget() {
     return Positioned(
-      left: ScreenUtil.blockSizeWidth*posX,
-      bottom: ScreenUtil.blockSizeHeight*posY,
+      left: ScreenUtil.unitWidth*posX,
+      bottom: ScreenUtil.unitHeight*posY,
       child: Text(
         "P" + _fighter.id.toString() + ": " + _fighter.damage.toString() + "%",
         style: TextStyle(color: Colors.redAccent),

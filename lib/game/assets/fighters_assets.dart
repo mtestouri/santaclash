@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 
 abstract class Fighter extends PhysicalAsset {
@@ -43,6 +44,29 @@ abstract class Fighter extends PhysicalAsset {
   double get hurtSmashRight => (posX + hurtSmashOffsetX + hurtSmashX/2);
   double get hurtSmashTop => (posY + hurtSmashOffsetY + hurtSmashY/2);
   double get hurtSmashBottom => (posY + hurtSmashOffsetY - hurtSmashY/2);
+
+  List<Asset> drawHurtboxes() {
+    List<Asset> hurtboxes = List();
+    // basic attack
+    hurtboxes.add(Box(
+      posX: posX + hurtBasicOffsetX,
+      posY: posY + hurtBasicOffsetY,
+      width: hurtBasicX,
+      height: hurtBasicY,
+      color: Colors.blueAccent,
+    ));
+    // smash attack
+    hurtboxes.add(Box(
+      posX: posX + hurtSmashOffsetX,
+      posY: posY + hurtSmashOffsetY,
+      width: hurtSmashX,
+      height: hurtSmashY,
+      color: Colors.blueAccent,
+    ));
+    return hurtboxes;
+  }
+
+  Fireball launchFireball();
 }
 
 class SantaClaus extends Fighter {
@@ -54,8 +78,8 @@ class SantaClaus extends Fighter {
     this.id = id;
     // visual properties
     this.imageFile = spritesPath + 'idle_r_1.png';
-    imageWidth = 8;
-    imageHeight = 17;
+    width = 8;
+    height = 17;
     this.posX = posX;
     this.posY = posY;
     // hitboxe
@@ -230,14 +254,24 @@ class SantaClaus extends Fighter {
   
     return animationsMap;
   }
+
+  Fireball launchFireball() {
+    // TODO start and wait for animation
+    if(orientation == Fighter.LEFT) {
+      return Fireball(spritesPath + 'fireball.png', 2, 4, posX-1, posY, -20, 2, 4);
+    }
+    else
+      return Fireball(spritesPath + 'fireball.png', 2, 4, posX+1, posY, 20, 2, 4);
+  }
 }
 
-class SantaClausFireball extends PhysicalAsset {
-  SantaClausFireball(double posX, double posY, double velX, double velY) {
+class Fireball extends PhysicalAsset {
+  Fireball(String imageFile, double width, double height,double posX,
+           double posY, double velX, double hitboxX, double hitboxY) {
     // visual properties
-    imageFile = 'assets/images/fighters/santaclaus/fireball.png';
-    imageWidth = 2;
-    imageHeight = 4;
+    this.imageFile = imageFile;
+    this.width = width;
+    this.height = height;
     this.posX = posX;
     this.posY = posY;
     // physical properties
@@ -245,10 +279,10 @@ class SantaClausFireball extends PhysicalAsset {
     gravity = false;
     // velocities
     this.velX = velX;
-    this.velY = velY;
+    this.velY = 0;
     // hitbox
-    hitboxX = 2;
-    hitboxY = 4;
+    this.hitboxX = hitboxX;
+    this.hitboxY = hitboxY;
   }
 
   @override

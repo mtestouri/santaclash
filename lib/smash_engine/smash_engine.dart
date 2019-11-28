@@ -15,7 +15,7 @@ class SmashEngine extends InheritedWidget {
 
   SmashEngine({
     @required List<InputGesture> inputGestures, 
-    @required List<Asset> assets,
+    @required GameAssets assets,
     @required GameLogic gameLogic,
   })  : super(child : Stack(
         children : [
@@ -32,6 +32,5 @@ class SmashEngine extends InheritedWidget {
 }
 
 abstract class GameLogic {
-  void update(Queue<String> inputs, List<Asset> assets);
+  void update(Queue<String> inputs, GameAssets gameAssets);
 }
-

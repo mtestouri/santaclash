@@ -1,12 +1,13 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 
 abstract class Asset {
   // visual properties
   String imageFile = '';
-  double imageHeight = 0;
-  double imageWidth = 0;
+  double width = 0;
+  double height = 0;
   double posX = 0;
   double posY = 0;
   // animations
@@ -51,13 +52,13 @@ abstract class Asset {
     // build widget
     if(imageFile != '') {
       return Positioned(
-        bottom: ScreenUtil.blockSizeHeight*posY 
-                - (ScreenUtil.blockSizeHeight*imageHeight)/2,
-        left: ScreenUtil.blockSizeWidth*posX 
-              - (ScreenUtil.blockSizeWidth*imageWidth)/2,
+        bottom: ScreenUtil.unitHeight*posY 
+                - (ScreenUtil.unitHeight*height)/2,
+        left: ScreenUtil.unitWidth*posX 
+              - (ScreenUtil.unitWidth*width)/2,
         child: Container(
-          height: ScreenUtil.blockSizeHeight*imageHeight,
-          width: ScreenUtil.blockSizeWidth*imageWidth,
+          height: ScreenUtil.unitHeight*height,
+          width: ScreenUtil.unitWidth*width,
           child: FittedBox(
             child: Image.asset(imageFile),
             fit: BoxFit.fill,
@@ -86,4 +87,57 @@ abstract class PhysicalAsset extends Asset {
   double get hitboxRight => (posX + hitboxX/2);
   double get hitboxTop => (posY + hitboxY/2);
   double get hitboxBottom => (posY - hitboxY/2);
+
+  Asset drawHitbox() {
+    return Box(
+      posX: posX,
+      posY: posY,
+      width: hitboxX,
+      height: hitboxY,
+      color: Colors.redAccent
+    );
+  }
+}
+
+class Box extends Asset {
+  MaterialAccentColor color;
+
+  Box({
+    @required double posX,
+    @required double posY,
+    @required double width,
+    @required double height,
+    @required MaterialAccentColor color
+  }) {
+    this.posX = ScreenUtil.unitWidth*posX;
+    this.posY = ScreenUtil.unitHeight*posY;
+    this.width = ScreenUtil.unitWidth*width;
+    this.height = ScreenUtil.unitHeight*height;
+    this.color = color;
+  }
+
+  @override
+  Widget toWidget() {
+    return Positioned(
+      left: posX - width/2,
+      bottom: posY - height/2,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          border: Border.all(color: color)
+        ),
+      ),
+    );
+  }
+  
+  @override
+  Map<String, Map<int, String>> animationsFactory() {
+    return null;
+  }
+}
+
+abstract class GameAssets {
+  List<Asset> toAssetList();
+  List<PhysicalAsset> get physicalAssets;
 }

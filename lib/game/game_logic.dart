@@ -1,30 +1,25 @@
 import 'dart:collection';
-import 'package:smashlike/game/fighters_assets.dart';
+import 'package:smashlike/game/assets/fighters_assets.dart';
+import 'package:smashlike/game/game_assets.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/physics.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 // TODO
-// UI & inputs
-// Assets structure (to list, get physical..)
-// bluetooth ?
+// improve animation system and action and fix animations timing
+// add opponent
+// game logic
+// update inputs
+// bluetooth or AI
 
-class SmashLike extends GameLogic {
+class SmashLikeLogic extends GameLogic {
   Physics _physics = Physics();
 
-  // 1. read apply inputs
-  // 2. game updates
-
   @override
-  void update(Queue<String> inputs, List<Asset> assets) {
-    SantaClaus player = assets.singleWhere((asset) => asset is SantaClaus);
-
-    // TODO might change
-    List<PhysicalAsset> physicalAssets = new List();
-    for(var asset in assets) {
-      if(asset is PhysicalAsset)
-        physicalAssets.add(asset);
-    }
+  void update(Queue<String> inputs, GameAssets gameAssets) {
+    SmashLikeAssets assets = gameAssets;
+    List<PhysicalAsset> physicalAssets = assets.physicalAssets;
+    Fighter player = assets.player;
 
     while(inputs.length > 0) {
       switch(inputs.removeFirst()) {
@@ -105,23 +100,12 @@ class SmashLike extends GameLogic {
         }
         break;
         
-        case "press_fireball": {
-          // TODO wait for animation
-          if(player.orientation == Fighter.LEFT) {
-            player.startAnimation("fireball_left");
-            assets.add(SantaClausFireball(player.posX - 1, player.posY, -20, 0));
-          }
-          else {
-            player.startAnimation("fireball_right");
-            assets.add(SantaClausFireball(player.posX + 1, player.posY, 20, 0));
-          }
-        }
+        case "press_fireball":
+          assets.physicalAssets.add(player.launchFireball());
         break;
 
-        default: { 
-          // nothing for now
-        }
-        break;
+        default:
+          break;
       }
     }
   }

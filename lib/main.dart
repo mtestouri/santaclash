@@ -52,8 +52,8 @@ class Title extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil.blockSizeHeight * 15,
-      width: ScreenUtil.blockSizeWidth * 35,
+      height: ScreenUtil.unitHeight * 15,
+      width: ScreenUtil.unitWidth * 35,
       child: FittedBox(
         child: Image.asset('assets/images/menus/smash-like.png'),
         fit: BoxFit.fill,
@@ -66,8 +66,8 @@ class PlayButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil.blockSizeHeight * 15,
-      width: ScreenUtil.blockSizeWidth * 20,
+      height: ScreenUtil.unitHeight * 15,
+      width: ScreenUtil.unitWidth * 20,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/menus/play.png'),
