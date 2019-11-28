@@ -87,6 +87,8 @@ abstract class PhysicalAsset extends Asset {
   double get hitboxRight => (posX + hitboxX/2);
   double get hitboxTop => (posY + hitboxY/2);
   double get hitboxBottom => (posY - hitboxY/2);
+  // airborne state
+  bool isOnGround = false;
 
   Asset drawHitbox() {
     return Box(

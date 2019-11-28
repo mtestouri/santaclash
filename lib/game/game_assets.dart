@@ -5,8 +5,8 @@ import 'package:smashlike/game/assets/ui_assets.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 
 class GameAssetsFactory {
-  static GameAssets build(String assetsId) {
-    switch(assetsId) {
+  static GameAssets build(String gameAssetsId) {
+    switch(gameAssetsId) {
       case "debug":
         return debug();
       default:
@@ -16,9 +16,8 @@ class GameAssetsFactory {
 
   static GameAssets debug() {
     String arenaPath = 'assets/images/arenas/debug/';
-    // other assets
+    // background assets
     List<Asset> backgroundAssets = List();
-    // background
     backgroundAssets.add(Background(arenaPath + 'background.png'));
 
     // physical assets

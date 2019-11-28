@@ -12,7 +12,6 @@ abstract class Fighter extends PhysicalAsset {
   static const int RIGHT = 0;
   static const int LEFT = 1;
   int orientation = RIGHT;
-  bool isMoving = false;
   // combat
   double damage = 0;
   double ultimate = 0;
@@ -65,8 +64,105 @@ abstract class Fighter extends PhysicalAsset {
     ));
     return hurtboxes;
   }
+  
+  void move(int direction) {
+    orientation = direction;
+    if(orientation == LEFT) {
+      velX = -20;
+      if(isOnGround)
+        startAnimation("move_left", repeat: true);
+      else
+        startAnimation("jump_left", repeat: true);
+    }
+    else {
+      velX = 20;
+      if(isOnGround)
+        startAnimation("move_right", repeat: true);
+      else
+        startAnimation("jump_right", repeat: true);
+    }
+  }
 
-  Fireball launchFireball();
+  void stopMove() {
+    velX = 0;
+    if(orientation == LEFT)
+      startAnimation("idle_left");
+    else
+      startAnimation("idle_right");
+  }
+
+  void jump() {
+    velY += 50;
+    if(orientation == LEFT)
+      startAnimation("jump_left");
+    else
+      startAnimation("jump_right");
+  }
+
+  void basicAttack() { // TODO modify hurtboxes
+    if(orientation == LEFT)
+      startAnimation("attack_left");
+    else
+      startAnimation("attack_right");  
+  }
+
+  void smashAttack() {
+    if(orientation == LEFT)
+      startAnimation("smash_attack_left");
+    else
+      startAnimation("smash_attack_right");
+  }
+
+  void block() {
+    if(orientation == LEFT)
+      startAnimation("block_left");
+    else
+      startAnimation("block_right"); 
+  }
+
+  void stopBlock() {
+    if(orientation == LEFT)
+      startAnimation("idle_left");
+    else
+      startAnimation("idle_right");
+  }
+
+  Fireball _buildFireball();
+
+  Fireball fireball() {
+    // TODO start and wait for animation
+    if(orientation == Fighter.LEFT) {
+      return _buildFireball().launch(posX-1, posY, -20);
+    }
+    else
+      return _buildFireball().launch(posX+1, posY, 20); 
+  }
+}
+
+class Fireball extends PhysicalAsset {
+  Fireball(String imageFile, double width, double height, double hitboxX, double hitboxY) {
+    // visual properties
+    this.imageFile = imageFile;
+    this.width = width;
+    this.height = height;
+    // physical properties
+    type = PhysicalAsset.DYNAMIC;
+    // hitbox
+    this.hitboxX = hitboxX;
+    this.hitboxY = hitboxY;
+  }
+
+  Fireball launch(double posX, double posY, double velX) {
+    this.posX = posX;
+    this.posY = posY;
+    this.velX = velX;
+    return this;
+  }
+
+  @override
+  Map<String, Map<int, String>> animationsFactory() {
+    return null;
+  }
 }
 
 class SantaClaus extends Fighter {
@@ -255,38 +351,8 @@ class SantaClaus extends Fighter {
     return animationsMap;
   }
 
-  Fireball launchFireball() {
-    // TODO start and wait for animation
-    if(orientation == Fighter.LEFT) {
-      return Fireball(spritesPath + 'fireball.png', 2, 4, posX-1, posY, -20, 2, 4);
-    }
-    else
-      return Fireball(spritesPath + 'fireball.png', 2, 4, posX+1, posY, 20, 2, 4);
-  }
-}
-
-class Fireball extends PhysicalAsset {
-  Fireball(String imageFile, double width, double height,double posX,
-           double posY, double velX, double hitboxX, double hitboxY) {
-    // visual properties
-    this.imageFile = imageFile;
-    this.width = width;
-    this.height = height;
-    this.posX = posX;
-    this.posY = posY;
-    // physical properties
-    type = PhysicalAsset.DYNAMIC;
-    gravity = false;
-    // velocities
-    this.velX = velX;
-    this.velY = 0;
-    // hitbox
-    this.hitboxX = hitboxX;
-    this.hitboxY = hitboxY;
-  }
-
   @override
-  Map<String, Map<int, String>> animationsFactory() {
-    return null;
+  Fireball _buildFireball() {
+    return Fireball(spritesPath + 'fireball.png', 2, 4, 2, 4);
   }
 }
