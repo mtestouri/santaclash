@@ -16,10 +16,12 @@ abstract class Asset {
   Map<int, String> _framesMap;
   Map<String, Map<int, String>> _animationsMap;
 
-  Map<String, Map<int, String>> animationsFactory();
-
   Asset() {
     this._animationsMap = animationsFactory();
+  }
+
+  Map<String, Map<int, String>> animationsFactory() {
+    return null;
   }
   
   void startAnimation(String animationId, {bool repeat}) {
@@ -32,6 +34,8 @@ abstract class Asset {
       _framesMap = _animationsMap[animationId];
     }
   }
+
+  void animationCallback(int counter, bool animationEnd) {}
 
   Widget toWidget() {
     // animation
@@ -48,6 +52,8 @@ abstract class Asset {
         else
           _framesMap = null;
       }
+      // animation callback
+      animationCallback(_counter, (_framesMap == null));
     }
     // build widget
     if(imageFile != '') {
@@ -131,11 +137,6 @@ class Box extends Asset {
         ),
       ),
     );
-  }
-  
-  @override
-  Map<String, Map<int, String>> animationsFactory() {
-    return null;
   }
 }
 

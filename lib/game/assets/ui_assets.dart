@@ -23,9 +23,4 @@ class DamageIndicator extends Asset {
       ),
     );
   }
-  
-  @override
-  Map<String, Map<int, String>> animationsFactory() {
-    return null;
-  }
 }

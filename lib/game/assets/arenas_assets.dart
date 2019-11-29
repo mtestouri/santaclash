@@ -13,11 +13,6 @@ class ArenaObject extends PhysicalAsset {
     this.hitboxX = hitboxX;
     this.hitboxY = hitboxY;
   }
-
-  @override
-  Map<String, Map<int, String>> animationsFactory() {
-    return null;
-  }
 }
 
 class Background extends Asset {
@@ -28,10 +23,5 @@ class Background extends Asset {
     height = 100;
     posX = 50;
     posY = 50;
-  }
-
-  @override
-  Map<String, Map<int, String>> animationsFactory() {
-    return null;
   }
 }

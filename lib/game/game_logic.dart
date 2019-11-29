@@ -5,12 +5,12 @@ import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 // TODO
-// improve animation system and action
-// fix animations timing
+// further improve animation and action system (quicker blocking)
+// adjust animations timing
 // add opponent
-// game logic
-// update inputs
+// update inputs buttons
 // bluetooth or AI
+// private variables and functions
 
 class SmashLikeLogic extends GameLogic {
   @override

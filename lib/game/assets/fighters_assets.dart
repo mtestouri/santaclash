@@ -5,40 +5,95 @@ abstract class Fighter extends PhysicalAsset {
   // id
   static const int PLAYER = 1;
   int id = 0;
+  
   // physical properties
   int type = PhysicalAsset.DYNAMIC;
   bool gravity = true;
+  
   // motion
   static const int RIGHT = 0;
   static const int LEFT = 1;
   int orientation = RIGHT;
-  // combat
+  bool _isMoving = false;
+  int _jumpCounter = 0;
+
+  // actions
+  int _currAction = _A_NONE;
+  static const int _A_NONE = 0;
+  static const int _A_MOVE = 1;
+  static const int _A_JUMP = 2;
+  static const int _A_BASIC_ATTACK = 3;
+  static const int _A_SMASH_ATTACK = 4;
+  static const int _A_BLOCK = 5;
+  static const int _A_FIREBALL = 6;
+
+  // damage
   double damage = 0;
-  double ultimate = 0;
-  // basic attack hurtboxe
+  
+  // basic attack
   double _hurtBasicOffsetX = 0;
   double hurtBasicOffsetY = 0;
-  double hurtBasicX = 0;
-  double hurtBasicY = 0;
+  double _hurtBasicX = 0;
+  double _hurtBasicY = 0;
+  int basicAttCounterMin = 0;
+  int basicAttCounterMax = 0;
+
+  // smash attack
+  double _hurtSmashOffsetX = 0;
+  double hurtSmashOffsetY = 0;
+  double _hurtSmashX = 0;
+  double _hurtSmashY = 0;
+  int smashAttCounterMin = 0;
+  int smashAttCounterMax = 0;
+
+  // fireball timing
+  int fireballCounterValue = 0;
+
   double get hurtBasicOffsetX {
     if(orientation == LEFT)
       return -1*_hurtBasicOffsetX;
     return _hurtBasicOffsetX;
   }
+
+  double get hurtBasicX {
+    if(_currAction == _A_BASIC_ATTACK)
+      return _hurtBasicX;
+    else
+      return 0;
+  }
+
+  double get hurtBasicY {
+    if(_currAction == _A_BASIC_ATTACK)
+      return _hurtBasicY;
+    else
+      return 0;
+  }
+  
   double get hurtBasicLeft => (posX + hurtBasicOffsetX - hurtBasicX/2);
   double get hurtBasicRight => (posX + hurtBasicOffsetX + hurtBasicX/2);
   double get hurtBasicTop => (posY + hurtBasicOffsetY + hurtBasicY/2);
   double get hurtBasicBottom => (posY + hurtBasicOffsetY - hurtBasicY/2);
-  // smash attack hurtboxe
-  double _hurtSmashOffsetX = 0;
-  double hurtSmashOffsetY = 0;
-  double hurtSmashX = 0;
-  double hurtSmashY = 0;
+  
   double get hurtSmashOffsetX {
     if(orientation == LEFT)
       return -1*_hurtSmashOffsetX;
     return _hurtSmashOffsetX;
   }
+
+  double get hurtSmashX {
+    if(_currAction == _A_SMASH_ATTACK)
+      return _hurtSmashX;
+    else
+      return 0;
+  }
+
+  double get hurtSmashY {
+    if(_currAction == _A_SMASH_ATTACK)
+      return _hurtSmashY;
+    else
+      return 0;
+  }
+  
   double get hurtSmashLeft => (posX + hurtSmashOffsetX - hurtSmashX/2);
   double get hurtSmashRight => (posX + hurtSmashOffsetX + hurtSmashX/2);
   double get hurtSmashTop => (posY + hurtSmashOffsetY + hurtSmashY/2);
@@ -64,83 +119,132 @@ abstract class Fighter extends PhysicalAsset {
     ));
     return hurtboxes;
   }
+
+  @override
+  void animationCallback(int counter, bool animationEnd) {
+    if((animationEnd == true)) {
+      if(_isMoving) {
+        _currAction = _A_MOVE;
+        move(orientation);
+      }
+      else if(_currAction != _A_BLOCK)
+        _currAction = _A_NONE;
+    }
+  }
   
   void move(int direction) {
-    orientation = direction;
-    if(orientation == LEFT) {
-      velX = -20;
-      if(isOnGround)
-        startAnimation("move_left", repeat: true);
-      else
-        startAnimation("jump_left", repeat: true);
-    }
-    else {
-      velX = 20;
-      if(isOnGround)
-        startAnimation("move_right", repeat: true);
-      else
-        startAnimation("jump_right", repeat: true);
+    if(_currAction != _A_BLOCK) { // can't move if blocking
+      if(_currAction == _A_NONE)
+        _currAction = _A_MOVE;
+      _isMoving = true;
+      orientation = direction;
+      if(orientation == LEFT) {
+        velX = -20;
+        if(_currAction == _A_MOVE) {
+          if(isOnGround)
+            startAnimation("move_left");
+          else
+            startAnimation("jump_left");
+        }
+      }
+      else {
+        velX = 20;
+        if(_currAction == _A_MOVE) {
+          if(isOnGround)
+            startAnimation("move_right");
+          else
+            startAnimation("jump_right");
+        }
+      }
     }
   }
 
   void stopMove() {
+    _isMoving = false;
     velX = 0;
-    if(orientation == LEFT)
-      startAnimation("idle_left");
-    else
-      startAnimation("idle_right");
+    if(_currAction == _A_MOVE) {
+      if(orientation == LEFT)
+        startAnimation("idle_left");
+      else
+        startAnimation("idle_right");
+    }
   }
-
+  
   void jump() {
-    velY += 50;
-    if(orientation == LEFT)
-      startAnimation("jump_left");
-    else
-      startAnimation("jump_right");
+    if(_currAction != _A_BLOCK) { // can't jump if blocking
+      if(isOnGround)
+        _jumpCounter = 0;
+      if(_jumpCounter < 2) { // maximum 2 consecutive jumps
+      velY += 60;
+      if(_currAction != _A_FIREBALL) { // avoid interrupting fireball animation
+        if(orientation == LEFT)
+          startAnimation("jump_left");
+        else
+          startAnimation("jump_right");
+      }
+      _jumpCounter++;
+      }
+    }
   }
-
-  void basicAttack() { // TODO modify hurtboxes
-    if(orientation == LEFT)
-      startAnimation("attack_left");
-    else
-      startAnimation("attack_right");  
+  
+  void basicAttack() {
+    if((_currAction == _A_NONE) || (_currAction == _A_MOVE) 
+        || (_currAction == _A_JUMP)) {
+      _currAction = _A_BASIC_ATTACK;
+      if(orientation == LEFT)
+        startAnimation("attack_left");
+      else
+        startAnimation("attack_right");
+    }
   }
 
   void smashAttack() {
-    if(orientation == LEFT)
-      startAnimation("smash_attack_left");
-    else
-      startAnimation("smash_attack_right");
+    if((_currAction == _A_NONE) || (_currAction == _A_MOVE) 
+        || (_currAction == _A_JUMP)) {
+      _currAction = _A_SMASH_ATTACK;
+      if(orientation == LEFT)
+        startAnimation("smash_attack_left");
+      else
+        startAnimation("smash_attack_right");
+    }
   }
 
   void block() {
-    if(orientation == LEFT)
-      startAnimation("block_left");
-    else
-      startAnimation("block_right"); 
+    if(_currAction == _A_NONE) {
+      _currAction = _A_BLOCK;
+      if(orientation == LEFT)
+        startAnimation("block_left");
+      else
+        startAnimation("block_right");
+    }
   }
 
   void stopBlock() {
-    if(orientation == LEFT)
-      startAnimation("idle_left");
-    else
-      startAnimation("idle_right");
+    if(_currAction == _A_BLOCK) {
+      _currAction = _A_NONE;
+      if(orientation == LEFT)
+        startAnimation("idle_left");
+      else
+        startAnimation("idle_right");
+    }
   }
 
   Fireball _buildFireball();
 
+  // TODO add fireball animation with timing
   Fireball fireball() {
-    // TODO start and wait for animation
     if(orientation == Fighter.LEFT) {
       return _buildFireball().launch(posX-1, posY, -20);
     }
-    else
-      return _buildFireball().launch(posX+1, posY, 20); 
+    else {
+      return _buildFireball().launch(posX+1, posY, 20);
+    }
   }
 }
 
 class Fireball extends PhysicalAsset {
-  Fireball(String imageFile, double width, double height, double hitboxX, double hitboxY) {
+  Fireball(String imageFile, double width, double height, 
+           double hitboxX, double hitboxY) {
     // visual properties
     this.imageFile = imageFile;
     this.width = width;
@@ -157,11 +261,6 @@ class Fireball extends PhysicalAsset {
     this.posY = posY;
     this.velX = velX;
     return this;
-  }
-
-  @override
-  Map<String, Map<int, String>> animationsFactory() {
-    return null;
   }
 }
 
@@ -181,16 +280,22 @@ class SantaClaus extends Fighter {
     // hitboxe
     hitboxX = 6;
     hitboxY = 11;
-    // basic attack hurtboxe
+    // basic attack
     _hurtBasicOffsetX = 2;
     hurtBasicOffsetY = 0.25;
-    hurtBasicX = 4;
-    hurtBasicY = 4;
-    // smash attack hurtboxe
+    _hurtBasicX = 4;
+    _hurtBasicY = 4;
+    basicAttCounterMin = 5;
+    basicAttCounterMax = 20;
+    // smash attack
     _hurtSmashOffsetX = 2;
     hurtSmashOffsetY = -2;
-    hurtSmashX = 4;
-    hurtSmashY = 4;
+    _hurtSmashX = 4;
+    _hurtSmashY = 4;
+    smashAttCounterMin = 5;
+    smashAttCounterMax = 20;
+    // fireball timing
+    fireballCounterValue = 30;
   }
 
   @override
