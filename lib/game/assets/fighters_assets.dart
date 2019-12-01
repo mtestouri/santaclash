@@ -231,13 +231,27 @@ abstract class Fighter extends PhysicalAsset {
 
   Fireball _buildFireball();
 
-  // TODO add fireball animation with timing
-  Fireball fireball() {
+  Fireball launchFireball() {
     if(orientation == Fighter.LEFT) {
       return _buildFireball().launch(posX-1, posY, -20);
     }
     else {
       return _buildFireball().launch(posX+1, posY, 20);
+    }
+  }
+
+  bool fireballReady() {
+    return (_currAction == _A_FIREBALL) && (counter == fireballCounterValue);
+  }
+  
+  void fireball() {
+    if((_currAction == _A_NONE) || (_currAction == _A_MOVE)
+        || (_currAction == _A_JUMP)) {
+      _currAction = _A_FIREBALL;
+      if(orientation == LEFT)
+        startAnimation("fireball_left");
+      else
+        startAnimation("fireball_right");
     }
   }
 }
@@ -295,7 +309,7 @@ class SantaClaus extends Fighter {
     smashAttCounterMin = 5;
     smashAttCounterMax = 20;
     // fireball timing
-    fireballCounterValue = 30;
+    fireballCounterValue = 40;
   }
 
   @override

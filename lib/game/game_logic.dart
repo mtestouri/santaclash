@@ -5,10 +5,10 @@ import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 // TODO
-// further improve animation and action system (quicker blocking)
-// adjust animations timing
 // add opponent
 // update inputs buttons
+// further improve animation and action system (quicker blocking)
+// adjust animations timing
 // bluetooth or AI
 // private variables and functions
 
@@ -18,6 +18,12 @@ class SmashLikeLogic extends GameLogic {
     SmashLikeAssets assets = gameAssets;
     Fighter player = assets.player;
 
+    // fireballs
+    assets.fireballs.removeWhere((fireball) => fireball.velX == 0);
+    if(player.fireballReady())
+      assets.fireballs.add(player.launchFireball());
+
+    // inputs
     while(inputs.length > 0) {
       switch(inputs.removeFirst()) {
         case "press_left_start":
@@ -57,7 +63,7 @@ class SmashLikeLogic extends GameLogic {
         break;
         
         case "press_fireball":
-          assets.physicalAssets.add(player.fireball());
+          player.fireball();
         break;
 
         default:

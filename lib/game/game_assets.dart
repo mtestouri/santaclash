@@ -33,7 +33,6 @@ class GameAssetsFactory {
     
     // fighters
     Fighter player = SantaClaus(Fighter.PLAYER, 10, 50);
-    physicalAssets.add(player);
     
     // ui
     List<Asset> ui = List();
@@ -54,6 +53,7 @@ class SmashLikeAssets extends GameAssets {
   List<PhysicalAsset> _physicalAssets;
   Fighter _player;
   //Fighter _opponent;
+  List<Fireball> _fireballs; 
   List<Asset> _ui;
   bool _drawHitboxes = false;
 
@@ -69,15 +69,22 @@ class SmashLikeAssets extends GameAssets {
     this._physicalAssets = physicalAssets;
     this._player = player;
     //this._opponent = opponent;
+    this._fireballs = List();
     this._ui = ui;
     if(drawHitboxes != null)
       _drawHitboxes = drawHitboxes;
   }
 
   @override
-  List<PhysicalAsset> get physicalAssets => _physicalAssets;
+  List<PhysicalAsset> get physicalAssets 
+  => _physicalAssets + [_player] + _fireballs;
+  
   Fighter get player => _player;  
+  
   //Fighter get opponent => _opponent;
+
+  List<Fireball> get fireballs => _fireballs;
+  
   set drawHitboxes(bool drawHitboxes) => _drawHitboxes = drawHitboxes;
 
   @override
@@ -86,13 +93,16 @@ class SmashLikeAssets extends GameAssets {
     List<Asset> assets = List();
     assets += _backgroundAssets;
     assets += _physicalAssets;
-    assets.add(player);
+    assets.add(_player);
+    //assets.add(opponent);
+    assets += _fireballs;
     assets += _ui;
+    
     // draw hitboxes and hurtboxes
     if(_drawHitboxes) {
       for(var asset in _physicalAssets)
         assets.add(asset.drawHitbox());
-      assets += player.drawHurtboxes();
+      assets += _player.drawHurtboxes();
       // hitboxes += opponent.drawHurtboxes();
     }
     return assets;

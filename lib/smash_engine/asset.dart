@@ -20,6 +20,8 @@ abstract class Asset {
     this._animationsMap = animationsFactory();
   }
 
+  int get counter => _counter;
+
   Map<String, Map<int, String>> animationsFactory() {
     return null;
   }
