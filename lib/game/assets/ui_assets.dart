@@ -14,13 +14,21 @@ class DamageIndicator extends Asset {
 
   @override
   Widget toWidget() {
+    MaterialAccentColor color;
+    if(_fighter.id == Fighter.PLAYER)
+      color = Colors.cyanAccent;
+    else
+      color = Colors.redAccent;
+    
     return Positioned(
       left: ScreenUtil.unitWidth*posX,
       bottom: ScreenUtil.unitHeight*posY,
       child: Text(
-        "P" + _fighter.id.toString() + ": " + _fighter.damage.toString() + "%",
-        style: TextStyle(color: Colors.redAccent),
+        "P" + _fighter.id.toString() + ": " + _fighter.damage.toStringAsFixed(1) + "%",
+        style: TextStyle(color: color),
       ),
     );
   }
 }
+
+// TODO remaining lifes

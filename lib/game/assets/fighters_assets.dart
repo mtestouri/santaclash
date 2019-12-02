@@ -4,6 +4,7 @@ import 'package:smashlike/smash_engine/asset.dart';
 abstract class Fighter extends PhysicalAsset {
   // id
   static const int PLAYER = 1;
+  static const int OPPONENT = 2;
   int id = 0;
   
   // physical properties
@@ -257,8 +258,12 @@ abstract class Fighter extends PhysicalAsset {
 }
 
 class Fireball extends PhysicalAsset {
-  Fireball(String imageFile, double width, double height, 
+  int id = 0; // associated fighter id
+  
+  Fireball(int id, String imageFile, double width, double height, 
            double hitboxX, double hitboxY) {
+    // id
+    this.id = id;
     // visual properties
     this.imageFile = imageFile;
     this.width = width;
@@ -268,6 +273,12 @@ class Fireball extends PhysicalAsset {
     // hitbox
     this.hitboxX = hitboxX;
     this.hitboxY = hitboxY;
+  }
+
+  int get direction {
+    if(velX <= 0)
+      return Fighter.LEFT;
+    return Fighter.RIGHT;
   }
 
   Fireball launch(double posX, double posY, double velX) {
@@ -472,6 +483,6 @@ class SantaClaus extends Fighter {
 
   @override
   Fireball _buildFireball() {
-    return Fireball(spritesPath + 'fireball.png', 2, 4, 2, 4);
+    return Fireball(id, spritesPath + 'fireball.png', 2, 4, 2, 4);
   }
 }

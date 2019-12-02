@@ -23,9 +23,10 @@ class GameAssetsFactory {
     // physical assets
     List<PhysicalAsset> physicalAssets = List();
     // invisible walls
-    physicalAssets.add(ArenaObject('', 1, 100, 1, 100, 0, 50));
-    physicalAssets.add(ArenaObject('', 1, 100, 1, 100, 100, 50));
-    physicalAssets.add(ArenaObject('', 100, 1, 100, 1, 50, 100));
+    physicalAssets.add(ArenaObject('', 0, 0, 1, 124, 0, 62));  // left
+    physicalAssets.add(ArenaObject('', 0, 0, 1, 124, 100, 62));  // right
+    physicalAssets.add(ArenaObject('', 0, 0, 130, 1, 50, 124));  // top
+    physicalAssets.add(ArenaObject('', 0, 0, 130, 1, 50, 0));    // bottom
     // arena objects
     physicalAssets.add(ArenaObject(arenaPath + 'base.png', 100, 30, 100, 30, 50, 15));
     physicalAssets.add(ArenaObject(arenaPath + 'air_platform.png', 15, 14, 12, 11, 50, 50));
@@ -33,15 +34,18 @@ class GameAssetsFactory {
     
     // fighters
     Fighter player = SantaClaus(Fighter.PLAYER, 10, 50);
+    Fighter opponent = SantaClaus(Fighter.OPPONENT, 80, 50);
     
     // ui
     List<Asset> ui = List();
     ui.add(DamageIndicator(player, 18, 90));
+    ui.add(DamageIndicator(opponent, 72, 90));
     
     return SmashLikeAssets(
       backgroundAssets: backgroundAssets,
       physicalAssets: physicalAssets,
       player: player,
+      opponent: opponent,
       ui: ui,
       drawHitboxes: true
     );
@@ -52,7 +56,7 @@ class SmashLikeAssets extends GameAssets {
   List<Asset> _backgroundAssets;
   List<PhysicalAsset> _physicalAssets;
   Fighter _player;
-  //Fighter _opponent;
+  Fighter _opponent;
   List<Fireball> _fireballs; 
   List<Asset> _ui;
   bool _drawHitboxes = false;
@@ -61,14 +65,14 @@ class SmashLikeAssets extends GameAssets {
     @required List<Asset> backgroundAssets,
     @required List<PhysicalAsset> physicalAssets,
     @required Fighter player,
-    //@required Fighter opponent,
+    @required Fighter opponent,
     @required List<Asset> ui,
     bool drawHitboxes,
   }) {
     this._backgroundAssets = backgroundAssets;
     this._physicalAssets = physicalAssets;
     this._player = player;
-    //this._opponent = opponent;
+    this._opponent = opponent;
     this._fireballs = List();
     this._ui = ui;
     if(drawHitboxes != null)
@@ -77,11 +81,11 @@ class SmashLikeAssets extends GameAssets {
 
   @override
   List<PhysicalAsset> get physicalAssets 
-  => _physicalAssets + [_player] + _fireballs;
+  => _physicalAssets + [_player, _opponent] + _fireballs;
   
   Fighter get player => _player;  
   
-  //Fighter get opponent => _opponent;
+  Fighter get opponent => _opponent;
 
   List<Fireball> get fireballs => _fireballs;
   
@@ -94,16 +98,21 @@ class SmashLikeAssets extends GameAssets {
     assets += _backgroundAssets;
     assets += _physicalAssets;
     assets.add(_player);
-    //assets.add(opponent);
+    assets.add(_opponent);
     assets += _fireballs;
     assets += _ui;
     
     // draw hitboxes and hurtboxes
     if(_drawHitboxes) {
+      // physical assets
       for(var asset in _physicalAssets)
         assets.add(asset.drawHitbox());
-      assets += _player.drawHurtboxes();
-      // hitboxes += opponent.drawHurtboxes();
+      // fighters
+      assets += [_player.drawHitbox(), _opponent.drawHitbox()];
+      assets += _player.drawHurtboxes() + _opponent.drawHurtboxes();
+      // fireballs
+      for(var fireball in _fireballs)
+        assets.add(fireball.drawHitbox());
     }
     return assets;
   }
