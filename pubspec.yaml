@@ -38,11 +38,32 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/homepage.png
-    - assets/images/play.png
-    - assets/images/smash-like.png
-    - assets/images/player.png
-    - assets/images/platform.png
+    - assets/images/menus/homepage.png
+    - assets/images/menus/play.png
+    - assets/images/menus/smash-like.png
+    - assets/images/menus/player.png
+    - assets/images/menus/platform.png
+    - assets/images/menus/touch-screen.png
+    - assets/images/menus/credits.png
+    - assets/images/menus/menu.png
+    - assets/images/menus/creditsfont.png
+    - assets/images/menus/idle0s.png
+    - assets/images/menus/idle1s.png
+    - assets/images/menus/idle2s.png
+    - assets/images/menus/idle3s.png
+    - assets/images/menus/idle4s.png
+    - assets/images/menus/idle0c.png
+    - assets/images/menus/idle1c.png
+    - assets/images/menus/idle2c.png
+    - assets/images/menus/idle3c.png
+    - assets/images/menus/idle4c.png
+    - assets/images/menus/selectbacks.png
+    - assets/images/menus/selectbackc.png
+    - assets/images/menus/selectback.png
+    - assets/images/menus/ligne.png
+    - assets/images/menus/vs.png
+    - assets/images/menus/stitle.png
+    - assets/images/menus/ctitle.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
