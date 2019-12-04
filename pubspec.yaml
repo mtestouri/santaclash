@@ -20,6 +20,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
+  #dependencies:
+  #  flutter_blue: ^0.6.3+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -40,6 +43,8 @@ flutter:
   assets:
     - assets/images/menus/
     - assets/images/arenas/debug/
+    - assets/images/arenas/map1/
+    - assets/images/arenas/map2/
     - assets/images/fighters/santaclaus/
 
   # An image asset can refer to one or more resolution-specific "variants", see
