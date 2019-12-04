@@ -2,6 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/gesture.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 
+class InputGesturesFactory {
+  static List<InputGesture> build(String inputGesturesId) {
+    switch(inputGesturesId) {
+      case "debug":
+        return debug();
+      default:
+        return List();
+    }
+  }
+
+  static List<InputGesture>  debug() {
+    List<InputGesture> inputGestures = List();
+    inputGestures.add(ButtonLeft());
+    inputGestures.add(ButtonRight());
+    inputGestures.add(ButtonUp());
+    inputGestures.add(ButtonA());
+    inputGestures.add(ButtonB());
+    inputGestures.add(ButtonFireball());
+    return inputGestures;
+  }
+}
+
 class CircularButton extends StatelessWidget {
   final IconData iconData;
   final String text;
@@ -11,8 +33,8 @@ class CircularButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-      width: ScreenUtil.blockSizeHeight*14,
-      height: ScreenUtil.blockSizeHeight*14,
+      width: ScreenUtil.unitHeight*14,
+      height: ScreenUtil.unitHeight*14,
       decoration: BoxDecoration(
         color: Colors.blueGrey,
         shape: BoxShape.circle,
@@ -38,8 +60,8 @@ class ButtonLeft extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*7,
-      left: ScreenUtil.blockSizeWidth*7,
+      bottom: ScreenUtil.unitHeight*7,
+      left: ScreenUtil.unitWidth*7,
       child: GestureDetector(
         onTapDown: (details) {
           this.pushInput(context, "press_left_start");
@@ -60,8 +82,8 @@ class ButtonRight extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*7,
-      left: ScreenUtil.blockSizeWidth*19,
+      bottom: ScreenUtil.unitHeight*7,
+      left: ScreenUtil.unitWidth*19,
       child: GestureDetector(
         onTapDown: (details) {
           this.pushInput(context, "press_right_start");
@@ -82,8 +104,8 @@ class ButtonUp extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*7,
-      left: ScreenUtil.blockSizeWidth*31,
+      bottom: ScreenUtil.unitHeight*24,
+      left: ScreenUtil.unitWidth*80,
       child: GestureDetector(
         onTapDown: (details) {
           this.pushInput(context, "press_up");
@@ -98,8 +120,8 @@ class ButtonA extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*7,
-      left: ScreenUtil.blockSizeWidth*62,
+      bottom: ScreenUtil.unitHeight*7,
+      left: ScreenUtil.unitWidth*62,
       child: GestureDetector(
         onTapDown: (details) {
           this.pushInput(context, "press_a");
@@ -117,8 +139,8 @@ class ButtonB extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*7,
-      left: ScreenUtil.blockSizeWidth*74,
+      bottom: ScreenUtil.unitHeight*7,
+      left: ScreenUtil.unitWidth*74,
       child: GestureDetector(
         onTapDown: (details) {
           this.pushInput(context, "press_b_start");
@@ -139,8 +161,8 @@ class ButtonFireball extends InputGesture {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: ScreenUtil.blockSizeHeight*7,
-      left: ScreenUtil.blockSizeWidth*86,
+      bottom: ScreenUtil.unitHeight*7,
+      left: ScreenUtil.unitWidth*86,
       child: GestureDetector(
         onTapDown: (details) {
           this.pushInput(context, "press_fireball");

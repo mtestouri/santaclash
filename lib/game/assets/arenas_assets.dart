@@ -5,18 +5,13 @@ class ArenaObject extends PhysicalAsset {
            double hitboxX, double hitboxY, double posX, double posY) {
     // visual properties
     this.imageFile = image;
-    this.imageWidth = width;
-    this.imageHeight = height;
+    this.width = width;
+    this.height = height;
     this.posX = posX;
     this.posY = posY;
     // hitbox
     this.hitboxX = hitboxX;
     this.hitboxY = hitboxY;
-  }
-
-  @override
-  Map<String, Map<int, String>> animationsFactory() {
-    return null;
   }
 }
 
@@ -24,14 +19,9 @@ class Background extends Asset {
   Background(String image) {
     // visual propertie
     imageFile = image;
-    imageWidth = 100;
-    imageHeight = 100;
+    width = 100;
+    height = 100;
     posX = 50;
     posY = 50;
-  }
-
-  @override
-  Map<String, Map<int, String>> animationsFactory() {
-    return null;
   }
 }

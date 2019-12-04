@@ -21,6 +21,7 @@ class Physics {
     for(int i=0; i<assets.length; i++) {
       if(assets[i].type == PhysicalAsset.DYNAMIC) {
         var a1 = assets[i];
+        a1.isOnGround = false; // reset the airborne state
 
         // gravity
         if(a1.gravity)
@@ -47,6 +48,7 @@ class Physics {
               max(a1.hitboxBottom + a1.velY/_currFps, a2.hitboxBottom + a2.velY/_currFps) 
               < min(a1.hitboxTop + a1.velY/_currFps, a2.hitboxTop + a2.velY/_currFps)) {
               a1.velY = 0;
+              a1.isOnGround = true; // object underneath
               continue;
             }
 
@@ -71,22 +73,5 @@ class Physics {
         a1.posY += a1.velY/_currFps;
       }
     }
-  }
-
-  bool isOnGround(PhysicalAsset a1, List<PhysicalAsset> assets) {
-    for(var a2 in assets) {
-      if((identical(a1, a2) == false) && (a2.type == PhysicalAsset.STATIC)) {
-        // check object underneath
-        if(max(a1.hitboxLeft, a2.hitboxLeft) 
-          < min(a1.hitboxRight, a2.hitboxRight) &&
-          max(a1.hitboxBottom + a1.velY/_currFps + 
-          _gravity/_currFps, a2.hitboxBottom + a2.velY/_currFps) 
-          < min(a1.hitboxTop + a1.velY/_currFps + 
-          _gravity/_currFps, a2.hitboxTop + a2.velY/_currFps)) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
 }
