@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/game.dart';
@@ -9,13 +8,8 @@ void main() => runApp(new App());
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // set landscape orientation
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    // hide status bar
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    ScreenUtil.setScreenOrientation("landscape");
+    ScreenUtil.hideStatusBar();
     // root widget
     return MaterialApp(
       title: 'Smash Like',
@@ -27,7 +21,7 @@ class App extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil().init(context, "landscape");
+    ScreenUtil.init(context, screenOrientation: "landscape");
     return Scaffold(
       body: GestureDetector(
         onTap:(){
@@ -42,7 +36,7 @@ class HomePage extends StatelessWidget {
         width: ScreenUtil.screenWidth,
         decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/homepage.png'),
+          image: AssetImage('assets/images/menus/homepage.png'),
           fit: BoxFit.fill,
         ),
       ),
@@ -75,7 +69,7 @@ class Title extends StatelessWidget {
       height: ScreenUtil.blockSizeHeight * 18,
       width: ScreenUtil.blockSizeWidth * 60,
       child: FittedBox(
-        child: Image.asset('assets/images/smash-like.png'),
+        child: Image.asset('assets/images/menus/smash-like.png'),
         fit: BoxFit.fill,
       ),
     );
