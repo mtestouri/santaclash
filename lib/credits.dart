@@ -1,20 +1,17 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/game.dart';
-import 'package:smashlike/main.dart';
 
 class Credits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil().init(context, "landscape");
+    ScreenUtil.init(context, screenOrientation: "landscape");
     return Scaffold(
       body: Container(
         height: ScreenUtil.screenHeight,
         width: ScreenUtil.screenWidth,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/creditsfont.png'),
+            image: AssetImage('assets/images/menus/creditsfont.png'),
             fit: BoxFit.fill,
           ),
         ),
@@ -56,26 +53,12 @@ class Credits extends StatelessWidget {
   }
 }
 
-class Title extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: ScreenUtil.blockSizeHeight * 15,
-      width: ScreenUtil.blockSizeWidth * 35,
-      child: FittedBox(
-        child: Image.asset('assets/images/Play.png'),
-        fit: BoxFit.fill,
-      ),
-    );
-  }
-}
-
 class ScrollCredits extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil.blockSizeHeight*40,
-      width: ScreenUtil.blockSizeWidth*60,
+      height: ScreenUtil.unitHeight*40,
+      width: ScreenUtil.unitWidth*60,
       child: SingleChildScrollView(
 
         child: Text(

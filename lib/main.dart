@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/game.dart';
 import 'package:smashlike/menu.dart';
 
 void main() => runApp(new App());
@@ -61,15 +60,14 @@ class HomePage extends StatelessWidget {
 
 }
 
-
 class Title extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil.blockSizeHeight * 18,
-      width: ScreenUtil.blockSizeWidth * 60,
+      height: ScreenUtil.unitHeight * 18,
+      width: ScreenUtil.unitWidth * 60,
       child: FittedBox(
-        child: Image.asset('assets/images/menus/smash-like.png'),
+        child: Image.asset('assets/images/menus/ctitle.png'),
         fit: BoxFit.fill,
       ),
     );
@@ -98,9 +96,9 @@ class _MyBlinkingButtonState extends State<MyBlinkingButton>
     return FadeTransition(
       opacity: _animationController,
       child: Container(
-        height: ScreenUtil.blockSizeHeight * 10,
-        width: ScreenUtil.blockSizeWidth * 30,
-        child: Image.asset('assets/images/touch-screen.png'),
+        height: ScreenUtil.unitHeight * 10,
+        width: ScreenUtil.unitWidth * 30,
+        child: Image.asset('assets/images/menus/touch-screen.png'),
       ),
       );
   }

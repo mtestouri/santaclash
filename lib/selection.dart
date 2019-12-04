@@ -1,21 +1,17 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/game.dart';
-import 'package:smashlike/main.dart';
-import 'package:smashlike/credits.dart';
 
 class SelectionChara extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil().init(context, "landscape");
+    ScreenUtil.init(context, screenOrientation: "landscape");
     return Scaffold(
       body:Container(
         height: ScreenUtil.screenHeight,
         width: ScreenUtil.screenWidth,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/selectback.png'),
+            image: AssetImage('assets/images/menus/selectback.png'),
             fit: BoxFit.fill,
           ),
         ),
@@ -26,10 +22,9 @@ class SelectionChara extends StatelessWidget {
             child: Container(
               width: ScreenUtil.screenWidth/2,
               height: ScreenUtil.screenHeight,
-              onTap:()=> print("on"),
               decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/images/selectbacks.png'),
+                      image: AssetImage('assets/images/menus/selectbacks.png'),
                       fit: BoxFit.fill,
                 ),
                   ),
@@ -42,11 +37,11 @@ class SelectionChara extends StatelessWidget {
                     Align(
                       alignment: Alignment(0,-0.87),
                       child:Container(
-                        width: ScreenUtil.blockSizeWidth*22,
-                        height: ScreenUtil.blockSizeHeight*13,
+                        width: ScreenUtil.unitWidth*22,
+                        height: ScreenUtil.unitHeight*13,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/images/stitle.png'),
+                            image: AssetImage('assets/images/menus/stitle.png'),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -64,7 +59,7 @@ class SelectionChara extends StatelessWidget {
               height: ScreenUtil.screenHeight,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/selectbackc.png'),
+                  image: AssetImage('assets/images/menus/selectbackc.png'),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -77,11 +72,11 @@ class SelectionChara extends StatelessWidget {
               Align(
                   alignment: Alignment(0.2,-0.87),
                   child:Container(
-                    width: ScreenUtil.blockSizeWidth*30,
-                    height: ScreenUtil.blockSizeHeight*15,
+                    width: ScreenUtil.unitWidth*30,
+                    height: ScreenUtil.unitHeight*15,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/ctitle.png'),
+                        image: AssetImage('assets/images/menus/ctitle.png'),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -96,11 +91,11 @@ class SelectionChara extends StatelessWidget {
           Align(
             alignment: Alignment(0, 0),
             child: Container(
-                width: ScreenUtil.blockSizeWidth*15,
+                width: ScreenUtil.unitWidth*15,
                 height: ScreenUtil.screenHeight,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/ligne.png'),
+                    image: AssetImage('assets/images/menus/ligne.png'),
                     fit: BoxFit.fill,
                   ),
           ),
@@ -109,11 +104,11 @@ class SelectionChara extends StatelessWidget {
           Align(
             alignment: Alignment(-0.01, -0.9),
             child: Container(
-              width: ScreenUtil.blockSizeWidth*20,
-              height: ScreenUtil.blockSizeHeight*15,
+              width: ScreenUtil.unitWidth*20,
+              height: ScreenUtil.unitHeight*15,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/vs.png'),
+                  image: AssetImage('assets/images/menus/vs.png'),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -148,19 +143,19 @@ class _IdleSantaState extends State<IdleSanta> with TickerProviderStateMixin{
   Widget frameNeeded(AnimationController frameNbr){
 
     if(frameNbr.value>=0 && frameNbr.value<1) {
-      return Image.asset('assets/images/idle0s.png');
+      return Image.asset('assets/images/menus/idle0s.png');
     }
     else if(frameNbr.value>=1 && frameNbr.value<2) {
-      return Image.asset('assets/images/idle1s.png');
+      return Image.asset('assets/images/menus/idle1s.png');
     }
     else if(frameNbr.value>=2 && frameNbr.value<3) {
-      return Image.asset('assets/images/idle2s.png');
+      return Image.asset('assets/images/menus/idle2s.png');
     }
     else if(frameNbr.value>=3 && frameNbr.value<4) {
-      return Image.asset('assets/images/idle3s.png');
+      return Image.asset('assets/images/menus/idle3s.png');
     }
     else {
-      return Image.asset('assets/images/idle4s.png');
+      return Image.asset('assets/images/menus/idle4s.png');
     }
 
 
@@ -168,15 +163,15 @@ class _IdleSantaState extends State<IdleSanta> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil.blockSizeHeight * 60,
-      width: ScreenUtil.blockSizeWidth * 25,
+      height: ScreenUtil.unitHeight * 60,
+      width: ScreenUtil.unitWidth * 25,
       child: FittedBox(
         child: AnimatedBuilder(
           animation: _idleFrame,
           builder: (context,child){
             return frameNeeded(_idleFrame);
           },
-          child: Image.asset('assets/images/idle0s'),
+          child: Image.asset('assets/images/menus/idle0s'),
         ),
         fit: BoxFit.fill,
       ),
@@ -210,19 +205,19 @@ class _IdleCyclState extends State<IdleCycl> with TickerProviderStateMixin{
   Widget frameNeeded(AnimationController frameNbr){
 
     if(frameNbr.value>=0 && frameNbr.value<1) {
-      return Image.asset('assets/images/idle0c.png');
+      return Image.asset('assets/images/menus/idle0c.png');
     }
     else if(frameNbr.value>=1 && frameNbr.value<2) {
-      return Image.asset('assets/images/idle1c.png');
+      return Image.asset('assets/images/menus/idle1c.png');
     }
     else if(frameNbr.value>=2 && frameNbr.value<3) {
-      return Image.asset('assets/images/idle2c.png');
+      return Image.asset('assets/images/menus/idle2c.png');
     }
     else if(frameNbr.value>=3 && frameNbr.value<4) {
-      return Image.asset('assets/images/idle3c.png');
+      return Image.asset('assets/images/menus/idle3c.png');
     }
     else {
-      return Image.asset('assets/images/idle4c.png');
+      return Image.asset('assets/images/menus/idle4c.png');
     }
 
 
@@ -230,15 +225,15 @@ class _IdleCyclState extends State<IdleCycl> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil.blockSizeHeight * 70,
-      width: ScreenUtil.blockSizeWidth * 40,
+      height: ScreenUtil.unitHeight * 70,
+      width: ScreenUtil.unitWidth * 40,
       child: FittedBox(
         child: AnimatedBuilder(
           animation: _idleFrame,
           builder: (context,child){
             return frameNeeded(_idleFrame);
           },
-          child: Image.asset('assets/images/idle0c'),
+          child: Image.asset('assets/images/menus/idle0c'),
         ),
         fit: BoxFit.fill,
       ),
