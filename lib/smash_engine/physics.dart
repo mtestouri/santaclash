@@ -36,7 +36,7 @@ class Physics {
             if(max(a1.hitboxLeft + a1.velX/_currFps, a2.hitboxLeft + a2.velX/_currFps) 
               < min(a1.hitboxRight + a1.velX/_currFps, a2.hitboxRight + a2.velX/_currFps) &&
               max(a1.hitboxBottom, a2.hitboxBottom) 
-              < min(a1.hitboxTop, a2.hitboxTop)) {
+              < min(a1.hitboxTop-1, a2.hitboxTop-1)) {
               a1.velX = 0;
               continue;
             }
@@ -55,7 +55,12 @@ class Physics {
               < min(a1.hitboxRight + a1.velX/_currFps, a2.hitboxRight + a2.velX/_currFps) &&
               max(a1.hitboxBottom + a1.velY/_currFps, a2.hitboxBottom + a2.velY/_currFps) 
               < min(a1.hitboxTop + a1.velY/_currFps, a2.hitboxTop + a2.velY/_currFps)) {
-              a1.velX = 0;
+                
+              if(max(a1.hitboxBottom + a1.velY/_currFps, a2.hitboxBottom + a2.velY/_currFps) 
+                < min((a1.hitboxTop + a1.velY/_currFps)-1, (a2.hitboxTop + a2.velY/_currFps)-1)){
+                  a1.velX = 0;
+                }
+              a1.posY += 1;
               a1.velY = 0;
             }
           }

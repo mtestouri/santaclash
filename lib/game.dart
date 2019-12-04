@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smashlike/game/factory.dart';
+import 'package:smashlike/game/map_1.dart';
+import 'package:smashlike/game/map_2.dart';
 import 'package:smashlike/game/game_logic.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
@@ -12,8 +14,8 @@ class Game extends StatelessWidget {
         height: ScreenUtil.screenHeight,
         width: ScreenUtil.screenWidth,
         child: SmashEngine(
-          inputGestures: InputGesturesFactory.build("debug"),
-          assets: AssetsFactory.build("debug"),
+          inputGestures: InputGesturesMap2.build("debug"),
+          assets: AssetsMap2.build("debug"),
           gameLogic: SmashLike(),
         ),
       ),
