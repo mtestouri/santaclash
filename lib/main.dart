@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/game.dart';
+import 'package:smashlike/menu.dart';
 
 void main() => runApp(new App());
 
@@ -12,6 +12,7 @@ class App extends StatelessWidget {
     // root widget
     return MaterialApp(
       title: 'Smash Like',
+      theme: ThemeData(fontFamily: 'pixelart'),
       home: HomePage(),
     );
   }
@@ -22,7 +23,15 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
     return Scaffold(
-      body: Container(
+      body: GestureDetector(
+        onTap:(){
+
+          Navigator.push(
+              context,
+              FadeRoute(page: MenuPage())
+          );
+        },
+      child: Container(
         height: ScreenUtil.screenHeight,
         width: ScreenUtil.screenWidth,
         decoration: BoxDecoration(
@@ -34,55 +43,94 @@ class HomePage extends StatelessWidget {
         child: Stack(
           children: [
             Align(
-              alignment: Alignment(0, 0.30),
-              child: PlayButton(),
-            ),
-            Align(
-              alignment: Alignment(0, -0.45),
+              alignment: Alignment(0, -0.89),
               child: Title(),
             ),
+            Align(
+              alignment: Alignment(0,0.7),
+              child: MyBlinkingButton(),
+            ),
+
           ],
-        ),
+
+      ),
+      ),
       ),
     );
   }
+
 }
 
 class Title extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil.unitHeight * 15,
-      width: ScreenUtil.unitWidth * 35,
+      height: ScreenUtil.unitHeight * 18,
+      width: ScreenUtil.unitWidth * 60,
       child: FittedBox(
-        child: Image.asset('assets/images/menus/smash-like.png'),
+        child: Image.asset('assets/images/menus/smashlike.png'),
         fit: BoxFit.fill,
       ),
     );
   }
 }
 
-class PlayButton extends StatelessWidget {
+class MyBlinkingButton extends StatefulWidget {
+  @override
+  _MyBlinkingButtonState createState() => _MyBlinkingButtonState();
+}
+
+class _MyBlinkingButtonState extends State<MyBlinkingButton>
+    with SingleTickerProviderStateMixin {
+
+  AnimationController _animationController;
+  @override
+  void initState() {
+    _animationController =
+    new AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animationController.repeat();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: ScreenUtil.unitHeight * 15,
-      width: ScreenUtil.unitWidth * 20,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/menus/play.png'),
-          fit: BoxFit.fill,
-        ),
+
+    return FadeTransition(
+      opacity: _animationController,
+      child: Container(
+        height: ScreenUtil.unitHeight * 10,
+        width: ScreenUtil.unitWidth * 30,
+        child: Image.asset('assets/images/menus/touch-screen.png'),
       ),
-      child: FlatButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Game()),
-          ); // switch to game page
-        },
-        child: null,
-      ),
-    );
+      );
+  }
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 }
+
+
+class FadeRoute extends PageRouteBuilder {
+  final Widget page;
+  FadeRoute({this.page})
+      : super(
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+  );
+}
+

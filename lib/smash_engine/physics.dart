@@ -3,6 +3,8 @@ import 'package:smashlike/smash_engine/asset.dart';
 
 class Physics {
   // TODO pos just before collision
+  // TODO move modif of vasco in game or parameter
+
   double _currFps = 60;
   double _gravity = -98.1;
 
@@ -59,9 +61,8 @@ class Physics {
               < min(a1.hitboxTop + a1.velY/_currFps, a2.hitboxTop + a2.velY/_currFps)) {
                 
               if(max(a1.hitboxBottom + a1.velY/_currFps, a2.hitboxBottom + a2.velY/_currFps) 
-                < min((a1.hitboxTop + a1.velY/_currFps)-1, (a2.hitboxTop + a2.velY/_currFps)-1)){
+                < min((a1.hitboxTop + a1.velY/_currFps)-1, (a2.hitboxTop + a2.velY/_currFps)-1))
                   a1.velX = 0;
-                }
               a1.posY += 1;
               a1.velY = 0;
             }
