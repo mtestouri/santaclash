@@ -12,6 +12,7 @@ class App extends StatelessWidget {
     // root widget
     return MaterialApp(
       title: 'Smash Like',
+      theme: ThemeData(fontFamily: 'pixelart'),
       home: HomePage(),
     );
   }
@@ -67,7 +68,7 @@ class Title extends StatelessWidget {
       height: ScreenUtil.unitHeight * 18,
       width: ScreenUtil.unitWidth * 60,
       child: FittedBox(
-        child: Image.asset('assets/images/menus/ctitle.png'),
+        child: Image.asset('assets/images/menus/smashlike.png'),
         fit: BoxFit.fill,
       ),
     );
