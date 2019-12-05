@@ -297,7 +297,11 @@ class SantaClaus extends Fighter {
     // id
     this.id = id;
     // visual properties
-    this.imageFile = spritesPath + 'idle_r_1.png';
+    if(this.id == Fighter.PLAYER){
+      this.imageFile = spritesPath + 'idle_r_1.png';
+    }else{
+      this.imageFile = spritesPath + 'idle_l_1.png';
+    }
     width = 8;
     height = 17;
     this.posX = posX;
@@ -484,5 +488,205 @@ class SantaClaus extends Fighter {
   @override
   Fireball _buildFireball() {
     return Fireball(id, spritesPath + 'fireball.png', 2, 4, 2, 4);
+  }
+}
+
+class Cyclope extends Fighter {
+  // sprites path
+  String spritesPath = 'assets/images/fighters/cyclope/';
+  
+  Cyclope(int id, double posX, double posY) {
+    // id
+    this.id = id;
+    // visual properties
+    if(this.id == Fighter.PLAYER){
+      this.imageFile = spritesPath + 'idle_r_01.png';
+    }else{
+      this.imageFile = spritesPath + 'idle_l_01.png';
+    }
+    width = 8;
+    height = 17;
+    this.posX = posX;
+    this.posY = posY;
+    // hitboxe
+    hitboxX = 6;
+    hitboxY = 11;
+    // basic attack
+    _hurtBasicOffsetX = 2;
+    hurtBasicOffsetY = 0.25;
+    _hurtBasicX = 4;
+    _hurtBasicY = 4;
+    basicAttCounterMin = 5;
+    basicAttCounterMax = 20;
+    // smash attack
+    _hurtSmashOffsetX = 2;
+    hurtSmashOffsetY = -2;
+    _hurtSmashX = 4;
+    _hurtSmashY = 4;
+    smashAttCounterMin = 5;
+    smashAttCounterMax = 20;
+    // fireball timing
+    fireballCounterValue = 40;
+  }
+
+  @override
+  Map<String, Map<int, String>> animationsFactory() {
+    Map<String, Map<int, String>> animationsMap = new Map();
+    var framesMap;
+
+    // idle left
+    framesMap = {
+      0:spritesPath + 'idle_l_01.png'
+    };
+    animationsMap["idle_left"] = framesMap;
+
+    // idle right
+    framesMap = {
+      0:spritesPath + 'idle_r_01.png'
+    };
+    animationsMap["idle_right"] = framesMap;
+
+    // move left
+    framesMap = {
+      0:spritesPath + 'move_l_01.png',
+      5:spritesPath + 'move_l_02.png',
+      10:spritesPath + 'move_l_03.png',
+      15:spritesPath + 'move_l_04.png',
+      20:spritesPath + 'move_l_05.png',
+      25:spritesPath + 'move_l_06.png',
+      30:spritesPath + 'move_l_07.png',
+      35:spritesPath + 'move_l_08.png',
+      40:spritesPath + 'move_l_09.png',
+      45:spritesPath + 'move_l_10.png',
+      50:spritesPath + 'move_l_11.png',
+      55:spritesPath + 'move_l_12.png'
+    };
+    animationsMap["move_left"] = framesMap;
+    
+    // move right
+    framesMap = {
+      0:spritesPath + 'move_r_01.png',
+      5:spritesPath + 'move_r_02.png',
+      10:spritesPath + 'move_r_03.png',
+      15:spritesPath + 'move_r_04.png',
+      20:spritesPath + 'move_r_05.png',
+      25:spritesPath + 'move_r_06.png',
+      30:spritesPath + 'move_r_07.png',
+      35:spritesPath + 'move_r_08.png',
+      40:spritesPath + 'move_r_09.png',
+      45:spritesPath + 'move_r_10.png',
+      50:spritesPath + 'move_r_11.png',
+      55:spritesPath + 'move_r_12.png'
+    };
+    animationsMap["move_right"] = framesMap;
+    
+    // jump left
+    framesMap = {
+      0:spritesPath + 'jump_l_1.png',
+      5:spritesPath + 'jump_l_2.png',
+      10:spritesPath + 'jump_l_3.png'
+    };
+    animationsMap["jump_left"] = framesMap;
+    
+    // jump right
+    framesMap = {
+      0:spritesPath + 'jump_r_1.png',
+      5:spritesPath + 'jump_r_2.png',
+      10:spritesPath + 'jump_r_3.png'
+    };
+    animationsMap["jump_right"] = framesMap;
+
+    // attack left
+    framesMap = {
+      0:spritesPath + 'attack_l_1.png',
+      5:spritesPath + 'attack_l_2.png',
+      10:spritesPath + 'attack_l_3.png',
+      15:spritesPath + 'attack_l_4.png',
+      20:spritesPath + 'attack_l_5.png',
+      25:spritesPath + 'attack_l_6.png'
+    };
+    animationsMap["attack_left"] = framesMap;
+
+    // attack right
+    framesMap = {
+      0:spritesPath + 'attack_r_1.png',
+      5:spritesPath + 'attack_r_2.png',
+      10:spritesPath + 'attack_r_3.png',
+      15:spritesPath + 'attack_r_4.png',
+      20:spritesPath + 'attack_r_5.png',
+      25:spritesPath + 'attack_r_6.png'
+    };
+    animationsMap["attack_right"] = framesMap;
+
+    // smash attack left
+    framesMap = {
+      0:spritesPath + 'smash_attack_l_01.png',
+      5:spritesPath + 'smash_attack_l_02.png',
+      10:spritesPath + 'smash_attack_l_03.png',
+      15:spritesPath + 'smash_attack_l_04.png',
+      20:spritesPath + 'smash_attack_l_05.png',
+      25:spritesPath + 'smash_attack_l_06.png',
+      30:spritesPath + 'smash_attack_l_07.png',
+      35:spritesPath + 'smash_attack_l_08.png',
+      40:spritesPath + 'smash_attack_l_09.png',
+      45:spritesPath + 'smash_attack_l_10.png',
+      50:spritesPath + 'smash_attack_l_11.png',
+      55:spritesPath + 'smash_attack_l_12.png'
+    };
+    animationsMap["smash_attack_left"] = framesMap;
+
+    // smash attack right
+    framesMap = {
+      0:spritesPath + 'smash_attack_r_01.png',
+      5:spritesPath + 'smash_attack_r_02.png',
+      10:spritesPath + 'smash_attack_r_03.png',
+      15:spritesPath + 'smash_attack_r_04.png',
+      20:spritesPath + 'smash_attack_r_05.png',
+      25:spritesPath + 'smash_attack_r_06.png',
+      30:spritesPath + 'smash_attack_r_07.png',
+      35:spritesPath + 'smash_attack_r_08.png',
+      40:spritesPath + 'smash_attack_r_09.png',
+      45:spritesPath + 'smash_attack_r_10.png',
+      50:spritesPath + 'smash_attack_r_11.png',
+      55:spritesPath + 'smash_attack_r_12.png'
+    };
+    animationsMap["smash_attack_right"] = framesMap;
+
+    // block left
+    framesMap = {
+      0:spritesPath + 'block_l_1.png'
+    };
+    animationsMap["block_left"] = framesMap;
+
+    // block right
+    framesMap = {
+      0:spritesPath + 'block_r_1.png'
+    };
+    animationsMap["block_right"] = framesMap;
+
+    // fireball left
+    framesMap = {
+      0:spritesPath + 'fireball_l_1.png',
+      5:spritesPath + 'fireball_l_2.png',
+      10:spritesPath + 'fireball_l_3.png',
+      15:spritesPath + 'fireball_l_4.png'
+    };
+    animationsMap["fireball_left"] = framesMap;
+
+    // fireball right
+    framesMap = {
+      0:spritesPath + 'fireball_r_1.png',
+      5:spritesPath + 'fireball_r_2.png',
+      10:spritesPath + 'fireball_r_3.png',
+      15:spritesPath + 'fireball_r_4.png'
+    };
+    animationsMap["fireball_right"] = framesMap;
+  
+    return animationsMap;
+  }
+
+  @override
+  Fireball _buildFireball() {
+    return Fireball(id, spritesPath + 'fireball.png', 5, 1, 5, 1);
   }
 }

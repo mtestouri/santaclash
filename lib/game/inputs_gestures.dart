@@ -32,19 +32,20 @@ class CircularButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return  Container(
       width: ScreenUtil.unitHeight*14,
       height: ScreenUtil.unitHeight*14,
       decoration: BoxDecoration(
-        color: Colors.blueGrey,
-        shape: BoxShape.circle,
+         color: Colors.blueGrey,
+         shape: BoxShape.circle,
       ),
       child: Stack(
         alignment: Alignment(0.0, 0.0),
         children: [
           Icon(
-            iconData,
-            color: Colors.white,
+             iconData,
+             color: Colors.white,
           ),
           Text(
             text,
@@ -72,8 +73,15 @@ class ButtonLeft extends InputGesture {
         onTapUp: (details) {
           this.pushInput(context, "press_left_end");
         },
-        child: CircularButton(iconData: Icons.arrow_back, text: ''),
-      )
+        child: Container(
+          height: ScreenUtil.unitHeight*13,
+          width: ScreenUtil.unitWidth*9,
+          child: FittedBox(
+            child: Image.asset('assets/images/buttons/leftbutton.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -94,7 +102,14 @@ class ButtonRight extends InputGesture {
         onTapUp: (details) {
           this.pushInput(context, "press_right_end");
         },
-        child: CircularButton(iconData: Icons.arrow_forward, text: ''),
+        child: Container(
+          height: ScreenUtil.unitHeight*13,
+          width: ScreenUtil.unitWidth*9,
+          child: FittedBox(
+            child: Image.asset('assets/images/buttons/rightbutton.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
       )
     );
   }
@@ -105,12 +120,19 @@ class ButtonUp extends InputGesture {
   Widget build(BuildContext context) {
     return Positioned(
       bottom: ScreenUtil.unitHeight*24,
-      left: ScreenUtil.unitWidth*80,
+      left: ScreenUtil.unitWidth*79,
       child: GestureDetector(
         onTapDown: (details) {
           this.pushInput(context, "press_up");
         },
-        child: CircularButton(iconData: Icons.arrow_upward, text: ''),
+        child: Container(
+          height: ScreenUtil.unitHeight*13,
+          width: ScreenUtil.unitWidth*9,
+          child: FittedBox(
+            child: Image.asset('assets/images/buttons/jumpbutton.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
       )
     );
   }
@@ -129,7 +151,14 @@ class ButtonA extends InputGesture {
         onLongPress: () {
           this.pushInput(context, "long_press_a");
         },
-        child: CircularButton(text: "A")
+        child: Container(
+          height: ScreenUtil.unitHeight*13,
+          width: ScreenUtil.unitWidth*9,
+          child: FittedBox(
+            child: Image.asset('assets/images/buttons/abutton.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
       ),
     );
   }
@@ -151,7 +180,14 @@ class ButtonB extends InputGesture {
         onTapUp: (details) {
           this.pushInput(context, "press_b_end");
         },
-        child: CircularButton(text: "B")
+        child: Container(
+          height: ScreenUtil.unitHeight*13,
+          width: ScreenUtil.unitWidth*9,
+          child: FittedBox(
+            child: Image.asset('assets/images/buttons/bbutton.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
       ),
     );
   }
@@ -167,7 +203,14 @@ class ButtonFireball extends InputGesture {
         onTapDown: (details) {
           this.pushInput(context, "press_fireball");
         },
-        child: CircularButton(iconData: Icons.brightness_low, text: ''),
+        child: Container(
+          height: ScreenUtil.unitHeight*13,
+          width: ScreenUtil.unitWidth*9,
+          child: FittedBox(
+            child: Image.asset('assets/images/buttons/fireballbutton.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
       ),
     );
   }

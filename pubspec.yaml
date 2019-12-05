@@ -40,7 +40,11 @@ flutter:
   assets:
     - assets/images/menus/
     - assets/images/arenas/debug/
+    - assets/images/arenas/map1/
+    - assets/images/arenas/map2/
     - assets/images/fighters/santaclaus/
+    - assets/images/fighters/cyclope/
+    - assets/images/buttons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
