@@ -65,7 +65,7 @@ class DynamicBlueListState extends State<DynamicBlueList> {
       itemBuilder: (BuildContext context, int index) {
         var post = blueList[index];
         return ListTile(
-          title: Text(post, textAlign: TextAlign.center,style:),
+          title: Text(post, textAlign: TextAlign.center),
           onTap: () {
             blueList=["a","b","c","d","e"];
             print(index);
