@@ -3,6 +3,7 @@ import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
 import 'package:smashlike/menu.dart';
 import 'package:smashlike/game.dart';
+import 'package:smashlike/host.dart';
 
 class SelectionChara extends StatelessWidget {
   @override
@@ -161,7 +162,7 @@ class SelectionArena extends StatelessWidget {
                   onTap:() {
                     Navigator.push(
                       context,
-                      FadeRoute(page: Game(mapId: 1,playerId: playerId,)),
+                      FadeRoute(page: Host(mapId: 1,playerId: playerId,)),
                     );
                   },
                   child:Container(
@@ -207,7 +208,7 @@ class SelectionArena extends StatelessWidget {
                   onTap:() {
                     Navigator.push(
                       context,
-                      FadeRoute(page: Game(mapId: 2,playerId: playerId)),
+                      FadeRoute(page: Host(mapId: 2,playerId: playerId,)),
                     );
                   },
                   child:Container(
@@ -260,6 +261,10 @@ class SelectionArena extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+              Align(
+                alignment: Alignment(-0.01, 1),
+                child: ReturnButtonToChara(),
               ),
 
 
@@ -411,6 +416,30 @@ class ReturnButton extends StatelessWidget {
           Navigator.push(
             context,
             FadeRoute(page: SecondMenuPage()),
+          ); // switch to game page
+        },
+        child: null,
+      ),
+    );
+  }
+}
+class ReturnButtonToChara extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil.unitHeight * 15,
+      width: ScreenUtil.unitWidth * 10,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/menus/return.png'),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: FlatButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            FadeRoute(page: SelectionChara()),
           ); // switch to game page
         },
         child: null,
