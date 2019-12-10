@@ -48,7 +48,7 @@ class Credits extends StatelessWidget {
               child: ScrollCredits(),
             ),
             Align(
-              alignment: Alignment(0, 0.86),
+              alignment: Alignment(0, 0.65),
               child: ReturnButton(),
             ),
           ],
@@ -77,6 +77,9 @@ class ScrollCredits extends StatelessWidget{
                     "BigBuckBunny\n"
                     "Max Thorne\n"
                     "Ansinuz\n"
+                    "Srip\n"
+                    "Freepik\n"
+                    "Dusan Pavkovic WARlord\n"
                     "Elthen",
                 style: TextStyle(
             fontSize: 16.0, color: Colors.white,
