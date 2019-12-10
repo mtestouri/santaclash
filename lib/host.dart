@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smashlike/game/multiplayer/multiplayer.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
 import 'package:smashlike/menu.dart';
@@ -6,6 +7,7 @@ import 'package:smashlike/menu.dart';
 class Host extends StatelessWidget {
   final int playerId;
   final int mapId;
+  final Multiplayer multiplayer = Multiplayer();
 
   Host({@required this.playerId, @required this.mapId});
   @override
@@ -15,18 +17,14 @@ class Host extends StatelessWidget {
       body: Container(
         height: ScreenUtil.screenHeight,
         width: ScreenUtil.screenWidth,
-
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/menus/joinback.png'),
             fit: BoxFit.fill,
-
           ),
         ),
         child:Stack(
             children:[
-
-
               Align(
                 alignment: Alignment(0, -0.6),
                 child: Text("Waiting for a player..."  , textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
@@ -63,18 +61,12 @@ class Host extends StatelessWidget {
                 alignment: Alignment(0, 0.9),
                 child: ReturnButton(),
               ),
-
-
             ]
         ),
       ),
     );
   }
 }
-
-
-
-
 
 class ReturnButton extends StatelessWidget {
   @override
