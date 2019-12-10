@@ -6,12 +6,12 @@ import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 // TODO
-// update inputs buttons
-// check blocking with attacks
 // stunt when hit (use animation)
+// check blocking with attacks
 // further improve animation and action system (quicker blocking)
 // adjust animations timing and other parameters (hitboxes, hurtboxes, ...)
 // private variables and functions
+// restructure menus
 
 class SmashLikeLogic extends GameLogic {
   @override
@@ -67,7 +67,7 @@ class SmashLikeLogic extends GameLogic {
     }
 
     // opponent inputs
-    // TODO bluetooth or AI
+    // TODO bluetooth
 
     // basic attacks
     if(checkHurtBasic(player, opponent) && (opponent.damage < 100))
