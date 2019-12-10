@@ -14,7 +14,7 @@ class Game extends StatelessWidget {
         width: ScreenUtil.screenWidth,
         child: SmashEngine(
           inputGestures: InputGesturesFactory.build("debug"),
-          assets: GameAssetsFactory.build("debug"),
+          assets: GameAssetsFactory.build("map2"),
           gameLogic: SmashLikeLogic(),
         ),
       ),

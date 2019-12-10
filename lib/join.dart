@@ -15,7 +15,7 @@ class Join extends StatelessWidget {
 
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/menus/selectback.png'),
+            image: AssetImage('assets/images/menus/joinback.png'),
             fit: BoxFit.fill,
 
           ),
@@ -245,7 +245,7 @@ class ScrollText extends StatelessWidget{
             "Did you know that during the developpement of this Game one of the developper use a computer that has less power than "
             "your toaster\n\n"
             "Did you know that one of the developper can talk Japanese ? \n はい！ 初めまして ！ お名前はアドリエンです。\nアニメと犬が大好きです。"
-            "ジョジョの奇妙な冒険は僕の好きなあにめです。宜しくお願いします！",
+            "ジョジョの奇妙な冒険は僕の好きなアニメです。宜しくお願いします！",
           style: TextStyle(
             fontSize: 16.0, color: Colors.white,
           ),

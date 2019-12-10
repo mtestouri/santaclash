@@ -79,6 +79,7 @@ class ScrollCredits extends StatelessWidget{
                     "Ansinuz\n"
                     "Srip\n"
                     "Freepik\n"
+                    "Dusan Pavkovic WARlord\n"
                     "Elthen",
                 style: TextStyle(
             fontSize: 16.0, color: Colors.white,

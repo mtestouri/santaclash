@@ -37,8 +37,8 @@ class GameAssetsFactory {
     physicalAssets.add(ArenaObject(arenaPath + 'rock.png', 8, 11, 6, 9, 28, 32));
     
     // fighters
-    Fighter player = SantaClaus(Fighter.PLAYER, 10, 50);
-    Fighter opponent = SantaClaus(Fighter.OPPONENT, 80, 50);
+    Fighter player = GreenSantaClaus(Fighter.PLAYER, 10, 50);
+    Fighter opponent = RedSantaClaus(Fighter.OPPONENT, 80, 50);
     
     // ui
     List<Asset> ui = List();
@@ -76,8 +76,8 @@ class GameAssetsFactory {
     physicalAssets.add(ArenaObject(arenaPath + 'long_block.png', 18, 11, 16, 9, 70, 55));
 
     // fighters
-    Fighter player = SantaClaus(Fighter.PLAYER, 10, 50);
-    Fighter opponent = SantaClaus(Fighter.OPPONENT, 80, 50);
+    Fighter player = GreenSantaClaus(Fighter.PLAYER, 30, 35);
+    Fighter opponent = RedSantaClaus(Fighter.OPPONENT, 70, 35);
     
     // ui
     List<Asset> ui = List();
@@ -123,8 +123,8 @@ class GameAssetsFactory {
     physicalAssets.add(ArenaObject(arenaPath + 'bolc_g_ground.png', 17, 30, 16, 28, 78, 14));
 
     // fighters
-    Fighter player = SantaClaus(Fighter.PLAYER, 10, 50);
-    Fighter opponent = SantaClaus(Fighter.OPPONENT, 80, 50);
+    Fighter player = GreenSantaClaus(Fighter.PLAYER, 18, 26);
+    Fighter opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34);
     
     // ui
     List<Asset> ui = List();
