@@ -42,7 +42,9 @@ flutter:
     - assets/images/arenas/debug/
     - assets/images/arenas/map1/
     - assets/images/arenas/map2/
-    - assets/images/fighters/santaclaus/
+    - assets/images/fighters/red_santaclaus/
+    - assets/images/fighters/green_santaclaus/
+    - assets/images/buttons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -55,12 +57,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: pixelart
+      fonts:
+        - asset: assets/fonts/pixelart.ttf
+
+
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

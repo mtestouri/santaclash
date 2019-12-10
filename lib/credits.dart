@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
+import 'package:smashlike/main.dart';
+import 'package:smashlike/menu.dart';
 
 class Credits extends StatelessWidget {
   @override
@@ -42,8 +44,12 @@ class Credits extends StatelessWidget {
 
             ),
             Align(
-              alignment: Alignment(0.1, 0),
+              alignment: Alignment(0, 0),
               child: ScrollCredits(),
+            ),
+            Align(
+              alignment: Alignment(0, 0.65),
+              child: ReturnButton(),
             ),
           ],
         ),
@@ -71,6 +77,9 @@ class ScrollCredits extends StatelessWidget{
                     "BigBuckBunny\n"
                     "Max Thorne\n"
                     "Ansinuz\n"
+                    "Srip\n"
+                    "Freepik\n"
+                    "Dusan Pavkovic WARlord\n"
                     "Elthen",
                 style: TextStyle(
             fontSize: 16.0, color: Colors.white,
@@ -80,5 +89,29 @@ class ScrollCredits extends StatelessWidget{
       ),
     );
 
+  }
+}
+class ReturnButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil.unitHeight * 15,
+      width: ScreenUtil.unitWidth * 10,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/menus/returncredit.png'),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: FlatButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            FadeRoute(page: MenuPage()),
+          ); // switch to game page
+        },
+        child: null,
+      ),
+    );
   }
 }
