@@ -180,7 +180,6 @@ class SelectionArena extends StatelessWidget {
                                   fit: BoxFit.fill,
                                 ),
                               ),
-                              child: Text(playerId.toString()),
                             ),
                           ),
                           Align(
