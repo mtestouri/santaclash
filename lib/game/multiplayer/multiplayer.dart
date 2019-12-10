@@ -1,51 +1,39 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:smashlike/game/multiplayer/bluetooth.dart';
 
-/*class Multiplayer {
+class Multiplayer {
   Bluetooth bluetooth = Bluetooth();
 
-  List<int> readPacket() {
-    // implement
-    return [0];
+  static final Multiplayer _inst = Multiplayer._internal();
+  Multiplayer._internal();
+
+  factory Multiplayer() {
+    return _inst;
   }
 
-  void writePackt() {
-    // implement
-  }
-}*/
-
-class Test extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => TestState();
-}
-
-class TestState extends State<Test> {
-  String text = 'Not connected';
-  Bluetooth bluetooth = Bluetooth();
-  
-  @override
-  void initState() {
-    super.initState();
+  Future<bool> host() {
+    return bluetooth.waitConnection();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bluetooth Test'),
-      ),
-      body: Center(
-        child: Text(text)
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          text = 'Not connected';
-          bluetooth.waitConnection();
-          text = 'Waiting connection';
-          setState(() {});
-        },
-        child: const Icon(Icons.bluetooth_searching),
-      ),
-    );
+  Future<List<String>> getServers() {
+    return bluetooth.pairedNames;
+  }
+
+  Future<bool> join(String deviceName) {
+    return bluetooth.connectToPaired(deviceName);
+  }
+
+  Future<bool> isReady() {
+    return bluetooth.isConnected;
+  }
+
+  List<int> _readPacket() {
+    // TODO complete
+    return bluetooth.read();
+  }
+
+  void _writePacket() {
+    // TODO implement
+    bluetooth.write([0]);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:math';
 import 'package:smashlike/game/assets/fighters_assets.dart';
 import 'package:smashlike/game/game_assets.dart';
+import 'package:smashlike/game/multiplayer/multiplayer.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
@@ -11,9 +12,11 @@ import 'package:smashlike/smash_engine/smash_engine.dart';
 // further improve animation and action system (quicker blocking)
 // adjust animations timing and other parameters (hitboxes, hurtboxes, ...)
 // private variables and functions
-// restructure menus
+// restructure menus & clean code
 
 class SmashLikeLogic extends GameLogic {
+  Multiplayer multiplayer = Multiplayer();
+
   @override
   void update(Queue<String> inputs, GameAssets gameAssets) {
     SmashLikeAssets assets = gameAssets;

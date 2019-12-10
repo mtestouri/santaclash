@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 
 class Bluetooth {
@@ -16,30 +15,30 @@ class Bluetooth {
     return pn;
   }
 
+  Future<bool> get isConnected {
+    return platform.invokeMethod('isConnected');
+  }
+
   factory Bluetooth() {
     return _inst;
   }
 
-  Future<bool> isEnabled() async {
-    return await platform.invokeMethod('isEnabled');
+  Future<bool> isEnabled() {
+    return platform.invokeMethod('isEnabled');
   }
 
-  Future<bool> connectToPaired(String deviceName) async {
-    return await platform.invokeMethod('connectToPaired', <String, dynamic>{
+  Future<bool> connectToPaired(String deviceName) {
+    return platform.invokeMethod('connectToPaired', <String, dynamic>{
         'deviceName': deviceName
     });
   }
 
-  Future<bool> waitConnection() async {
-    return await platform.invokeMethod('waitConnection');
+  Future<bool> waitConnection() {
+    return platform.invokeMethod('waitConnection');
   }
 
-  Future<bool> isConnected() async {
-    return await platform.invokeMethod('isConnected');
-  }
-
-  Future<bool> disconnect() async {
-    return await platform.invokeMethod('disconnect');
+  Future<bool> disconnect() {
+    return platform.invokeMethod('disconnect');
   }
 
   List<int> read() {

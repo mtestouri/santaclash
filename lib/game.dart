@@ -19,7 +19,7 @@ class Game extends StatelessWidget {
         width: ScreenUtil.screenWidth,
         child: SmashEngine(
           inputGestures: InputGesturesFactory.build("debug"),
-          assets: GameAssetsFactory.build(mapId,playerId),
+          assets: GameAssetsFactory.build(mapId, playerId),
           gameLogic: SmashLikeLogic(),
         ),
       ),

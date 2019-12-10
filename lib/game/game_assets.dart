@@ -5,13 +5,13 @@ import 'package:smashlike/game/assets/ui_assets.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 
 class GameAssetsFactory {
-  static GameAssets build(int mapId,int playerId) {
-    switch(mapId.toString()) {
-      case "0":
+  static GameAssets build(int mapId, int playerId) {
+    switch(mapId) {
+      case 0:
         return debug();
-      case "1":
+      case 1:
         return map1(playerId);
-      case "2":
+      case 2:
         return map2(playerId);
       default:
         return debug();
@@ -78,14 +78,15 @@ class GameAssetsFactory {
     // fighters
     Fighter player;
     Fighter opponent;
-    if(playerId==0){
+    if(playerId == 0) {
       player = RedSantaClaus(Fighter.PLAYER, 18, 34);
       opponent = GreenSantaClaus(Fighter.OPPONENT, 78, 34);
     }
-    if(playerId==1) {
+    if(playerId == 1) {
       player = GreenSantaClaus(Fighter.PLAYER, 18, 34);
       opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34);
     }
+
     // ui
     List<Asset> ui = List();
     ui.add(DamageIndicator(player, 18, 90));
@@ -132,14 +133,15 @@ class GameAssetsFactory {
     // fighters
     Fighter player;
     Fighter opponent;
-    if(playerId==0){
+    if(playerId == 0) {
       player = RedSantaClaus(Fighter.PLAYER, 18, 26);
       opponent = GreenSantaClaus(Fighter.OPPONENT, 78, 34);
     }
-    if(playerId==1) {
+    if(playerId == 1) {
        player = GreenSantaClaus(Fighter.PLAYER, 18, 26);
       opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34);
     }
+    
     // ui
     List<Asset> ui = List();
     ui.add(DamageIndicator(player, 18, 90));
