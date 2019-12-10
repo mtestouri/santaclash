@@ -26,7 +26,7 @@ class SelectionChara extends StatelessWidget {
                   onTap:() {
                     Navigator.push(
                       context,
-                      FadeRoute(page: SelectionArena()),
+                      FadeRoute(page: SelectionArena(playerId: 0)),
                     );
                   },
                   child:Container(
@@ -64,7 +64,7 @@ class SelectionChara extends StatelessWidget {
                   onTap:() {
                     Navigator.push(
                       context,
-                      FadeRoute(page: SelectionArena()),
+                      FadeRoute(page: SelectionArena(playerId: 1)),
                     );
                   },
                   child:Container(
@@ -137,6 +137,9 @@ class SelectionChara extends StatelessWidget {
 
 
 class SelectionArena extends StatelessWidget {
+  final int playerId; // 0=red Santa 1=green Santa
+
+  SelectionArena({@required this.playerId});
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
@@ -158,7 +161,7 @@ class SelectionArena extends StatelessWidget {
                   onTap:() {
                     Navigator.push(
                       context,
-                      FadeRoute(page: Game()),
+                      FadeRoute(page: Game(mapId: 1,playerId: playerId,)),
                     );
                   },
                   child:Container(
@@ -177,6 +180,7 @@ class SelectionArena extends StatelessWidget {
                                   fit: BoxFit.fill,
                                 ),
                               ),
+                              child: Text(playerId.toString()),
                             ),
                           ),
                           Align(
@@ -204,7 +208,7 @@ class SelectionArena extends StatelessWidget {
                   onTap:() {
                     Navigator.push(
                       context,
-                      FadeRoute(page: Game()),
+                      FadeRoute(page: Game(mapId: 2,playerId: playerId)),
                     );
                   },
                   child:Container(
