@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
 import 'package:smashlike/menu.dart';
+import 'dart:io';
 
 class Join extends StatelessWidget {
   @override
@@ -160,6 +161,68 @@ class DynamicBlueListState extends State<DynamicBlueList> {
     blueList = widget.blueList;
   }
 
+  connectionDialog(BuildContext context,String name) {
+
+    Widget yesButton = FlatButton(
+        child: Text("Yes"),
+        onPressed: () {
+          sleep(Duration(seconds: 2));
+          failedDialog(context);
+        },
+    );
+
+    Widget noButton = FlatButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Connection Info"),
+      content: Text("Connection to "+name+" ?"),
+      actions: [
+        yesButton,
+        noButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+      barrierDismissible: false,
+    );
+  }
+  // user defined function
+  failedDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+        },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Connection Info"),
+      content: Text("Connection Failed !"),
+      actions: [
+        okButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+      barrierDismissible: false,
+    );
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -169,8 +232,7 @@ class DynamicBlueListState extends State<DynamicBlueList> {
         return ListTile(
           title: Text(post, textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
           onTap: () {
-            blueList=["a","b","c","d","e"];
-            print(index);
+            connectionDialog(context,blueList[index]);
             setState((){});
           },
         );
