@@ -84,6 +84,7 @@ abstract class PhysicalAsset extends Asset {
   static const STATIC = 0;
   static const DYNAMIC = 1;
   int type = STATIC;
+  bool projectile = false;
   bool gravity = false;
   // velocities
   double velX = 0;
