@@ -21,6 +21,15 @@ class GameAssetsFactory {
     }
   }
 
+  static List<Asset> _buildUI(Fighter player, Fighter opponent) {
+    List<Asset> ui = List();
+    ui.add(DamageIndicator(player, 28, 90));
+    ui.add(DamageIndicator(opponent, 60, 90));
+    ui.add(LifeIndicator(player, 12, 90));
+    ui.add(LifeIndicator(opponent, 75, 90));
+    return ui;
+  }
+
   static GameAssets debug() {
     String arenaPath = 'assets/images/arenas/debug/';
     // background assets
@@ -30,7 +39,7 @@ class GameAssetsFactory {
     // physical assets
     List<PhysicalAsset> physicalAssets = List();
     // invisible walls
-    physicalAssets.add(ArenaObject('', 0, 0, 1, 124, 0, 62));  // left
+    physicalAssets.add(ArenaObject('', 0, 0, 1, 124, 0, 62));    // left
     physicalAssets.add(ArenaObject('', 0, 0, 1, 124, 100, 62));  // right
     physicalAssets.add(ArenaObject('', 0, 0, 130, 1, 50, 124));  // top
     physicalAssets.add(ArenaObject('', 0, 0, 130, 1, 50, 0));    // bottom
@@ -43,17 +52,12 @@ class GameAssetsFactory {
     Fighter player = GreenSantaClaus(Fighter.PLAYER, 10, 50, Fighter.RIGHT);
     Fighter opponent = RedSantaClaus(Fighter.OPPONENT, 80, 50, Fighter.LEFT);
     
-    // ui
-    List<Asset> ui = List();
-    ui.add(DamageIndicator(player, 18, 90));
-    ui.add(DamageIndicator(opponent, 72, 90));
-    
     return SmashLikeAssets(
       backgroundAssets: backgroundAssets,
       physicalAssets: physicalAssets,
       player: player,
       opponent: opponent,
-      ui: ui,
+      ui: _buildUI(player, opponent),
       drawHitboxes: true
     );
   }
@@ -70,7 +74,7 @@ class GameAssetsFactory {
     physicalAssets.add(ArenaObject('', 0, 0, 1, 140, -20, 54));  // left
     physicalAssets.add(ArenaObject('', 0, 0, 1, 140, 120, 54));  // right
     physicalAssets.add(ArenaObject('', 0, 0, 170, 1, 50, 124));  // top
-    physicalAssets.add(ArenaObject('', 0, 0, 170, 1, 50, -15));    // bottom
+    physicalAssets.add(ArenaObject('', 0, 0, 170, 1, 50, -15));  // bottom
 
     // arena objects
     physicalAssets.add(ArenaObject(arenaPath + 'ground.png', 75, 30, 73, 28, 50, 15));
@@ -81,38 +85,36 @@ class GameAssetsFactory {
     // fighters
     Fighter player;
     Fighter opponent;
+    double leftPosX = 18;
+    double rightPosX = 78;
+    double posY = 40;
     if(playerId == 0) {
       if(side == LEFT_SIDE) {
-        player = RedSantaClaus(Fighter.PLAYER, 18, 34, Fighter.RIGHT);
-        opponent = GreenSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
+        player = RedSantaClaus(Fighter.PLAYER, leftPosX, posY, Fighter.RIGHT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, rightPosX, posY, Fighter.LEFT);
       }
       else {
-        player = RedSantaClaus(Fighter.PLAYER, 78, 34, Fighter.LEFT);
-        opponent = GreenSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
+        player = RedSantaClaus(Fighter.PLAYER, rightPosX, posY, Fighter.LEFT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, leftPosX, posY, Fighter.RIGHT);
       }
     }
     if(playerId == 1) {
       if(side == LEFT_SIDE) {
-        player = GreenSantaClaus(Fighter.PLAYER, 18, 34, Fighter.RIGHT);
-        opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
+        player = GreenSantaClaus(Fighter.PLAYER, leftPosX, posY, Fighter.RIGHT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, rightPosX, posY, Fighter.LEFT);
       }
       else {
-        player = GreenSantaClaus(Fighter.PLAYER, 78, 34, Fighter.LEFT);
-        opponent = RedSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
+        player = GreenSantaClaus(Fighter.PLAYER, rightPosX, posY, Fighter.LEFT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, leftPosX, posY, Fighter.RIGHT);
       }
     }
-
-    // ui
-    List<Asset> ui = List();
-    ui.add(DamageIndicator(player, 18, 90));
-    ui.add(DamageIndicator(opponent, 72, 90));
     
     return SmashLikeAssets(
       backgroundAssets: backgroundAssets,
       physicalAssets: physicalAssets,
       player: player,
       opponent: opponent,
-      ui: ui,
+      ui: _buildUI(player, opponent),
       drawHitboxes: true
     );
   }
@@ -129,7 +131,7 @@ class GameAssetsFactory {
     physicalAssets.add(ArenaObject('', 0, 0, 1, 140, -20, 54));  // left
     physicalAssets.add(ArenaObject('', 0, 0, 1, 140, 120, 54));  // right
     physicalAssets.add(ArenaObject('', 0, 0, 170, 1, 50, 124));  // top
-    physicalAssets.add(ArenaObject('', 0, 0, 170, 1, 50, -15));    // bottom
+    physicalAssets.add(ArenaObject('', 0, 0, 170, 1, 50, -15));  // bottom
     
     // arena objects
     physicalAssets.add(ArenaObject(arenaPath + 'water.png', 12, 15, 0, 0, 6, 7));
@@ -148,40 +150,36 @@ class GameAssetsFactory {
     // fighters
     Fighter player;
     Fighter opponent;
+    double leftPosX = 18;
+    double rightPosX = 78;
+    double posY = 40;
     if(playerId == 0) {
       if(side == LEFT_SIDE) {
-        player = RedSantaClaus(Fighter.PLAYER, 18, 26, Fighter.RIGHT);
-        opponent = GreenSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
+        player = RedSantaClaus(Fighter.PLAYER, leftPosX, posY, Fighter.RIGHT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, rightPosX, posY, Fighter.LEFT);
       }
       else {
-        player = RedSantaClaus(Fighter.PLAYER, 78, 26, Fighter.LEFT);
-        opponent = GreenSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
+        player = RedSantaClaus(Fighter.PLAYER, rightPosX, posY, Fighter.LEFT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, leftPosX, posY, Fighter.RIGHT);
       }
     }
     if(playerId == 1) {
       if(side == LEFT_SIDE) {
-        player = GreenSantaClaus(Fighter.PLAYER, 18, 26, Fighter.RIGHT);
-        opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
+        player = GreenSantaClaus(Fighter.PLAYER, leftPosX, posY, Fighter.RIGHT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, rightPosX, posY, Fighter.LEFT);
       }
       else {
-        player = GreenSantaClaus(Fighter.PLAYER, 78, 26, Fighter.LEFT);
-        opponent = RedSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
+        player = GreenSantaClaus(Fighter.PLAYER, rightPosX, posY, Fighter.LEFT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, leftPosX, posY, Fighter.RIGHT);
       }
     }
-    
-    // ui
-    List<Asset> ui = List();
-    ui.add(DamageIndicator(player, 26, 90));
-    ui.add(DamageIndicator(opponent, 70, 90));
-    ui.add(LifeIndicator(player, 13, 90));
-    ui.add(LifeIndicator(opponent, 82, 90));
     
     return SmashLikeAssets(
       backgroundAssets: backgroundAssets,
       physicalAssets: physicalAssets,
       player: player,
       opponent: opponent,
-      ui: ui,
+      ui: _buildUI(player, opponent),
       drawHitboxes: true
     );
   }

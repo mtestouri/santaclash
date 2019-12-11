@@ -2,8 +2,9 @@ import 'dart:math';
 import 'package:smashlike/smash_engine/asset.dart';
 
 class Physics {
-  // TODO pos just before collision
-  // TODO move modif of vasco in game or parameter
+  // TODO 
+  // pos just before collision 
+  // function parameters
 
   double _currFps = 60;
   double _gravity = -98.1;

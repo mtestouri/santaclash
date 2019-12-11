@@ -46,6 +46,10 @@ class Multiplayer {
     return bluetooth.connectToPaired(deviceName);
   }
 
+  Future<bool> disconnect() {
+    return bluetooth.disconnect();
+  }
+
   Future<void> start() async {
     if(_isServer) {
       await bluetooth.writeByte(mapId);

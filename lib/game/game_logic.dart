@@ -4,16 +4,14 @@ import 'dart:math';
 import 'package:smashlike/game/assets/fighters_assets.dart';
 import 'package:smashlike/game/game_assets.dart';
 import 'package:smashlike/game/multiplayer/multiplayer.dart';
-import 'package:smashlike/menu/endscreen.dart';
+import 'package:smashlike/menus/endscreen.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 // TODO
+// santas fighter color
+// isolate multiplayer
 // Check mulitplayer start fail
-
-// stunt when hit (use animation)
-// further improve animation and action system (quicker blocking)
-// ui life, out of border
 
 // bluetooth (sync)
 // check blocking with attacks
@@ -23,15 +21,12 @@ import 'package:smashlike/smash_engine/smash_engine.dart';
 
 class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();
+  bool useMultiplayer = true;
+
+  SmashLikeLogic({this.useMultiplayer});
 
   @override
   Future<int> update(Queue<String> inputs, GameAssets gameAssets) async {
-    // check connection failure
-    if(await multiplayer.isConnected == false) {
-      endGameScreen = EndScreen(status: EndScreen.CONNECTION_LOST);
-      return GameLogic.FINISHED;
-    }
-    
     // extract the assets
     SmashLikeAssets assets = gameAssets;
     Fighter player = assets.player;
@@ -43,113 +38,133 @@ class SmashLikeLogic extends GameLogic {
       switch(inputs.removeFirst()) { // one input per frame
         case "press_left_start": {
           player.move(Fighter.LEFT);
-          multiplayer.send(Multiplayer.LEFT_START);
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.LEFT_START);
         }
         break;
 
         case "press_left_end": {
           player.stopMove();
-          multiplayer.send(Multiplayer.LEFT_END);
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.LEFT_END);
         }
         break;
 
         case "press_right_start": {
           player.move(Fighter.RIGHT);
-          multiplayer.send(Multiplayer.RIGHT_START);
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.RIGHT_START);
         }
         break;
 
         case "press_right_end": {
           player.stopMove();
-          multiplayer.send(Multiplayer.RIGHT_END);
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.RIGHT_END);
         }
         break;
 
         case "press_up": {
-          player.jump(); 
-          multiplayer.send(Multiplayer.UP);
+          player.jump();
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.UP);
         }
         break;
 
         case "press_a": {
           player.basicAttack();
-          multiplayer.send(Multiplayer.A);
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.A);
         }
         break;
 
         case "long_press_a": {
           player.smashAttack();
-          multiplayer.send(Multiplayer.LONG_A);
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.LONG_A);
         }
         break;
         
         case "press_b_start": {
           player.block();
-          multiplayer.send(Multiplayer.B_START);
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.B_START);
         }
         break;
 
         case "press_b_end": {
           player.stopBlock();
-          multiplayer.send(Multiplayer.B_END);
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.B_END);
         }
         break;
         
         case "press_fireball": {
           player.fireball();
-          multiplayer.send(Multiplayer.FIREBALL);
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.FIREBALL);
         }
         break;
 
-        default:
-          multiplayer.send(Multiplayer.NONE);
+        default: {
+          if(useMultiplayer)
+            multiplayer.send(Multiplayer.NONE);
+        }
         break;
       }
     }
-    else
+    else if(useMultiplayer)
       multiplayer.send(Multiplayer.NONE);
 
-    // opponent inputs
-    switch(await multiplayer.receive()) {
-      case Multiplayer.LEFT_START:
-        opponent.move(Fighter.LEFT);
-      break;
+    if(useMultiplayer) {
+      // check connection failure
+      if((await multiplayer.isConnected) == false) {
+        endGameScreen = EndScreen(status: EndScreen.CONNECTION_LOST);
+        return GameLogic.FINISHED;
+      }
 
-      case Multiplayer.LEFT_END:
-        opponent.stopMove();
-      break;
+      // multiplayer opponent inputs
+      switch(await multiplayer.receive()) {
+        case Multiplayer.LEFT_START:
+          opponent.move(Fighter.LEFT);
+        break;
 
-      case Multiplayer.RIGHT_START:
-        opponent.move(Fighter.RIGHT);
-      break;
+        case Multiplayer.LEFT_END:
+          opponent.stopMove();
+        break;
 
-      case Multiplayer.RIGHT_END:
-        opponent.stopMove();
-      break;
+        case Multiplayer.RIGHT_START:
+          opponent.move(Fighter.RIGHT);
+        break;
 
-      case Multiplayer.UP:
-        opponent.jump(); 
-      break;
+        case Multiplayer.RIGHT_END:
+          opponent.stopMove();
+        break;
 
-      case Multiplayer.A:
-        opponent.basicAttack();
-      break;
+        case Multiplayer.UP:
+          opponent.jump(); 
+        break;
 
-      case Multiplayer.LONG_A:
-        opponent.smashAttack();
-      break;
+        case Multiplayer.A:
+          opponent.basicAttack();
+        break;
+
+        case Multiplayer.LONG_A:
+          opponent.smashAttack();
+        break;
         
-      case Multiplayer.B_START:
-        opponent.block();
-      break;
+        case Multiplayer.B_START:
+          opponent.block();
+        break;
 
-      case Multiplayer.B_END:
-        opponent.stopBlock();
-      break;
+        case Multiplayer.B_END:
+          opponent.stopBlock();
+        break;
         
-      case Multiplayer.FIREBALL:
-        opponent.fireball();
-      break;
+        case Multiplayer.FIREBALL:
+          opponent.fireball();
+        break;
+      }
     }
 
     // basic attacks
@@ -208,6 +223,8 @@ class SmashLikeLogic extends GameLogic {
       player.damage = 0;
       player.lifes--;
       if(player.lifes == 0) {
+        if(useMultiplayer)
+          multiplayer.disconnect();
         endGameScreen = EndScreen(status: EndScreen.DEFEAT);
         return GameLogic.FINISHED;
       }
@@ -220,6 +237,8 @@ class SmashLikeLogic extends GameLogic {
       opponent.damage = 0;
       opponent.lifes--;
       if(opponent.lifes == 0) {
+        if(useMultiplayer)
+          multiplayer.disconnect();
         endGameScreen = EndScreen(status: EndScreen.VICTORY);
         return GameLogic.FINISHED;
       }

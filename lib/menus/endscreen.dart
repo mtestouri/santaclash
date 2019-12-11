@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
-import 'package:smashlike/menu/menu.dart';
+import 'package:smashlike/menus/menu.dart';
 
 class EndScreen extends StatelessWidget {
   static const int VICTORY = 0;
