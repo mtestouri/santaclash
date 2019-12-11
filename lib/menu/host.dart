@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smashlike/game/game_assets.dart';
 import 'package:smashlike/game/multiplayer/multiplayer.dart';

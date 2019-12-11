@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:smashlike/game/assets/fighters_assets.dart';
 import 'package:smashlike/game/game_assets.dart';
 import 'package:smashlike/game/multiplayer/multiplayer.dart';
+import 'package:smashlike/menu/endscreen.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
@@ -27,7 +28,7 @@ class SmashLikeLogic extends GameLogic {
   Future<int> update(Queue<String> inputs, GameAssets gameAssets) async {
     // check connection failure
     if(await multiplayer.isConnected == false) {
-      // TODO create end screen error
+      endGameScreen = EndScreen(status: EndScreen.CONNECTION_LOST);
       return GameLogic.FINISHED;
     }
     
@@ -207,7 +208,7 @@ class SmashLikeLogic extends GameLogic {
       player.damage = 0;
       player.lifes--;
       if(player.lifes == 0) {
-        // TODO creat end Screen lose
+        endGameScreen = EndScreen(status: EndScreen.DEFEAT);
         return GameLogic.FINISHED;
       }
     }
@@ -219,12 +220,11 @@ class SmashLikeLogic extends GameLogic {
       opponent.damage = 0;
       opponent.lifes--;
       if(opponent.lifes == 0) {
-        // TODO creat end Screen win
+        endGameScreen = EndScreen(status: EndScreen.VICTORY);
         return GameLogic.FINISHED;
       }
     }
-
-    // TODO check out of the arena limits, life and end of game
+    
     return GameLogic.ON_GOING;
   }
 }

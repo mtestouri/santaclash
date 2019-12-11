@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
@@ -159,6 +160,7 @@ class ReturnButton extends StatelessWidget {
             FadeRoute(page: MenuPage()),
           ); // switch to game page
         },
+        child: null,
       ),
     );
   }
