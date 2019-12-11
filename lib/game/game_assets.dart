@@ -64,10 +64,10 @@ class GameAssetsFactory {
     // physical assets
     List<PhysicalAsset> physicalAssets = List();
     // invisible walls
-    physicalAssets.add(ArenaObject('', 0, 0, 1, 124, 0, 62));  // left
-    physicalAssets.add(ArenaObject('', 0, 0, 1, 124, 100, 62));  // right
-    physicalAssets.add(ArenaObject('', 0, 0, 130, 1, 50, 124));  // top
-    physicalAssets.add(ArenaObject('', 0, 0, 130, 1, 50, 0));    // bottom
+    physicalAssets.add(ArenaObject('', 0, 0, 1, 140, -20, 54));  // left
+    physicalAssets.add(ArenaObject('', 0, 0, 1, 140, 120, 54));  // right
+    physicalAssets.add(ArenaObject('', 0, 0, 170, 1, 50, 124));  // top
+    physicalAssets.add(ArenaObject('', 0, 0, 170, 1, 50, -15));    // bottom
 
     // arena objects
     physicalAssets.add(ArenaObject(arenaPath + 'ground.png', 75, 30, 73, 28, 50, 15));
@@ -103,10 +103,10 @@ class GameAssetsFactory {
     // physical assets
     List<PhysicalAsset> physicalAssets = List();
     // invisible walls
-    physicalAssets.add(ArenaObject('', 0, 0, 1, 124, 0, 62));  // left
-    physicalAssets.add(ArenaObject('', 0, 0, 1, 124, 100, 62));  // right
-    physicalAssets.add(ArenaObject('', 0, 0, 130, 1, 50, 124));  // top
-    physicalAssets.add(ArenaObject('', 0, 0, 130, 1, 50, 0));    // bottom
+    physicalAssets.add(ArenaObject('', 0, 0, 1, 140, -20, 54));  // left
+    physicalAssets.add(ArenaObject('', 0, 0, 1, 140, 120, 54));  // right
+    physicalAssets.add(ArenaObject('', 0, 0, 170, 1, 50, 124));  // top
+    physicalAssets.add(ArenaObject('', 0, 0, 170, 1, 50, -15));    // bottom
     
     // arena objects
     physicalAssets.add(ArenaObject(arenaPath + 'water.png', 12, 15, 0, 0, 6, 7));
@@ -128,8 +128,10 @@ class GameAssetsFactory {
     
     // ui
     List<Asset> ui = List();
-    ui.add(DamageIndicator(player, 18, 90));
-    ui.add(DamageIndicator(opponent, 72, 90));
+    ui.add(DamageIndicator(player, 26, 90));
+    ui.add(DamageIndicator(opponent, 70, 90));
+    ui.add(LifeIndicator(player, 13, 90));
+    ui.add(LifeIndicator(opponent, 82, 90));
     
     return SmashLikeAssets(
       backgroundAssets: backgroundAssets,

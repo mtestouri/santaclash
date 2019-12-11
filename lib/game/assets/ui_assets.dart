@@ -31,4 +31,30 @@ class DamageIndicator extends Asset {
   }
 }
 
-// TODO remaining lifes
+class LifeIndicator extends Asset {
+  Fighter _fighter;
+
+  LifeIndicator(Fighter fighter, double posX, double posY) {
+    this._fighter = fighter;
+    this.posX = posX;
+    this.posY = posY;
+  }
+
+  @override
+  Widget toWidget() {
+    MaterialAccentColor color;
+    if(_fighter.id == Fighter.PLAYER)
+      color = Colors.cyanAccent;
+    else
+      color = Colors.redAccent;
+    
+    return Positioned(
+      left: ScreenUtil.unitWidth*posX,
+      bottom: ScreenUtil.unitHeight*posY,
+      child: Text(
+        "Lifes: " + _fighter.lifes.toStringAsFixed(1),
+        style: TextStyle(color: color),
+      ),
+      );
+  }
+}

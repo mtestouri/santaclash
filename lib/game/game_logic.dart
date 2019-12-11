@@ -70,18 +70,26 @@ class SmashLikeLogic extends GameLogic {
     // TODO bluetooth or AI
 
     // basic attacks
-    if(checkHurtBasic(player, opponent) && (opponent.damage < 100))
+    if(checkHurtBasic(player, opponent) && (opponent.damage < 100)) {
       opponent.damage += 0.1;
-    if(checkHurtBasic(opponent, player) && (player.damage < 100))
+      opponent.hit();
+    }
+    if(checkHurtBasic(opponent, player) && (player.damage < 100)) {
       player.damage += 0.1;
+      player.hit();
+    }
     
     // smash attacks
     bool ejectOpponent = checkHurtSmash(player, opponent);
     bool ejectPlayer = checkHurtSmash(opponent, player);
-    if(ejectPlayer)
+    if(ejectPlayer){
+      player.eject();
       ejectFighter(player, opponent.orientation, 3, 8);
-    if(ejectOpponent)
+    }
+    if(ejectOpponent){
+      opponent.eject();
       ejectFighter(opponent, player.orientation, 3, 8);
+    }
 
     // remove useless fireballs
     fireballs.removeWhere((fireball) => fireball.velX == 0);
@@ -93,21 +101,51 @@ class SmashLikeLogic extends GameLogic {
     // check fireballs hits
     for(Fireball fireball in fireballs) {
       if(checkHurtFireball(player, fireball)) {
-        ejectFighter(player, fireball.direction, 20, 60);
+        player.hit();
+        if(player.damage < 100) {
+          player.damage += 5;
+        }
         fireball.velX = 0;
         continue;
       }
       if(checkHurtFireball(opponent, fireball)) {
-        if(opponent.damage<100) {
+        opponent.hit();
+        if(opponent.damage < 100) {
           opponent.damage += 5;
-          fireball.velX = 0;
-
         }
+        fireball.velX = 0;
       }
     }
 
-    // TODO check out of the arena limits
+    if(outOfLimits(player)){
+      player.posY = 26;
+      player.posX = 18;
+      player.velX = 0;
+      player.velY = 0;
+      player.damage = 0;
+      player.lifes--;
+      if(player.lifes == 0){
+        //TODO player win
+      }
+    }
+    if(outOfLimits(opponent)){
+      opponent.posY = 34;
+      opponent.posX = 78;
+      opponent.velX = 0;
+      opponent.velY = 0;
+      opponent.damage = 0;
+      opponent.lifes--;
+      if(opponent.lifes == 0){
+        //TODO opponent win
+      }
+    }
   }
+}
+
+bool outOfLimits (Fighter fighter){
+  if(fighter.posX < -10 || fighter.posX > 110 || fighter.posY < -8)
+    return true;
+  return false;
 }
 
 bool checkHurtBasic(Fighter att, Fighter def) {
