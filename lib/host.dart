@@ -3,13 +3,45 @@ import 'package:smashlike/game/multiplayer/multiplayer.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
 import 'package:smashlike/menu.dart';
+import 'package:smashlike/game.dart';
 
-class Host extends StatelessWidget {
+class Host extends StatefulWidget {
+  @override
+  _HostState createState() => _HostState();
   final int playerId;
   final int mapId;
-  final Multiplayer multiplayer = Multiplayer();
-
   Host({@required this.playerId, @required this.mapId});
+}
+
+class _HostState extends State<Host> with TickerProviderStateMixin{
+  AnimationController _waitForConnection;
+  Animation _animation;
+  Multiplayer _multiplayer=Multiplayer();
+
+  @override
+  void initSate(){
+    _multiplayer.host();
+    _waitForConnection=AnimationController(
+      duration: Duration(seconds: 1),
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 0, end: 1).animate(_waitForConnection);
+    _animation.addStatusListener((animationStatus) async {
+      if (animationStatus == AnimationStatus.completed)
+        _waitForConnection.reset();
+          if(await _multiplayer.isReady()){
+            Navigator.push(
+              context,
+              FadeRoute(page: Game(mapId: widget.mapId,playerId: widget.playerId,)),
+            );
+          }
+        _waitForConnection.forward();
+      }
+    );
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
@@ -66,7 +98,13 @@ class Host extends StatelessWidget {
       ),
     );
   }
+  @override
+  void dispose() {
+    _waitForConnection.dispose();
+    super.dispose();
+  }
 }
+
 
 class ReturnButton extends StatelessWidget {
   @override
