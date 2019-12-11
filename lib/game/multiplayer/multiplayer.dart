@@ -17,11 +17,14 @@ class Multiplayer {
   static const int FIREBALL = 13;
 
   Bluetooth bluetooth = Bluetooth();
+  
+  bool _isServer = false;
+  int mapId = 0, characterId = 0;
 
   static final Multiplayer _inst = Multiplayer._internal();
   Multiplayer._internal();
 
-  Future<bool> get isReady {
+  Future<bool> get isConnected {
     return bluetooth.isConnected;
   }
 
@@ -30,6 +33,7 @@ class Multiplayer {
   }
 
   Future<bool> host() {
+    _isServer = true;
     return bluetooth.waitConnection();
   }
 
@@ -38,7 +42,19 @@ class Multiplayer {
   }
 
   Future<bool> join(String deviceName) {
+    _isServer = false;
     return bluetooth.connectToPaired(deviceName);
+  }
+
+  Future<void> start() async {
+    if(_isServer) {
+      await bluetooth.writeByte(mapId);
+      await bluetooth.writeByte(characterId);
+    }
+    else {
+      mapId = await bluetooth.readByte();
+      characterId = await bluetooth.readByte();
+    }
   }
 
   Future<bool> send(int value) {

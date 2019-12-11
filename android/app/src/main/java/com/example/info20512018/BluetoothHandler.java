@@ -188,13 +188,13 @@ class BluetoothHandler {
      */
     int readByte() {
         if(inputStream == null)
-            return 0;
+            return -1;
         try {
             return inputStream.read();
         }
         catch(IOException e) {
             e.printStackTrace();
-            return 0;
+            return -1;
         }
     }
 }
