@@ -82,13 +82,21 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
     _physics.currFps = _currFps;
 
     // game logic update
-    await _gameLogic.update(SmashEngine.of(context).inputs, _assets);
-    
-    // physics update
-    _physics.update(_assets.physicalAssets);
+    if((await _gameLogic.update(
+      SmashEngine.of(context).inputs, _assets)) == GameLogic.FINISHED) {
+      _controller.stop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => _gameLogic.endGameScreen),
+      );
+    }
+    else {
+      // physics update
+      _physics.update(_assets.physicalAssets);
 
-    // render the frame
-    setState(() {});
+      // render the frame
+      setState(() {});
+    }
   }
 
   @override

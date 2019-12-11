@@ -17,6 +17,9 @@ abstract class Fighter extends PhysicalAsset {
   int orientation = RIGHT;
   bool _isMoving = false;
   int _jumpCounter = 0;
+  bool _isHit = false;
+  bool _isEject = false;
+  bool _isBlocking = false;
 
   // actions
   int _currAction = _A_NONE;
@@ -27,9 +30,15 @@ abstract class Fighter extends PhysicalAsset {
   static const int _A_SMASH_ATTACK = 4;
   static const int _A_BLOCK = 5;
   static const int _A_FIREBALL = 6;
+  static const int _A_STUN = 7;
+
+  // respawn
+  double respawnPosX = 0;
+  double respawnPosY = 0;
 
   // damage
   double damage = 0;
+  int lifes = 3;
   
   // basic attack
   double _hurtBasicOffsetX = 0;
@@ -124,17 +133,28 @@ abstract class Fighter extends PhysicalAsset {
   @override
   void animationCallback(int counter, bool animationEnd) {
     if((animationEnd == true)) {
-      if(_isMoving) {
+      if(_isHit)
+        _isHit = false;
+      if(_isEject)
+        _isEject = false;
+      if(_isBlocking)
+        block();
+      if(_isMoving && _currAction != _A_BLOCK) {
         _currAction = _A_MOVE;
         move(orientation);
       }
-      else if(_currAction != _A_BLOCK)
+      else if(_currAction != _A_BLOCK){
         _currAction = _A_NONE;
+        if(orientation == LEFT)
+          startAnimation("idle_left");
+        else
+          startAnimation("idle_right");
+      }
     }
   }
   
   void move(int direction) {
-    if(_currAction != _A_BLOCK) { // can't move if blocking
+    if(_currAction != _A_BLOCK && _currAction != _A_STUN) { // can't move if blocking
       if(_currAction == _A_NONE)
         _currAction = _A_MOVE;
       _isMoving = true;
@@ -172,7 +192,7 @@ abstract class Fighter extends PhysicalAsset {
   }
   
   void jump() {
-    if(_currAction != _A_BLOCK) { // can't jump if blocking
+    if(_currAction != _A_BLOCK && _currAction != _A_STUN) { // can't jump if blocking
       if(isOnGround)
         _jumpCounter = 0;
       if(_jumpCounter < 2) { // maximum 2 consecutive jumps
@@ -185,6 +205,27 @@ abstract class Fighter extends PhysicalAsset {
       }
       _jumpCounter++;
       }
+    }
+  }
+
+  void hit() {
+    if(_currAction != _A_BLOCK && _isHit == false && _currAction != _A_STUN) { // can't be hit if blocking
+      _isHit = true;
+      if(orientation == LEFT)
+        startAnimation("stun_left");
+      else
+        startAnimation("stun_right");
+    }
+  }
+
+  void eject() {
+    if(_currAction != _A_BLOCK && _isEject == false) { // can't be eject if blocking
+      _isEject = true;
+      _currAction = _A_STUN;
+      if(orientation == LEFT)
+        startAnimation("stun_left");
+      else
+        startAnimation("stun_right");
     }
   }
   
@@ -211,8 +252,10 @@ abstract class Fighter extends PhysicalAsset {
   }
 
   void block() {
-    if(_currAction == _A_NONE) {
+    _isBlocking  = true;
+    if((_currAction == _A_NONE) || (_currAction == _A_MOVE) || (_currAction == _A_JUMP)) {
       _currAction = _A_BLOCK;
+      velX = 0;
       if(orientation == LEFT)
         startAnimation("block_left");
       else
@@ -223,6 +266,7 @@ abstract class Fighter extends PhysicalAsset {
   void stopBlock() {
     if(_currAction == _A_BLOCK) {
       _currAction = _A_NONE;
+      _isBlocking = false;
       if(orientation == LEFT)
         startAnimation("idle_left");
       else
@@ -270,6 +314,7 @@ class Fireball extends PhysicalAsset {
     this.height = height;
     // physical properties
     type = PhysicalAsset.DYNAMIC;
+    projectile = true;
     // hitbox
     this.hitboxX = hitboxX;
     this.hitboxY = hitboxY;
@@ -308,6 +353,9 @@ class RedSantaClaus extends Fighter {
     // hitboxe
     hitboxX = 6;
     hitboxY = 11;
+    // respawn
+    respawnPosX = posX;
+    respawnPosY = posY;
     // basic attack
     _hurtBasicOffsetX = 2;
     hurtBasicOffsetY = 0.25;
@@ -390,6 +438,24 @@ class RedSantaClaus extends Fighter {
       25:spritesPath + 'jump_r_6.png'
     };
     animationsMap["jump_right"] = framesMap;
+
+    // stun left
+    framesMap = {
+      0:spritesPath + 'stun_l_1.png',
+      5:spritesPath + 'stun_l_2.png',
+      10:spritesPath + 'stun_l_3.png',
+      15:spritesPath + 'stun_l_4.png'
+    };
+    animationsMap["stun_left"] = framesMap;
+    
+    // stun right
+    framesMap = {
+      0:spritesPath + 'stun_r_1.png',
+      5:spritesPath + 'stun_r_2.png',
+      10:spritesPath + 'stun_r_3.png',
+      15:spritesPath + 'stun_r_4.png'
+    };
+    animationsMap["stun_right"] = framesMap;
 
     // attack left
     framesMap = {
@@ -509,6 +575,9 @@ class GreenSantaClaus extends Fighter {
     // hitboxe
     hitboxX = 6;
     hitboxY = 11;
+    // respawn
+    respawnPosX = posX;
+    respawnPosY = posY;
     // basic attack
     _hurtBasicOffsetX = 2;
     hurtBasicOffsetY = 0.25;
@@ -591,6 +660,24 @@ class GreenSantaClaus extends Fighter {
       25:spritesPath + 'jump_r_6.png'
     };
     animationsMap["jump_right"] = framesMap;
+
+    // stun left
+    framesMap = {
+      0:spritesPath + 'stun_l_1.png',
+      5:spritesPath + 'stun_l_2.png',
+      10:spritesPath + 'stun_l_3.png',
+      15:spritesPath + 'stun_l_4.png'
+    };
+    animationsMap["stun_left"] = framesMap;
+    
+    // stun right
+    framesMap = {
+      0:spritesPath + 'stun_r_1.png',
+      5:spritesPath + 'stun_r_2.png',
+      10:spritesPath + 'stun_r_3.png',
+      15:spritesPath + 'stun_r_4.png'
+    };
+    animationsMap["stun_right"] = framesMap;
 
     // attack left
     framesMap = {

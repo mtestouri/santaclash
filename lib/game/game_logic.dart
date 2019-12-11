@@ -8,20 +8,30 @@ import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 // TODO
-// bluetooth (async await in renderer ?)
+// Check mulitplayer start fail
+
 // stunt when hit (use animation)
-// check blocking with attacks
 // further improve animation and action system (quicker blocking)
-// adjust animations timing and other parameters (hitboxes, hurtboxes, ...)
-// private variables and functions
-// restructure menus & clean code
 // ui life, out of border
+
+// bluetooth (sync)
+// check blocking with attacks
+// adjust animations timing and other parameters (hitboxes, hurtboxes, ...)
+// restructure menus & clean code
+// private variables and functions
 
 class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();
 
   @override
-  Future<void> update(Queue<String> inputs, GameAssets gameAssets) async {
+  Future<int> update(Queue<String> inputs, GameAssets gameAssets) async {
+    // check connection failure
+    if(await multiplayer.isConnected == false) {
+      // TODO create end screen error
+      return GameLogic.FINISHED;
+    }
+    
+    // extract the assets
     SmashLikeAssets assets = gameAssets;
     Fighter player = assets.player;
     Fighter opponent = assets.opponent;
@@ -99,7 +109,6 @@ class SmashLikeLogic extends GameLogic {
       multiplayer.send(Multiplayer.NONE);
 
     // opponent inputs
-    // TODO check connection failure
     switch(await multiplayer.receive()) {
       case Multiplayer.LEFT_START:
         opponent.move(Fighter.LEFT);
@@ -143,18 +152,26 @@ class SmashLikeLogic extends GameLogic {
     }
 
     // basic attacks
-    if(checkHurtBasic(player, opponent) && (opponent.damage < 100))
+    if(checkHurtBasic(player, opponent) && (opponent.damage < 100)) {
       opponent.damage += 0.1;
-    if(checkHurtBasic(opponent, player) && (player.damage < 100))
+      opponent.hit();
+    }
+    if(checkHurtBasic(opponent, player) && (player.damage < 100)) {
       player.damage += 0.1;
+      player.hit();
+    }
     
     // smash attacks
     bool ejectOpponent = checkHurtSmash(player, opponent);
     bool ejectPlayer = checkHurtSmash(opponent, player);
-    if(ejectPlayer)
+    if(ejectPlayer){
+      player.eject();
       ejectFighter(player, opponent.orientation, 3, 8);
-    if(ejectOpponent)
+    }
+    if(ejectOpponent){
+      opponent.eject();
       ejectFighter(opponent, player.orientation, 3, 8);
+    }
 
     // remove useless fireballs
     fireballs.removeWhere((fireball) => fireball.velX == 0);
@@ -166,13 +183,15 @@ class SmashLikeLogic extends GameLogic {
     // check fireballs hits
     for(Fireball fireball in fireballs) {
       if(checkHurtFireball(player, fireball)) {
+        player.hit();
         if(player.damage < 100) {
-          opponent.damage += 5;
+          player.damage += 5;
         }
         fireball.velX = 0;
         continue;
       }
       if(checkHurtFireball(opponent, fireball)) {
+        opponent.hit();
         if(opponent.damage < 100) {
           opponent.damage += 5;
         }
@@ -180,8 +199,40 @@ class SmashLikeLogic extends GameLogic {
       }
     }
 
+    if(outOfLimits(player)) {
+      player.posX = player.respawnPosX;
+      player.posY = player.respawnPosY;
+      player.velX = 0;
+      player.velY = 0;
+      player.damage = 0;
+      player.lifes--;
+      if(player.lifes == 0) {
+        // TODO creat end Screen lose
+        return GameLogic.FINISHED;
+      }
+    }
+    if(outOfLimits(opponent)) {
+      opponent.posX = opponent.respawnPosX;
+      opponent.posY = opponent.respawnPosY;
+      opponent.velX = 0;
+      opponent.velY = 0;
+      opponent.damage = 0;
+      opponent.lifes--;
+      if(opponent.lifes == 0) {
+        // TODO creat end Screen win
+        return GameLogic.FINISHED;
+      }
+    }
+
     // TODO check out of the arena limits, life and end of game
+    return GameLogic.ON_GOING;
   }
+}
+
+bool outOfLimits (Fighter fighter){
+  if(fighter.posX < -10 || fighter.posX > 110 || fighter.posY < -8)
+    return true;
+  return false;
 }
 
 bool checkHurtBasic(Fighter att, Fighter def) {
