@@ -19,7 +19,7 @@ class _HostState extends State<Host> with TickerProviderStateMixin{
   Multiplayer _multiplayer=Multiplayer();
 
   @override
-  void initSate(){
+  void initState(){
     _multiplayer.host();
     _waitForConnection=AnimationController(
       duration: Duration(seconds: 1),
