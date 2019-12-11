@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
-import 'package:smashlike/menu.dart';
+import 'package:smashlike/menu/menu.dart';
 
 class Credits extends StatelessWidget {
   @override
@@ -82,6 +82,7 @@ class ScrollCredits extends StatelessWidget{
               "Ansinuz\n"
               "Srip\n"
               "Freepik\n"
+              "TheWiseHedgehog\n"
               "Dusan Pavkovic WARlord\n"
               "Elthen",
           style: TextStyle(

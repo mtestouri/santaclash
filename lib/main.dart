@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/menu.dart';
+import 'package:smashlike/menu/menu.dart';
 
 void main() => runApp(new App());
 
@@ -44,6 +44,11 @@ class HomePage extends StatelessWidget {
             ),
             child: Stack(
               children: [
+                Align(
+                  alignment: Alignment(-0.97, -0.98),
+                  child: Text("V_1.0",style: TextStyle(color: Colors.white,fontSize: 10)),
+                
+            ),
                 Align(
                   alignment: Alignment(0, -0.89),
                   child: Title(),

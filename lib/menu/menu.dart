@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
-import 'package:smashlike/credits.dart';
-import 'package:smashlike/selection.dart';
-import 'package:smashlike/join.dart';
+import 'package:smashlike/menu/credits.dart';
+import 'package:smashlike/menu/selection.dart';
+import 'package:smashlike/menu/join.dart';
+
+
 
 class MenuPage extends StatelessWidget {
   @override

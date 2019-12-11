@@ -3,8 +3,8 @@ import 'package:smashlike/game/game_assets.dart';
 import 'package:smashlike/game/multiplayer/multiplayer.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
-import 'package:smashlike/menu.dart';
 import 'package:smashlike/game.dart';
+import 'package:smashlike/menu/menu.dart';
 
 class Host extends StatefulWidget {
   @override
