@@ -14,6 +14,7 @@ import 'package:smashlike/smash_engine/smash_engine.dart';
 // adjust animations timing and other parameters (hitboxes, hurtboxes, ...)
 // private variables and functions
 // restructure menus & clean code
+// ui life, out of border
 
 class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();

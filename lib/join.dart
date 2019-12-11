@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smashlike/game/game_assets.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
 import 'package:smashlike/menu.dart';
@@ -265,7 +266,7 @@ class DynamicBlueListState extends State<DynamicBlueList> {
                 }
                 Navigator.push(
                   context,
-                  FadeRoute(page: Game(mapId: multiplayer.mapId,playerId: playerId, side: Game.RIGHT,)),
+                  FadeRoute(page: Game(mapId: multiplayer.mapId,playerId: playerId, side: GameAssetsFactory.RIGHT_SIDE,)),
                 );
 
 

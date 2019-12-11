@@ -9,8 +9,6 @@ class Game extends StatelessWidget {
   final int playerId;
   final int mapId;
   final int side;
-  static const int LEFT = 0;
-  static const int RIGHT = 1;
 
   Game({@required this.playerId, @required this.mapId,@required this.side});
 
