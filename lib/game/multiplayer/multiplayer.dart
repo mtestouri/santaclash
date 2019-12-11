@@ -19,7 +19,7 @@ class Multiplayer {
   Bluetooth bluetooth = Bluetooth();
   
   bool _isServer = false;
-  int mapId = 0, characterId = 0;
+  int mapId = 0, firstPlayerId = 0;
 
   static final Multiplayer _inst = Multiplayer._internal();
   Multiplayer._internal();
@@ -49,11 +49,11 @@ class Multiplayer {
   Future<void> start() async {
     if(_isServer) {
       await bluetooth.writeByte(mapId);
-      await bluetooth.writeByte(characterId);
+      await bluetooth.writeByte(firstPlayerId);
     }
     else {
       mapId = await bluetooth.readByte();
-      characterId = await bluetooth.readByte();
+      firstPlayerId = await bluetooth.readByte();
     }
   }
 

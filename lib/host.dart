@@ -29,11 +29,15 @@ class _HostState extends State<Host> with TickerProviderStateMixin{
     _animation.addStatusListener((animationStatus) async {
       if (animationStatus == AnimationStatus.completed)
         _waitForConnection.reset();
-          if(await _multiplayer.isReady) {
-            Navigator.push(
-              context,
-              FadeRoute(page: Game(mapId: widget.mapId,playerId: widget.playerId,)),
-            );
+          if(await _multiplayer.isConnected) {
+            _multiplayer.start().then((unused) {
+              Navigator.push(
+                  context,
+                  FadeRoute(page: Game(mapId: widget.mapId, playerId: widget.playerId,)),
+
+              );
+            });
+
           }
         _waitForConnection.forward();
       }

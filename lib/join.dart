@@ -247,11 +247,22 @@ class DynamicBlueListState extends State<DynamicBlueList> {
         onPressed: () {
           multiplayer.join(name).then((connected){
             if(connected) {
-              Navigator.of(context).pop();
-              Navigator.push(
-                context,
-                FadeRoute(page: Game(mapId: 1,playerId: 1,)),
-              );
+
+              multiplayer.start().then((unused){
+                Navigator.of(context).pop();
+                int playerId;
+                if(multiplayer.firstPlayerId==0){
+                  playerId=1;
+                }
+                else{
+                  playerId=0;
+                }
+                Navigator.push(
+                  context,
+                  FadeRoute(page: Game(mapId: multiplayer.mapId,playerId: playerId,)),
+                );
+              });
+
             }
             else {
               Navigator.of(context).pop();
