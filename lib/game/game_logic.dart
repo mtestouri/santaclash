@@ -166,16 +166,17 @@ class SmashLikeLogic extends GameLogic {
     // check fireballs hits
     for(Fireball fireball in fireballs) {
       if(checkHurtFireball(player, fireball)) {
-        ejectFighter(player, fireball.direction, 20, 60);
+        if(player.damage < 100) {
+          opponent.damage += 5;
+        }
         fireball.velX = 0;
         continue;
       }
       if(checkHurtFireball(opponent, fireball)) {
-        if(opponent.damage<100) {
+        if(opponent.damage < 100) {
           opponent.damage += 5;
-          fireball.velX = 0;
-
         }
+        fireball.velX = 0;
       }
     }
 
