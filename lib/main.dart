@@ -113,7 +113,6 @@ class _MyBlinkingButtonState extends State<MyBlinkingButton>
   }
 }
 
-
 class FadeRoute extends PageRouteBuilder {
   final Widget page;
   FadeRoute({this.page})

@@ -8,20 +8,29 @@ import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 // TODO
-// bluetooth (async await in renderer ?)
+// Check mulitplayer start fail
+// init player opponent pos
+
 // stunt when hit (use animation)
-// check blocking with attacks
 // further improve animation and action system (quicker blocking)
-// adjust animations timing and other parameters (hitboxes, hurtboxes, ...)
-// private variables and functions
-// restructure menus & clean code
 // ui life, out of border
+
+// bluetooth (sync)
+// check blocking with attacks
+// adjust animations timing and other parameters (hitboxes, hurtboxes, ...)
+// restructure menus & clean code
+// private variables and functions
 
 class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();
 
   @override
-  Future<void> update(Queue<String> inputs, GameAssets gameAssets) async {
+  Future<int> update(Queue<String> inputs, GameAssets gameAssets) async {
+    // check connection failure
+    if(await multiplayer.isConnected == false)
+      return GameLogic.FINISHED;
+    
+    // extract the assets
     SmashLikeAssets assets = gameAssets;
     Fighter player = assets.player;
     Fighter opponent = assets.opponent;
@@ -99,7 +108,6 @@ class SmashLikeLogic extends GameLogic {
       multiplayer.send(Multiplayer.NONE);
 
     // opponent inputs
-    // TODO check connection failure
     switch(await multiplayer.receive()) {
       case Multiplayer.LEFT_START:
         opponent.move(Fighter.LEFT);
@@ -167,7 +175,7 @@ class SmashLikeLogic extends GameLogic {
     for(Fireball fireball in fireballs) {
       if(checkHurtFireball(player, fireball)) {
         if(player.damage < 100) {
-          opponent.damage += 5;
+          player.damage += 5;
         }
         fireball.velX = 0;
         continue;
@@ -181,6 +189,7 @@ class SmashLikeLogic extends GameLogic {
     }
 
     // TODO check out of the arena limits, life and end of game
+    return GameLogic.ON_GOING;
   }
 }
 

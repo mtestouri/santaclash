@@ -33,11 +33,13 @@ class SmashEngine extends InheritedWidget {
 }
 
 abstract class GameLogic {
-  bool _gameFinished = false;
+  // game status
+  static const int ON_GOING = 0;
+  static const int FINISHED = 1;
+  
+  // shown at the end of the game
+  Widget endGameScreen = Container();
 
-  bool get gameFinished => _gameFinished;
-
-  // TODO exit screen with reason
-
-  Future<void> update (Queue<String> inputs, GameAssets gameAssets);
+  // game logic update
+  Future<int> update (Queue<String> inputs, GameAssets gameAssets);
 }
