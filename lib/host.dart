@@ -16,34 +16,43 @@ class Host extends StatefulWidget {
 class _HostState extends State<Host> with TickerProviderStateMixin{
   AnimationController _waitForConnection;
   Animation _animation;
-  Multiplayer _multiplayer=Multiplayer();
+  Multiplayer _multiplayer = Multiplayer();
 
   @override
-  void initState(){
-    _multiplayer.host();
-    _waitForConnection=AnimationController(
-      duration: Duration(seconds: 1),
+  void initState() {
+    super.initState();
+
+    _multiplayer.host(); // ask the multiplayer to wait for a connection
+
+    _waitForConnection = AnimationController(
+      duration: Duration(milliseconds: 500),
       vsync: this,
     );
+    
     _animation = Tween<double>(begin: 0, end: 1).animate(_waitForConnection);
+    _animation.addListener(() {setState(() {});});
     _animation.addStatusListener((animationStatus) async {
-      if (animationStatus == AnimationStatus.completed)
+      if(animationStatus == AnimationStatus.completed) {
         _waitForConnection.reset();
-          if(await _multiplayer.isConnected) {
-            _multiplayer.start().then((unused) {
-              Navigator.push(
-                  context,
-                  FadeRoute(page: Game(mapId: widget.mapId, playerId: widget.playerId,)),
 
-              );
-            });
+        if(await _multiplayer.isConnected) {
 
-          }
-        _waitForConnection.forward();
+          _multiplayer.mapId = widget.mapId;
+          _multiplayer.firstPlayerId = widget.playerId;
+
+          _multiplayer.start().then((onValue) {
+            Navigator.push(
+                context,
+                FadeRoute(page: Game(mapId: widget.mapId, playerId: widget.playerId)),
+            );
+          });
+        }
+        else
+          _waitForConnection.forward();
       }
-    );
+    });
 
-    super.initState();
+    _waitForConnection.forward();
   }
 
   @override

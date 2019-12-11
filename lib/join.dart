@@ -4,7 +4,6 @@ import 'package:smashlike/main.dart';
 import 'package:smashlike/menu.dart';
 import 'package:smashlike/game.dart';
 import 'package:smashlike/game/multiplayer/multiplayer.dart';
-import 'dart:io';
 import 'dart:async';
 
 class Join extends StatelessWidget {
@@ -220,34 +219,28 @@ class DynamicBlueList extends StatefulWidget {
 }
 
 class DynamicBlueListState extends State<DynamicBlueList> {
-  List<String> blueList=List();
+  List<String> blueList = List();
   Multiplayer multiplayer = Multiplayer();
 
-  Future<List<String>> getServerList()async{
+  Future<List<String>> getServerList() async {
     return await multiplayer.getServers();
-
   }
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    getServerList().then((servers){
+    getServerList().then((servers) {
       blueList=servers;
-      setState(() {
-
-      });
-    }
-    );
-
+      setState(() {});
+    });
   }
 
   connectionDialog(BuildContext context,String name) {
-
     Widget yesButton = FlatButton(
         child: Text("Yes"),
         onPressed: () {
           multiplayer.join(name).then((connected){
             if(connected) {
-
               multiplayer.start().then((unused){
                 Navigator.of(context).pop();
                 int playerId;
@@ -333,7 +326,7 @@ class DynamicBlueListState extends State<DynamicBlueList> {
         return ListTile(
           title: Text(post, textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
           onTap: () {
-            connectionDialog(context,blueList[index]);
+            connectionDialog(context, blueList[index].substring(0, blueList[index].length-1));
             setState((){});
           },
         );

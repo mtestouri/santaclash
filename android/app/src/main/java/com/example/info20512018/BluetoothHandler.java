@@ -115,7 +115,7 @@ class BluetoothHandler {
         // create and run the accepting thread
         try {
             bAccept = new BluetoothAcceptThread(this, NAME, MY_UUID);
-            bAccept.run();
+            bAccept.start();
             return true;
         }
         catch(IOException e) {
@@ -129,15 +129,16 @@ class BluetoothHandler {
      * @param bSocket the new Bluetooth socket
      */
     synchronized void setBluetoothSocket(BluetoothSocket bSocket) {
-        if(bSocket != null) {
-            try {
-                bSocket.close();
-            }
-            catch(IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            if(this.bSocket != null)    
+                this.bSocket.close();
+            this.bSocket = bSocket;
+            this.outputStream = bSocket.getOutputStream();
+            this.inputStream = bSocket.getInputStream();
         }
-        this.bSocket = bSocket;
+        catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -145,6 +146,7 @@ class BluetoothHandler {
      * @return true if connected, false otherwise
      */
     boolean isConnected() {
+        //System.out.println("ISCONNECTED ? " + ((bSocket != null) && bSocket.isConnected()));
         return ((bSocket != null) && bSocket.isConnected());
     }
 

@@ -25,25 +25,25 @@ class BluetoothAcceptThread extends Thread {
         if(bServerSocket == null)
             return;
         // listen for a connection
+        BluetoothSocket bSocket = null;
         while (true) {
-            BluetoothSocket bSocket;
             try {
                 bSocket = bServerSocket.accept();
             }
             catch (IOException e) {
                 e.printStackTrace();
-                return;
+                break;
             }
             // check successful connection
             if (bSocket != null) {
                 try {
-                    bServerSocket.close();
                     bHandler.setBluetoothSocket(bSocket);
+                    bServerSocket.close();
                 }
                 catch (IOException e) {
                     e.printStackTrace();
                 }
-                return;
+                break;
             }
         }
     }
