@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
 import 'package:smashlike/menu.dart';
+import 'package:smashlike/game.dart';
 import 'package:smashlike/game/multiplayer/multiplayer.dart';
 import 'dart:io';
 import 'dart:async';
@@ -9,7 +10,7 @@ import 'dart:async';
 class Join extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<String> posts = ["bite","adrien","oups","Mehdi","Sami","zizi"];
+
     ScreenUtil.init(context, screenOrientation: "landscape");
     return Scaffold(
       body: Container(
@@ -32,7 +33,7 @@ class Join extends StatelessWidget {
                   width: ScreenUtil.unitWidth*50,
 
 
-                  child: DynamicBlueList(posts),
+                  child: DynamicBlueList(),
                 ),
               ),
               Align(
@@ -101,42 +102,56 @@ class PreJoin extends StatelessWidget{
       body: GestureDetector(
         onTap:() {
           Navigator.push(
-          context,
-          FadeRoute(page: Join()),
-      );
-    },
-      child: Container(
-        height: ScreenUtil.screenHeight,
-        width: ScreenUtil.screenWidth,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/menus/joinback.png'),
-            fit: BoxFit.fill,
+            context,
+            FadeRoute(page: Join()),
+          );
+        },
+        child: Container(
+          height: ScreenUtil.screenHeight,
+          width: ScreenUtil.screenWidth,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/menus/joinback.png'),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child:Stack(
-            children:[
-              Align(
-                alignment: Alignment(0, -0.6),
-                child: Text("Warning !\n Don't forget to activate your bluetooth and to pair your device with your opponent before joining a host game"  , textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
-              ),
-              Align(
-                alignment: Alignment(0, 0.9),
-                child: Container(
-                  height: ScreenUtil.unitHeight*30,
-                  width: ScreenUtil.unitWidth*20,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/menus/bluetooth.png'),
-                      fit: BoxFit.fill,
+          child:Stack(
+              children:[
+                Align(
+                  alignment: Alignment(0, -0.6),
+                  child: Text("Warning !\n Don't forget to activate your bluetooth and to pair your device with your opponent before joining a host game"  , textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
+                ),
+                Align(
+                  alignment: Alignment(0.2, 0.6),
+                  child: Container(
+                    height: ScreenUtil.unitHeight*20,
+                    width: ScreenUtil.unitWidth*15,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/menus/prebluetooth.png'),
+                        fit: BoxFit.fill,
 
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ]
+                Align(
+                  alignment: Alignment(-0.2, 0.6),
+                  child: Container(
+                    height: ScreenUtil.unitHeight*20,
+                    width: ScreenUtil.unitWidth*15,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/menus/warning.png'),
+                        fit: BoxFit.fill,
+
+                      ),
+                    ),
+                  ),
+                ),
+              ]
+          ),
         ),
-      ),
       ),
     );
   }
@@ -160,18 +175,18 @@ class EasterEgg extends StatelessWidget{
           ),
         ),
         child: Stack(
-          children:[
-            Align(
-              alignment: Alignment(0, -0.8),
-              child: Text("Well played ! You find the EasterEgg page !", textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
-            ),
-            Align(
-              alignment: Alignment(0, 0.15),
-              child: ScrollText(),
-            ),
-            Align(
-              alignment: Alignment(0, 0.95),
-              child: Container(
+            children:[
+              Align(
+                alignment: Alignment(0, -0.8),
+                child: Text("Well played ! You find the EasterEgg page !", textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
+              ),
+              Align(
+                alignment: Alignment(0, 0.15),
+                child: ScrollText(),
+              ),
+              Align(
+                alignment: Alignment(0, 0.95),
+                child: Container(
                   height: ScreenUtil.unitHeight * 20,
                   width: ScreenUtil.unitWidth * 15,
                   decoration: BoxDecoration(
@@ -180,27 +195,25 @@ class EasterEgg extends StatelessWidget{
                       fit: BoxFit.fill,
                     ),
                   ),
-                child: FlatButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      FadeRoute(page: Join()),
-                    ); // switch to game page
-                  },
-                  child: null,
+                  child: FlatButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        FadeRoute(page: Join()),
+                      ); // switch to game page
+                    },
+                    child: null,
+                  ),
                 ),
               ),
-            ),
-          ]
+            ]
         ),
       ),
     );
   }
 }
 class DynamicBlueList extends StatefulWidget {
-  final List<String> blueList;
 
-  DynamicBlueList(this.blueList);
 
   @override
   DynamicBlueListState createState() => DynamicBlueListState();
@@ -232,9 +245,20 @@ class DynamicBlueListState extends State<DynamicBlueList> {
     Widget yesButton = FlatButton(
         child: Text("Yes"),
         onPressed: () {
-          sleep(Duration(seconds: 2));
-          failedDialog(context);
-        },
+          multiplayer.join(name).then((connected){
+            if(connected) {
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                FadeRoute(page: Game(mapId: 1,playerId: 1,)),
+              );
+            }
+            else {
+              Navigator.of(context).pop();
+              failedDialog(context);
+            }
+          });
+        }
     );
 
     Widget noButton = FlatButton(
@@ -269,8 +293,8 @@ class DynamicBlueListState extends State<DynamicBlueList> {
       child: Text("OK"),
       onPressed: () {
         Navigator.of(context).pop();
-        Navigator.of(context).pop();
-        },
+
+      },
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
