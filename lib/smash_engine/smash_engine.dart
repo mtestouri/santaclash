@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/asset.dart';
@@ -32,5 +33,11 @@ class SmashEngine extends InheritedWidget {
 }
 
 abstract class GameLogic {
-  void update(Queue<String> inputs, GameAssets gameAssets);
+  bool _gameFinished = false;
+
+  bool get gameFinished => _gameFinished;
+
+  // TODO exit screen with reason
+
+  Future<void> update (Queue<String> inputs, GameAssets gameAssets);
 }

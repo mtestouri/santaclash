@@ -334,17 +334,14 @@ class RedSantaClaus extends Fighter {
   // sprites path
   String spritesPath = 'assets/images/fighters/red_santaclaus/';
   
-  RedSantaClaus(int id, double posX, double posY) {
+  RedSantaClaus(int id, double posX, double posY, int orientation) {
     // id
     this.id = id;
     // visual properties
-    //figther
-    //spritesPath += color + '_santaclaus/';
-    if(this.id == Fighter.PLAYER){
-      this.imageFile = spritesPath + 'idle_r_1.png';
-    }else{
+    if(this.orientation == Fighter.LEFT)
       this.imageFile = spritesPath + 'idle_l_1.png';
-    }
+    else
+      this.imageFile = spritesPath + 'idle_r_1.png';
     width = 8;
     height = 17;
     this.posX = posX;
@@ -556,17 +553,14 @@ class GreenSantaClaus extends Fighter {
   // sprites path
   String spritesPath = 'assets/images/fighters/green_santaclaus/';
   
-  GreenSantaClaus(int id, double posX, double posY) {
+  GreenSantaClaus(int id, double posX, double posY, int orientation) {
     // id
     this.id = id;
     // visual properties
-    //figther
-    //spritesPath += color + '_santaclaus/';
-    if(this.id == Fighter.PLAYER){
-      this.imageFile = spritesPath + 'idle_r_1.png';
-    }else{
+    if(this.orientation == Fighter.LEFT)
       this.imageFile = spritesPath + 'idle_l_1.png';
-    }
+    else
+      this.imageFile = spritesPath + 'idle_r_1.png';
     width = 8;
     height = 17;
     this.posX = posX;

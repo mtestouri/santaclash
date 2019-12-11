@@ -5,14 +5,17 @@ import 'package:smashlike/game/assets/ui_assets.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 
 class GameAssetsFactory {
-  static GameAssets build(String gameAssetsId) {
-    switch(gameAssetsId) {
-      case "debug":
+  static const int LEFT_SIDE = 0;
+  static const int RIGHT_SIDE = 1;
+
+  static GameAssets build(int mapId, int playerId, int side) {
+    switch(mapId) {
+      case 0:
         return debug();
-      case "map1":
-        return map1();
-      case "map2":
-        return map2();
+      case 1:
+        return map1(playerId, side);
+      case 2:
+        return map2(playerId, side);
       default:
         return debug();
     }
@@ -37,8 +40,8 @@ class GameAssetsFactory {
     physicalAssets.add(ArenaObject(arenaPath + 'rock.png', 8, 11, 6, 9, 28, 32));
     
     // fighters
-    Fighter player = GreenSantaClaus(Fighter.PLAYER, 10, 50);
-    Fighter opponent = RedSantaClaus(Fighter.OPPONENT, 80, 50);
+    Fighter player = GreenSantaClaus(Fighter.PLAYER, 10, 50, Fighter.RIGHT);
+    Fighter opponent = RedSantaClaus(Fighter.OPPONENT, 80, 50, Fighter.LEFT);
     
     // ui
     List<Asset> ui = List();
@@ -55,7 +58,7 @@ class GameAssetsFactory {
     );
   }
 
-  static GameAssets map1() {
+  static GameAssets map1(int playerId, int side) {
     String arenaPath = 'assets/images/arenas/map1/';
     // background assets
     List<Asset> backgroundAssets = List();
@@ -76,9 +79,29 @@ class GameAssetsFactory {
     physicalAssets.add(ArenaObject(arenaPath + 'long_block.png', 18, 11, 16, 9, 70, 55));
 
     // fighters
-    Fighter player = GreenSantaClaus(Fighter.PLAYER, 30, 35);
-    Fighter opponent = RedSantaClaus(Fighter.OPPONENT, 70, 35);
-    
+    Fighter player;
+    Fighter opponent;
+    if(playerId == 0) {
+      if(side == LEFT_SIDE) {
+        player = RedSantaClaus(Fighter.PLAYER, 18, 34, Fighter.RIGHT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
+      }
+      else {
+        player = RedSantaClaus(Fighter.PLAYER, 78, 34, Fighter.LEFT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
+      }
+    }
+    if(playerId == 1) {
+      if(side == LEFT_SIDE) {
+        player = GreenSantaClaus(Fighter.PLAYER, 18, 34, Fighter.RIGHT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
+      }
+      else {
+        player = GreenSantaClaus(Fighter.PLAYER, 78, 34, Fighter.LEFT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
+      }
+    }
+
     // ui
     List<Asset> ui = List();
     ui.add(DamageIndicator(player, 18, 90));
@@ -94,7 +117,7 @@ class GameAssetsFactory {
     );
   }
 
-  static GameAssets map2() {
+  static GameAssets map2(int playerId, int side) {
     String arenaPath = 'assets/images/arenas/map2/';
     // background assets
     List<Asset> backgroundAssets = List();
@@ -123,8 +146,28 @@ class GameAssetsFactory {
     physicalAssets.add(ArenaObject(arenaPath + 'bolc_g_ground.png', 17, 30, 16, 28, 78, 14));
 
     // fighters
-    Fighter player = GreenSantaClaus(Fighter.PLAYER, 18, 26);
-    Fighter opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34);
+    Fighter player;
+    Fighter opponent;
+    if(playerId == 0) {
+      if(side == LEFT_SIDE) {
+        player = RedSantaClaus(Fighter.PLAYER, 18, 26, Fighter.RIGHT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
+      }
+      else {
+        player = RedSantaClaus(Fighter.PLAYER, 78, 26, Fighter.LEFT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
+      }
+    }
+    if(playerId == 1) {
+      if(side == LEFT_SIDE) {
+        player = GreenSantaClaus(Fighter.PLAYER, 18, 26, Fighter.RIGHT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
+      }
+      else {
+        player = GreenSantaClaus(Fighter.PLAYER, 78, 26, Fighter.LEFT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
+      }
+    }
     
     // ui
     List<Asset> ui = List();

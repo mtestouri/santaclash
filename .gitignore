@@ -11,3 +11,5 @@ build/
 .idea/
 ios/
 pubspec.lock
+android/.project
+android/.settings/
