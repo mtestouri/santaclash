@@ -43,7 +43,7 @@ class _HostState extends State<Host> with TickerProviderStateMixin{
           _multiplayer.start().then((onValue) {
             Navigator.push(
                 context,
-                FadeRoute(page: Game(mapId: widget.mapId, playerId: widget.playerId)),
+                FadeRoute(page: Game(mapId: widget.mapId, playerId: widget.playerId, side: Game.LEFT)),
             );
           });
         }
@@ -58,39 +58,41 @@ class _HostState extends State<Host> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
-    return Scaffold(
-      body: Container(
-        height: ScreenUtil.screenHeight,
-        width: ScreenUtil.screenWidth,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/menus/joinback.png'),
-            fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child:Scaffold(
+        body: Container(
+          height: ScreenUtil.screenHeight,
+          width: ScreenUtil.screenWidth,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/menus/joinback.png'),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child:Stack(
-            children:[
-              Align(
-                alignment: Alignment(0, -0.6),
-                child: Text("Waiting for a player..."  , textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
-              ),
-              Align(
-                alignment: Alignment(-0.8, 0.1),
-                child: Container(
-                  height: ScreenUtil.unitHeight*30,
-                  width: ScreenUtil.unitWidth*20,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/menus/bluetooth.png'),
-                      fit: BoxFit.fill,
+          child:Stack(
+              children:[
+                Align(
+                  alignment: Alignment(0, -0.6),
+                  child: Text("Waiting for a player..."  , textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
+                ),
+                Align(
+                  alignment: Alignment(-0.8, 0.1),
+                  child: Container(
+                    height: ScreenUtil.unitHeight*30,
+                    width: ScreenUtil.unitWidth*20,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/menus/bluetooth.png'),
+                        fit: BoxFit.fill,
 
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment(0.8, 0.1),
-                child:Container(
+                Align(
+                  alignment: Alignment(0.8, 0.1),
+                  child:Container(
                     height: ScreenUtil.unitHeight*30,
                     width: ScreenUtil.unitWidth*20,
                     decoration: BoxDecoration(
@@ -102,11 +104,12 @@ class _HostState extends State<Host> with TickerProviderStateMixin{
                   ),
                 ),
 
-              Align(
-                alignment: Alignment(0, 0.9),
-                child: ReturnButton(),
-              ),
-            ]
+                Align(
+                  alignment: Alignment(0, 0.9),
+                  child: ReturnButton(),
+                ),
+              ]
+          ),
         ),
       ),
     );

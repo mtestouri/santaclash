@@ -8,126 +8,129 @@ class SelectionChara extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
-    return Scaffold(
-      body:Container(
-        height: ScreenUtil.screenHeight,
-        width: ScreenUtil.screenWidth,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/menus/selectback.png'),
-            fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child:Scaffold(
+        body:Container(
+          height: ScreenUtil.screenHeight,
+          width: ScreenUtil.screenWidth,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/menus/selectback.png'),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child:Stack(
-            children:[
-              Align(
-                alignment: Alignment(-1, 0),
-                child:GestureDetector(
-                  onTap:() {
-                    Navigator.push(
-                      context,
-                      FadeRoute(page: SelectionArena(playerId: 0)),
-                    );
-                  },
-                  child:Container(
-                    width: ScreenUtil.screenWidth/2,
-                    height: ScreenUtil.screenHeight,
+          child:Stack(
+              children:[
+                Align(
+                  alignment: Alignment(-1, 0),
+                  child:GestureDetector(
+                    onTap:() {
+                      Navigator.push(
+                        context,
+                        FadeRoute(page: SelectionArena(playerId: 0)),
+                      );
+                    },
+                    child:Container(
+                      width: ScreenUtil.screenWidth/2,
+                      height: ScreenUtil.screenHeight,
 
-                    child:Stack(
-                        children:[
-                          Align(
-                            alignment: Alignment(0, 1),
-                            child: IdleRSanta(),
-                          ),
-                          Align(
-                              alignment: Alignment(0,-0.87),
-                              child:Container(
-                                width: ScreenUtil.unitWidth*22,
-                                height: ScreenUtil.unitHeight*13,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/images/menus/rstitle.png'),
-                                    fit: BoxFit.fill,
+                      child:Stack(
+                          children:[
+                            Align(
+                              alignment: Alignment(0, 1),
+                              child: IdleRSanta(),
+                            ),
+                            Align(
+                                alignment: Alignment(0,-0.87),
+                                child:Container(
+                                  width: ScreenUtil.unitWidth*22,
+                                  height: ScreenUtil.unitHeight*13,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage('assets/images/menus/rstitle.png'),
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
-                                ),
-                              )
-                          ),
-                        ]
+                                )
+                            ),
+                          ]
+                      ),
                     ),
                   ),
+
                 ),
+                Align(
+                  alignment: Alignment(1, 0),
+                  child:GestureDetector(
+                    onTap:() {
+                      Navigator.push(
+                        context,
+                        FadeRoute(page: SelectionArena(playerId: 1)),
+                      );
+                    },
+                    child:Container(
+                      width: ScreenUtil.screenWidth/2,
+                      height: ScreenUtil.screenHeight,
 
-              ),
-              Align(
-                alignment: Alignment(1, 0),
-                child:GestureDetector(
-                  onTap:() {
-                    Navigator.push(
-                      context,
-                      FadeRoute(page: SelectionArena(playerId: 1)),
-                    );
-                  },
-                  child:Container(
-                    width: ScreenUtil.screenWidth/2,
-                    height: ScreenUtil.screenHeight,
+                      child:Stack(
+                          children:[
 
-                    child:Stack(
-                        children:[
-
-                          Align(
-                            alignment: Alignment(0, 1),
-                            child: IdleGSanta(),
-                          ),
-                          Align(
-                              alignment: Alignment(0,-0.87),
-                              child:Container(
-                                width: ScreenUtil.unitWidth*22,
-                                height: ScreenUtil.unitHeight*13,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/images/menus/gstitle.png'),
-                                    fit: BoxFit.fill,
+                            Align(
+                              alignment: Alignment(0, 1),
+                              child: IdleGSanta(),
+                            ),
+                            Align(
+                                alignment: Alignment(0,-0.87),
+                                child:Container(
+                                  width: ScreenUtil.unitWidth*22,
+                                  height: ScreenUtil.unitHeight*13,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage('assets/images/menus/gstitle.png'),
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
-                                ),
-                              )
-                          ),
-                        ]
+                                )
+                            ),
+                          ]
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              Align(
-                alignment: Alignment(0, 0),
-                child: Container(
-                  width: ScreenUtil.unitWidth*15,
-                  height: ScreenUtil.screenHeight,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/menus/ligne.png'),
-                      fit: BoxFit.fill,
+                Align(
+                  alignment: Alignment(0, 0),
+                  child: Container(
+                    width: ScreenUtil.unitWidth*15,
+                    height: ScreenUtil.screenHeight,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/menus/ligne.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment(-0.01, -0.9),
-                child: Container(
-                  width: ScreenUtil.unitWidth*20,
-                  height: ScreenUtil.unitHeight*15,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/menus/vs.png'),
-                      fit: BoxFit.fill,
+                Align(
+                  alignment: Alignment(-0.01, -0.9),
+                  child: Container(
+                    width: ScreenUtil.unitWidth*20,
+                    height: ScreenUtil.unitHeight*15,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/menus/vs.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment(-0.01, 1),
-                child: ReturnButton(),
-              ),
-            ]
+                Align(
+                  alignment: Alignment(-0.01, 1),
+                  child: ReturnButton(),
+                ),
+              ]
+          ),
         ),
       ),
     );
@@ -143,131 +146,134 @@ class SelectionArena extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
-    return Scaffold(
-      body:Container(
-        height: ScreenUtil.screenHeight,
-        width: ScreenUtil.screenWidth,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/menus/selectback.png'),
-            fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child:Scaffold(
+        body:Container(
+          height: ScreenUtil.screenHeight,
+          width: ScreenUtil.screenWidth,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/menus/selectback.png'),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child:Stack(
-            children:[
-              Align(
-                alignment: Alignment(-1, 0),
-                child:GestureDetector(
-                  onTap:() {
-                    Navigator.push(
-                      context,
-                      FadeRoute(page: Host(mapId: 1,playerId: playerId,)),
-                    );
-                  },
-                  child:Container(
-                    width: ScreenUtil.screenWidth/2,
-                    height: 2/3*ScreenUtil.screenHeight,
-                    child:Stack(
-                        children:[
-                          Align(
-                            alignment: Alignment(0, 0.5),
-                            child:Container(
-                              width: ScreenUtil.unitWidth*30,
-                              height: ScreenUtil.unitHeight*40,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/menus/snowlandim.png'),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Align(
-                              alignment: Alignment(0,-0.8),
+          child:Stack(
+              children:[
+                Align(
+                  alignment: Alignment(-1, 0),
+                  child:GestureDetector(
+                    onTap:() {
+                      Navigator.push(
+                        context,
+                        FadeRoute(page: Host(mapId: 1,playerId: playerId,)),
+                      );
+                    },
+                    child:Container(
+                      width: ScreenUtil.screenWidth/2,
+                      height: 2/3*ScreenUtil.screenHeight,
+                      child:Stack(
+                          children:[
+                            Align(
+                              alignment: Alignment(0, 0.5),
                               child:Container(
-                                width: ScreenUtil.unitWidth*22,
-                                height: ScreenUtil.unitHeight*13,
+                                width: ScreenUtil.unitWidth*30,
+                                height: ScreenUtil.unitHeight*40,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: AssetImage('assets/images/menus/snowland.png'),
+                                    image: AssetImage('assets/images/menus/snowlandim.png'),
                                     fit: BoxFit.fill,
                                   ),
                                 ),
-                              )
-                          ),
-                        ]
-                    ),
-                  ),
-                ),
-
-              ),
-              Align(
-                alignment: Alignment(1, 0),
-                child:GestureDetector(
-                  onTap:() {
-                    Navigator.push(
-                      context,
-                      FadeRoute(page: Host(mapId: 2,playerId: playerId,)),
-                    );
-                  },
-                  child:Container(
-                    width: ScreenUtil.screenWidth/2,
-                    height: 2/3*ScreenUtil.screenHeight,
-
-                    child:Stack(
-                        children:[
-                          Align(
-                            alignment: Alignment(0, 0.5),
-                            child:Container(
-                              width: ScreenUtil.unitWidth*30,
-                              height: ScreenUtil.unitHeight*40,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/menus/sunnylandim.png'),
-                                  fit: BoxFit.fill,
-                                ),
                               ),
                             ),
-                          ),
-                          Align(
-                              alignment: Alignment(0,-0.8),
+                            Align(
+                                alignment: Alignment(0,-0.8),
+                                child:Container(
+                                  width: ScreenUtil.unitWidth*22,
+                                  height: ScreenUtil.unitHeight*13,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage('assets/images/menus/snowland.png'),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                )
+                            ),
+                          ]
+                      ),
+                    ),
+                  ),
+
+                ),
+                Align(
+                  alignment: Alignment(1, 0),
+                  child:GestureDetector(
+                    onTap:() {
+                      Navigator.push(
+                        context,
+                        FadeRoute(page: Host(mapId: 2,playerId: playerId,)),
+                      );
+                    },
+                    child:Container(
+                      width: ScreenUtil.screenWidth/2,
+                      height: 2/3*ScreenUtil.screenHeight,
+
+                      child:Stack(
+                          children:[
+                            Align(
+                              alignment: Alignment(0, 0.5),
                               child:Container(
-                                width: ScreenUtil.unitWidth*22,
-                                height: ScreenUtil.unitHeight*15,
+                                width: ScreenUtil.unitWidth*30,
+                                height: ScreenUtil.unitHeight*40,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: AssetImage('assets/images/menus/sunnyland.png'),
+                                    image: AssetImage('assets/images/menus/sunnylandim.png'),
                                     fit: BoxFit.fill,
                                   ),
                                 ),
-                              )
-                          ),
-                        ]
+                              ),
+                            ),
+                            Align(
+                                alignment: Alignment(0,-0.8),
+                                child:Container(
+                                  width: ScreenUtil.unitWidth*22,
+                                  height: ScreenUtil.unitHeight*15,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage('assets/images/menus/sunnyland.png'),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                )
+                            ),
+                          ]
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              Align(
-                alignment: Alignment(0, 0),
-                child: Container(
-                  width: ScreenUtil.unitWidth*15,
-                  height: ScreenUtil.screenHeight,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/menus/ligne.png'),
-                      fit: BoxFit.fill,
+                Align(
+                  alignment: Alignment(0, 0),
+                  child: Container(
+                    width: ScreenUtil.unitWidth*15,
+                    height: ScreenUtil.screenHeight,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/menus/ligne.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment(-0.01, 1),
-                child: ReturnButtonToChara(),
-              ),
+                Align(
+                  alignment: Alignment(-0.01, 1),
+                  child: ReturnButtonToChara(),
+                ),
 
 
-            ]
+              ]
+          ),
         ),
       ),
     );

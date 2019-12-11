@@ -5,7 +5,9 @@ import 'package:smashlike/game/assets/ui_assets.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 
 class GameAssetsFactory {
-  static GameAssets build(int mapId, int playerId) {
+
+
+  static GameAssets build(int mapId, int playerId,int side) {
     switch(mapId) {
       case 0:
         return debug();

@@ -46,15 +46,21 @@ class Multiplayer {
     return bluetooth.connectToPaired(deviceName);
   }
 
-  Future<void> start() async {
+  Future<bool> start() async {
     if(_isServer) {
       await bluetooth.writeByte(mapId);
       await bluetooth.writeByte(firstPlayerId);
+      return true;
     }
     else {
+      print("pénétration");
       mapId = await bluetooth.readByte();
+      print(mapId);
       firstPlayerId = await bluetooth.readByte();
+      print(firstPlayerId);
+      return true;
     }
+
   }
 
   Future<bool> send(int value) {
