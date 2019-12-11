@@ -9,31 +9,34 @@ class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
-    return Scaffold(
-      body: Container(
-        height: ScreenUtil.screenHeight,
-        width: ScreenUtil.screenWidth,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/menus/homepage.png'),
-            fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child:Scaffold(
+        body: Container(
+          height: ScreenUtil.screenHeight,
+          width: ScreenUtil.screenWidth,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/menus/homepage.png'),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment(0, -0.1),
-              child: PlayButton(),
-            ),
-            Align(
-              alignment: Alignment(0, 0.45),
-              child: CreditsButton(),
-            ),
-            Align(
-              alignment: Alignment(0, -0.89),
-              child: Title(),
-            ),
-          ],
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment(0, -0.1),
+                child: PlayButton(),
+              ),
+              Align(
+                alignment: Alignment(0, 0.45),
+                child: CreditsButton(),
+              ),
+              Align(
+                alignment: Alignment(0, -0.89),
+                child: Title(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -46,7 +49,9 @@ class SecondMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () => Future.value(false),
+    child:Scaffold(
       body: Container(
         height: ScreenUtil.screenHeight,
         width: ScreenUtil.screenWidth,
@@ -77,6 +82,7 @@ class SecondMenuPage extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }
@@ -120,17 +126,17 @@ class PlayButton extends StatelessWidget {
   }
 }
 class ReturnButton extends StatelessWidget {
-    @override
-    Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-    height: ScreenUtil.unitHeight * 15,
-    width: ScreenUtil.unitWidth * 10,
-    decoration: BoxDecoration(
-    image: DecorationImage(
-    image: AssetImage('assets/images/menus/return.png'),
-    fit: BoxFit.fill,
-    ),
-    ),
+      height: ScreenUtil.unitHeight * 15,
+      width: ScreenUtil.unitWidth * 10,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/menus/return.png'),
+          fit: BoxFit.fill,
+        ),
+      ),
       child: FlatButton(
         onPressed: () {
           Navigator.push(

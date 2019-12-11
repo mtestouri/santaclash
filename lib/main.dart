@@ -23,38 +23,41 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
     return Scaffold(
-      body: GestureDetector(
-        onTap:(){
 
-          Navigator.push(
-              context,
-              FadeRoute(page: MenuPage())
-          );
-        },
-      child: Container(
-        height: ScreenUtil.screenHeight,
-        width: ScreenUtil.screenWidth,
-        decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/menus/homepage.png'),
-          fit: BoxFit.fill,
+      body: WillPopScope(
+        onWillPop: () => Future.value(false),
+        child:GestureDetector(
+          onTap:(){
+            Navigator.push(
+                context,
+                FadeRoute(page: MenuPage())
+            );
+          },
+          child: Container(
+            height: ScreenUtil.screenHeight,
+            width: ScreenUtil.screenWidth,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/menus/homepage.png'),
+                fit: BoxFit.fill,
+              ),
+            ),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment(0, -0.89),
+                  child: Title(),
+                ),
+                Align(
+                  alignment: Alignment(0,0.7),
+                  child: MyBlinkingButton(),
+                ),
+
+              ],
+
+            ),
+          ),
         ),
-      ),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment(0, -0.89),
-              child: Title(),
-            ),
-            Align(
-              alignment: Alignment(0,0.7),
-              child: MyBlinkingButton(),
-            ),
-
-          ],
-
-      ),
-      ),
       ),
     );
   }
@@ -101,7 +104,7 @@ class _MyBlinkingButtonState extends State<MyBlinkingButton>
         width: ScreenUtil.unitWidth * 30,
         child: Image.asset('assets/images/menus/touch-screen.png'),
       ),
-      );
+    );
   }
   @override
   void dispose() {

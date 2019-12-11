@@ -8,8 +8,11 @@ import 'package:smashlike/smash_engine/screen_util.dart';
 class Game extends StatelessWidget {
   final int playerId;
   final int mapId;
+  final int side;
+  static const int LEFT = 0;
+  static const int RIGHT = 1;
 
-  Game({@required this.playerId, @required this.mapId});
+  Game({@required this.playerId, @required this.mapId,@required this.side});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class Game extends StatelessWidget {
         width: ScreenUtil.screenWidth,
         child: SmashEngine(
           inputGestures: InputGesturesFactory.build("debug"),
-          assets: GameAssetsFactory.build(mapId, playerId),
+          assets: GameAssetsFactory.build(mapId, playerId, side),
           gameLogic: SmashLikeLogic(),
         ),
       ),

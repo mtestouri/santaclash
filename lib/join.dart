@@ -12,80 +12,83 @@ class Join extends StatelessWidget {
   Widget build(BuildContext context) {
 
     ScreenUtil.init(context, screenOrientation: "landscape");
-    return Scaffold(
-      body: Container(
-        height: ScreenUtil.screenHeight,
-        width: ScreenUtil.screenWidth,
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child:Scaffold(
+        body: Container(
+          height: ScreenUtil.screenHeight,
+          width: ScreenUtil.screenWidth,
 
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/menus/joinback.png'),
-            fit: BoxFit.fill,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/menus/joinback.png'),
+              fit: BoxFit.fill,
 
+            ),
           ),
-        ),
-        child:Stack(
-            children:[
-              Align(
-                alignment: Alignment(0, 0),
-                child:Container(
-                  height: ScreenUtil.unitHeight*50,
-                  width: ScreenUtil.unitWidth*50,
+          child:Stack(
+              children:[
+                Align(
+                  alignment: Alignment(0, 0),
+                  child:Container(
+                    height: ScreenUtil.unitHeight*50,
+                    width: ScreenUtil.unitWidth*50,
 
 
-                  child: DynamicBlueList(),
-                ),
-              ),
-              Align(
-                alignment: Alignment(0, -0.8),
-                child: Text("Select the hoster", textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
-              ),
-              Align(
-                alignment: Alignment(-0.8, 0.1),
-                child: Container(
-                  height: ScreenUtil.unitHeight*30,
-                  width: ScreenUtil.unitWidth*20,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/menus/bluetooth.png'),
-                      fit: BoxFit.fill,
-
-                    ),
+                    child: DynamicBlueList(),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment(0.8, 0.1),
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      FadeRoute(page: EasterEgg()),
-                    );
-
-                  },
-                  child:Container(
+                Align(
+                  alignment: Alignment(0, -0.8),
+                  child: Text("Select the hoster", textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
+                ),
+                Align(
+                  alignment: Alignment(-0.8, 0.1),
+                  child: Container(
                     height: ScreenUtil.unitHeight*30,
                     width: ScreenUtil.unitWidth*20,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/images/menus/bluetooth.png'),
                         fit: BoxFit.fill,
+
                       ),
                     ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment(-0.2, 0.9),
-                child: ReturnButton(),
-              ),
-              Align(
-                alignment: Alignment(0.2, 0.9),
-                child: RefreshButton(),
-              ),
+                Align(
+                  alignment: Alignment(0.8, 0.1),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        FadeRoute(page: EasterEgg()),
+                      );
 
-            ]
+                    },
+                    child:Container(
+                      height: ScreenUtil.unitHeight*30,
+                      width: ScreenUtil.unitWidth*20,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/menus/bluetooth.png'),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment(-0.2, 0.9),
+                  child: ReturnButton(),
+                ),
+                Align(
+                  alignment: Alignment(0.2, 0.9),
+                  child: RefreshButton(),
+                ),
+
+              ]
+          ),
         ),
       ),
     );
@@ -98,58 +101,61 @@ class PreJoin extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
-    return Scaffold(
-      body: GestureDetector(
-        onTap:() {
-          Navigator.push(
-            context,
-            FadeRoute(page: Join()),
-          );
-        },
-        child: Container(
-          height: ScreenUtil.screenHeight,
-          width: ScreenUtil.screenWidth,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/menus/joinback.png'),
-              fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child:Scaffold(
+        body: GestureDetector(
+          onTap:() {
+            Navigator.push(
+              context,
+              FadeRoute(page: Join()),
+            );
+          },
+          child: Container(
+            height: ScreenUtil.screenHeight,
+            width: ScreenUtil.screenWidth,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/menus/joinback.png'),
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-          child:Stack(
-              children:[
-                Align(
-                  alignment: Alignment(0, -0.6),
-                  child: Text("Warning !\n Don't forget to activate your bluetooth and to pair your device with your opponent before joining a host game"  , textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
-                ),
-                Align(
-                  alignment: Alignment(0.2, 0.6),
-                  child: Container(
-                    height: ScreenUtil.unitHeight*20,
-                    width: ScreenUtil.unitWidth*15,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/menus/prebluetooth.png'),
-                        fit: BoxFit.fill,
+            child:Stack(
+                children:[
+                  Align(
+                    alignment: Alignment(0, -0.6),
+                    child: Text("Warning !\n Don't forget to activate your bluetooth and to pair your device with your opponent before joining a host game"  , textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
+                  ),
+                  Align(
+                    alignment: Alignment(0.2, 0.6),
+                    child: Container(
+                      height: ScreenUtil.unitHeight*20,
+                      width: ScreenUtil.unitWidth*15,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/menus/prebluetooth.png'),
+                          fit: BoxFit.fill,
 
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment(-0.2, 0.6),
-                  child: Container(
-                    height: ScreenUtil.unitHeight*20,
-                    width: ScreenUtil.unitWidth*15,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/menus/warning.png'),
-                        fit: BoxFit.fill,
+                  Align(
+                    alignment: Alignment(-0.2, 0.6),
+                    child: Container(
+                      height: ScreenUtil.unitHeight*20,
+                      width: ScreenUtil.unitWidth*15,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/menus/warning.png'),
+                          fit: BoxFit.fill,
 
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ]
+                ]
+            ),
           ),
         ),
       ),
@@ -162,51 +168,54 @@ class EasterEgg extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
-    return Scaffold(
-      body: Container(
-        height: ScreenUtil.screenHeight,
-        width: ScreenUtil.screenWidth,
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child:Scaffold(
+        body: Container(
+          height: ScreenUtil.screenHeight,
+          width: ScreenUtil.screenWidth,
 
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/menus/eastereggback.png'),
-            fit: BoxFit.fill,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/menus/eastereggback.png'),
+              fit: BoxFit.fill,
 
+            ),
           ),
-        ),
-        child: Stack(
-            children:[
-              Align(
-                alignment: Alignment(0, -0.8),
-                child: Text("Well played ! You find the EasterEgg page !", textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
-              ),
-              Align(
-                alignment: Alignment(0, 0.15),
-                child: ScrollText(),
-              ),
-              Align(
-                alignment: Alignment(0, 0.95),
-                child: Container(
-                  height: ScreenUtil.unitHeight * 20,
-                  width: ScreenUtil.unitWidth * 15,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/menus/santaeaster.png'),
-                      fit: BoxFit.fill,
+          child: Stack(
+              children:[
+                Align(
+                  alignment: Alignment(0, -0.8),
+                  child: Text("Well played ! You find the EasterEgg page !", textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
+                ),
+                Align(
+                  alignment: Alignment(0, 0.15),
+                  child: ScrollText(),
+                ),
+                Align(
+                  alignment: Alignment(0, 0.95),
+                  child: Container(
+                    height: ScreenUtil.unitHeight * 20,
+                    width: ScreenUtil.unitWidth * 15,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/menus/santaeaster.png'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          FadeRoute(page: Join()),
+                        ); // switch to game page
+                      },
+                      child: null,
                     ),
                   ),
-                  child: FlatButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        FadeRoute(page: Join()),
-                      ); // switch to game page
-                    },
-                    child: null,
-                  ),
                 ),
-              ),
-            ]
+              ]
+          ),
         ),
       ),
     );
@@ -244,11 +253,14 @@ class DynamicBlueListState extends State<DynamicBlueList> {
 
     Widget yesButton = FlatButton(
         child: Text("Yes"),
-        onPressed: () {
-          multiplayer.join(name).then((connected){
+        onPressed: () async{
+          bool connected = await multiplayer.join(name);
+            print("connection: ");
+            print(connected);
+            print(await multiplayer.isConnected);
             if(connected) {
-
-              multiplayer.start().then((unused){
+                await multiplayer.start();
+                print("mapid: "+multiplayer.mapId.toString());
                 Navigator.of(context).pop();
                 int playerId;
                 if(multiplayer.firstPlayerId==0){
@@ -259,18 +271,18 @@ class DynamicBlueListState extends State<DynamicBlueList> {
                 }
                 Navigator.push(
                   context,
-                  FadeRoute(page: Game(mapId: multiplayer.mapId,playerId: playerId,)),
+                  FadeRoute(page: Game(mapId: multiplayer.mapId,playerId: playerId, side: Game.RIGHT,)),
                 );
-              });
+
 
             }
             else {
               Navigator.of(context).pop();
               failedDialog(context);
             }
-          });
-        }
-    );
+          }
+          );
+
 
     Widget noButton = FlatButton(
       child: Text("No"),
@@ -329,11 +341,10 @@ class DynamicBlueListState extends State<DynamicBlueList> {
 
     return  ListView.builder(
       itemBuilder: (BuildContext context, int index) {
-        var post = blueList[index];
         return ListTile(
-          title: Text(post, textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
+          title: Text(blueList[index], textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
           onTap: () {
-            connectionDialog(context,blueList[index]);
+            connectionDialog(context,blueList[index].substring(0,blueList[index].length-1));
             setState((){});
           },
         );

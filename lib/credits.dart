@@ -7,55 +7,58 @@ class Credits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, screenOrientation: "landscape");
-    return Scaffold(
-      body: Container(
-        height: ScreenUtil.screenHeight,
-        width: ScreenUtil.screenWidth,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/menus/creditsfont.png'),
-            fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child:Scaffold(
+        body: Container(
+          height: ScreenUtil.screenHeight,
+          width: ScreenUtil.screenWidth,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/menus/creditsfont.png'),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child: Stack(
-          children:[
-            Align(
-              alignment: Alignment(0,-0.70),
-              child: Stack(
-                children:[
-                  Text("Special Thank You To :",
-                  style: TextStyle(
-                    fontSize:40,
-                    foreground: Paint()
-                      ..style=PaintingStyle.stroke
-                      ..strokeWidth=6
-                      ..color=Colors.blue[900],
-                  ),
-                  ),
+          child: Stack(
+            children:[
+              Align(
+                alignment: Alignment(0,-0.70),
+                child: Stack(
+                    children:[
+                      Text("Special Thank You To :",
+                        style: TextStyle(
+                          fontSize:40,
+                          foreground: Paint()
+                            ..style=PaintingStyle.stroke
+                            ..strokeWidth=6
+                            ..color=Colors.blue[900],
+                        ),
+                      ),
 
-                  Text("Special Thank You To :",
-                style: TextStyle(
-                  fontSize: 40.0, color: Colors.grey[300],
+                      Text("Special Thank You To :",
+                        style: TextStyle(
+                          fontSize: 40.0, color: Colors.grey[300],
 
+                        ),
+                      ),
+                    ]
                 ),
+
               ),
-                ]
-            ),
-
-            ),
-            Align(
-              alignment: Alignment(0, 0),
-              child: ScrollCredits(),
-            ),
-            Align(
-              alignment: Alignment(0, 0.65),
-              child: ReturnButton(),
-            ),
-          ],
-        ),
+              Align(
+                alignment: Alignment(0, 0),
+                child: ScrollCredits(),
+              ),
+              Align(
+                alignment: Alignment(0, 0.65),
+                child: ReturnButton(),
+              ),
+            ],
+          ),
 
         ),
-      );
+      ),
+    );
   }
 }
 
@@ -68,24 +71,24 @@ class ScrollCredits extends StatelessWidget{
       child: SingleChildScrollView(
 
         child: Text(
-                "DEVELOPER :\n \n"
-                    "Agnello Vasco\n"
-                    "Chiodo Adrien\n"
-                    "Testouri Mehdi\n\n"
-                    "ASSET DRAWER :\n\n"
-                    "Vnitti\n"
-                    "BigBuckBunny\n"
-                    "Max Thorne\n"
-                    "Ansinuz\n"
-                    "Srip\n"
-                    "Freepik\n"
-                    "Dusan Pavkovic WARlord\n"
-                    "Elthen",
-                style: TextStyle(
+          "DEVELOPER :\n \n"
+              "Agnello Vasco\n"
+              "Chiodo Adrien\n"
+              "Testouri Mehdi\n\n"
+              "ASSET DRAWER :\n\n"
+              "Vnitti\n"
+              "BigBuckBunny\n"
+              "Max Thorne\n"
+              "Ansinuz\n"
+              "Srip\n"
+              "Freepik\n"
+              "Dusan Pavkovic WARlord\n"
+              "Elthen",
+          style: TextStyle(
             fontSize: 16.0, color: Colors.white,
+          ),
+          textAlign: TextAlign.center,
         ),
-            textAlign: TextAlign.center,
-      ),
       ),
     );
 
