@@ -7,6 +7,7 @@ import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 // TODO
+// bluetooth (async await in renderer ?)
 // stunt when hit (use animation)
 // check blocking with attacks
 // further improve animation and action system (quicker blocking)
@@ -18,59 +19,126 @@ class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();
 
   @override
-  void update(Queue<String> inputs, GameAssets gameAssets) {
+  void update(Queue<String> inputs, GameAssets gameAssets) async {
     SmashLikeAssets assets = gameAssets;
     Fighter player = assets.player;
     Fighter opponent = assets.opponent;
     List<Fireball> fireballs = assets.fireballs;
   
     // player inputs
-    while(inputs.length > 0) {
-      switch(inputs.removeFirst()) {
-        case "press_left_start":
+    if(inputs.length > 0) {
+      switch(inputs.removeFirst()) { // one input per frame
+        case "press_left_start": {
           player.move(Fighter.LEFT);
+          multiplayer.send(Multiplayer.LEFT_START);
+        }
         break;
 
-        case "press_left_end":
+        case "press_left_end": {
           player.stopMove();
+          multiplayer.send(Multiplayer.LEFT_END);
+        }
         break;
 
-        case "press_right_start":
+        case "press_right_start": {
           player.move(Fighter.RIGHT);
+          multiplayer.send(Multiplayer.RIGHT_START);
+        }
         break;
 
-        case "press_right_end":
+        case "press_right_end": {
           player.stopMove();
+          multiplayer.send(Multiplayer.RIGHT_END);
+        }
         break;
 
-        case "press_up":
+        case "press_up": {
           player.jump(); 
+          multiplayer.send(Multiplayer.UP);
+        }
         break;
 
-        case "press_a":
+        case "press_a": {
           player.basicAttack();
+          multiplayer.send(Multiplayer.A);
+        }
         break;
 
-        case "long_press_a":
+        case "long_press_a": {
           player.smashAttack();
+          multiplayer.send(Multiplayer.LONG_A);
+        }
         break;
         
-        case "press_b_start":
+        case "press_b_start": {
           player.block();
+          multiplayer.send(Multiplayer.B_START);
+        }
         break;
 
-        case "press_b_end":
+        case "press_b_end": {
           player.stopBlock();
+          multiplayer.send(Multiplayer.B_END);
+        }
         break;
         
-        case "press_fireball":
+        case "press_fireball": {
           player.fireball();
+          multiplayer.send(Multiplayer.FIREBALL);
+        }
+        break;
+
+        default:
+          multiplayer.send(Multiplayer.NONE);
         break;
       }
     }
+    else
+      multiplayer.send(Multiplayer.NONE);
 
     // opponent inputs
-    // TODO bluetooth
+    // TODO check connection failure
+    switch(await multiplayer.receive()) {
+      case Multiplayer.LEFT_START:
+        opponent.move(Fighter.LEFT);
+      break;
+
+      case Multiplayer.LEFT_END:
+        opponent.stopMove();
+      break;
+
+      case Multiplayer.RIGHT_START:
+        opponent.move(Fighter.RIGHT);
+      break;
+
+      case Multiplayer.RIGHT_END:
+        opponent.stopMove();
+      break;
+
+      case Multiplayer.UP:
+        opponent.jump(); 
+      break;
+
+      case Multiplayer.A:
+        opponent.basicAttack();
+      break;
+
+      case Multiplayer.LONG_A:
+        opponent.smashAttack();
+      break;
+        
+      case Multiplayer.B_START:
+        opponent.block();
+      break;
+
+      case Multiplayer.B_END:
+        opponent.stopBlock();
+      break;
+        
+      case Multiplayer.FIREBALL:
+        opponent.fireball();
+      break;
+    }
 
     // basic attacks
     if(checkHurtBasic(player, opponent) && (opponent.damage < 100))
@@ -109,7 +177,7 @@ class SmashLikeLogic extends GameLogic {
       }
     }
 
-    // TODO check out of the arena limits
+    // TODO check out of the arena limits, life and end of game
   }
 }
 

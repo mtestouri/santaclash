@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 class Bluetooth {
   static const platform = const MethodChannel('bluetooth');
-  List<int> _inputBuffer = List();
 
   static final Bluetooth _inst = Bluetooth._internal();
   Bluetooth._internal();
@@ -41,11 +40,13 @@ class Bluetooth {
     return platform.invokeMethod('disconnect');
   }
 
-  List<int> read() {
-    return List();
+  Future<int> readByte() {
+    return platform.invokeMethod('readByte');
   }
 
-  void write(List<int> data) {
-
+  Future<bool> writeByte(int data) {
+    return platform.invokeMethod('writeByte', <String, dynamic>{
+        'data': data
+    });
   }
 }

@@ -3,7 +3,6 @@ package com.example.info20512018;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-
 import android.bluetooth.BluetoothServerSocket;
 
 import java.io.IOException;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
  */
 class BluetoothHandler {
     private static final UUID MY_UUID = UUID.fromString("7b2c86c3-a4d0-44ea-b3b2-5264c4784b7c");
-    private static final String NAME = "SmashLike Server";
+    private static final String NAME = "SmashLike-Server";
     
     private BluetoothAdapter bAdapter;
     private BluetoothSocket bSocket;
@@ -167,17 +166,35 @@ class BluetoothHandler {
     }
 
     /**
-     * Send data to the connected device
-     * @param data the string data to send
+     * Send a byte to the connected device
+     * @param data the byte to send
      */
-    synchronized void write(String data) {
+    boolean writeByte(int data) {
         if(outputStream == null)
-            return;
+            return false;
         try {
-            outputStream.write(data.getBytes());
+            outputStream.write(data);
+            return true;
         }
         catch(IOException e) {
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Read a byte from the connected device
+     * @return the byte read
+     */
+    int readByte() {
+        if(inputStream == null)
+            return 0;
+        try {
+            return inputStream.read();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 }

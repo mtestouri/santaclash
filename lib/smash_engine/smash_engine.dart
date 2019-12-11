@@ -32,5 +32,11 @@ class SmashEngine extends InheritedWidget {
 }
 
 abstract class GameLogic {
+  bool _gameFinished = false;
+
+  bool get gameFinished => _gameFinished;
+
+  // TODO exit screen with reason
+
   void update(Queue<String> inputs, GameAssets gameAssets);
 }
