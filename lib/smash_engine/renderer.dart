@@ -60,7 +60,7 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
     _controller.forward();
   }
 
-  void _render() {
+  void _render() async {
     // current FPS
     DateTime currTime = DateTime.now();
     int diff = currTime.difference(_prevTime).inMicroseconds;
@@ -81,18 +81,18 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
     // update FPS in physics
     _physics.currFps = _currFps;
 
+    // game logic update
+    await _gameLogic.update(SmashEngine.of(context).inputs, _assets);
+    
+    // physics update
+    _physics.update(_assets.physicalAssets);
+
     // render the frame
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    // game logic update
-    _gameLogic.update(SmashEngine.of(context).inputs, _assets);
-    
-    // physics update
-    _physics.update(_assets.physicalAssets);
-
     // display assets
     List<Widget> assetWidgets = List();
     for(var asset in _assets.toAssetList()) {

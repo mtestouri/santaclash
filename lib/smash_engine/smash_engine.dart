@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/asset.dart';
@@ -38,5 +39,5 @@ abstract class GameLogic {
 
   // TODO exit screen with reason
 
-  void update(Queue<String> inputs, GameAssets gameAssets);
+  Future<void> update (Queue<String> inputs, GameAssets gameAssets);
 }

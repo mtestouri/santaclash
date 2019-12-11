@@ -40,8 +40,8 @@ class GameAssetsFactory {
     physicalAssets.add(ArenaObject(arenaPath + 'rock.png', 8, 11, 6, 9, 28, 32));
     
     // fighters
-    Fighter player = GreenSantaClaus(Fighter.PLAYER, 10, 50);
-    Fighter opponent = RedSantaClaus(Fighter.OPPONENT, 80, 50);
+    Fighter player = GreenSantaClaus(Fighter.PLAYER, 10, 50, Fighter.RIGHT);
+    Fighter opponent = RedSantaClaus(Fighter.OPPONENT, 80, 50, Fighter.LEFT);
     
     // ui
     List<Asset> ui = List();
@@ -83,30 +83,22 @@ class GameAssetsFactory {
     Fighter opponent;
     if(playerId == 0) {
       if(side == LEFT_SIDE) {
-        player = RedSantaClaus(Fighter.PLAYER, 18, 34);
-        player.orientation = Fighter.RIGHT;
-        opponent = GreenSantaClaus(Fighter.OPPONENT, 78, 34);
-        opponent.orientation = Fighter.LEFT;
+        player = RedSantaClaus(Fighter.PLAYER, 18, 34, Fighter.RIGHT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
       }
       else {
-        player = RedSantaClaus(Fighter.PLAYER, 78, 34);
-        player.orientation = Fighter.LEFT;
-        opponent = GreenSantaClaus(Fighter.OPPONENT, 18, 34);
-        opponent.orientation = Fighter.RIGHT;
+        player = RedSantaClaus(Fighter.PLAYER, 78, 34, Fighter.LEFT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
       }
     }
     if(playerId == 1) {
       if(side == LEFT_SIDE) {
-        player = GreenSantaClaus(Fighter.PLAYER, 18, 34);
-        player.orientation = Fighter.RIGHT;
-        opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34);
-        opponent.orientation = Fighter.LEFT;
+        player = GreenSantaClaus(Fighter.PLAYER, 18, 34, Fighter.RIGHT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
       }
       else {
-        player = GreenSantaClaus(Fighter.PLAYER, 78, 34);
-        player.orientation = Fighter.LEFT;
-        opponent = RedSantaClaus(Fighter.OPPONENT, 18, 34);
-        opponent.orientation = Fighter.RIGHT;
+        player = GreenSantaClaus(Fighter.PLAYER, 78, 34, Fighter.LEFT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
       }
     }
 
@@ -158,30 +150,22 @@ class GameAssetsFactory {
     Fighter opponent;
     if(playerId == 0) {
       if(side == LEFT_SIDE) {
-        player = RedSantaClaus(Fighter.PLAYER, 18, 26);
-        player.orientation = Fighter.RIGHT;
-        opponent = GreenSantaClaus(Fighter.OPPONENT, 78, 34);
-        opponent.orientation = Fighter.LEFT;
+        player = RedSantaClaus(Fighter.PLAYER, 18, 26, Fighter.RIGHT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
       }
       else {
-        player = RedSantaClaus(Fighter.PLAYER, 78, 26);
-        player.orientation = Fighter.LEFT;
-        opponent = GreenSantaClaus(Fighter.OPPONENT, 18, 34);
-        opponent.orientation = Fighter.RIGHT;
+        player = RedSantaClaus(Fighter.PLAYER, 78, 26, Fighter.LEFT);
+        opponent = GreenSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
       }
     }
     if(playerId == 1) {
       if(side == LEFT_SIDE) {
-        player = GreenSantaClaus(Fighter.PLAYER, 18, 26);
-        player.orientation = Fighter.RIGHT;
-        opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34);
-        opponent.orientation = Fighter.LEFT;
+        player = GreenSantaClaus(Fighter.PLAYER, 18, 26, Fighter.RIGHT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, 78, 34, Fighter.LEFT);
       }
       else {
-        player = GreenSantaClaus(Fighter.PLAYER, 78, 26);
-        player.orientation = Fighter.LEFT;
-        opponent = RedSantaClaus(Fighter.OPPONENT, 18, 34);
-        opponent.orientation = Fighter.RIGHT;
+        player = GreenSantaClaus(Fighter.PLAYER, 78, 26, Fighter.LEFT);
+        opponent = RedSantaClaus(Fighter.OPPONENT, 18, 34, Fighter.RIGHT);
       }
     }
     

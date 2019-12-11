@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:math';
 import 'package:smashlike/game/assets/fighters_assets.dart';
@@ -20,7 +21,7 @@ class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();
 
   @override
-  void update(Queue<String> inputs, GameAssets gameAssets) async {
+  Future<void> update(Queue<String> inputs, GameAssets gameAssets) async {
     SmashLikeAssets assets = gameAssets;
     Fighter player = assets.player;
     Fighter opponent = assets.opponent;
