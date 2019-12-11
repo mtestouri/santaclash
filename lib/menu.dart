@@ -183,7 +183,7 @@ class JoinGameButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            FadeRoute(page: Join()),
+            FadeRoute(page: PreJoin()),
           ); // switch to game page
         },
         child: null,

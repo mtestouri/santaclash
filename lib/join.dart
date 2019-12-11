@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
 import 'package:smashlike/menu.dart';
+import 'package:smashlike/game/multiplayer/multiplayer.dart';
 import 'dart:io';
+import 'dart:async';
 
 class Join extends StatelessWidget {
   @override
@@ -89,6 +91,58 @@ class Join extends StatelessWidget {
   }
 }
 
+
+
+class PreJoin extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    ScreenUtil.init(context, screenOrientation: "landscape");
+    return Scaffold(
+      body: GestureDetector(
+        onTap:() {
+          Navigator.push(
+          context,
+          FadeRoute(page: Join()),
+      );
+    },
+      child: Container(
+        height: ScreenUtil.screenHeight,
+        width: ScreenUtil.screenWidth,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/menus/joinback.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child:Stack(
+            children:[
+              Align(
+                alignment: Alignment(0, -0.6),
+                child: Text("Warning !\n Don't forget to activate your bluetooth and to pair your device with your opponent before joining a host game"  , textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
+              ),
+              Align(
+                alignment: Alignment(0, 0.9),
+                child: Container(
+                  height: ScreenUtil.unitHeight*30,
+                  width: ScreenUtil.unitWidth*20,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/menus/bluetooth.png'),
+                      fit: BoxFit.fill,
+
+                    ),
+                  ),
+                ),
+              ),
+            ]
+        ),
+      ),
+      ),
+    );
+  }
+}
+
+
 class EasterEgg extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
@@ -153,12 +207,24 @@ class DynamicBlueList extends StatefulWidget {
 }
 
 class DynamicBlueListState extends State<DynamicBlueList> {
-  List<String> blueList;
+  List<String> blueList=List();
+  Multiplayer multiplayer = Multiplayer();
 
+  Future<List<String>> getServerList()async{
+    return await multiplayer.getServers();
+
+  }
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    blueList = widget.blueList;
+    getServerList().then((servers){
+      blueList=servers;
+      setState(() {
+
+      });
+    }
+    );
+
   }
 
   connectionDialog(BuildContext context,String name) {
@@ -283,7 +349,10 @@ class RefreshButton extends StatelessWidget {
       ),
       child: FlatButton(
         onPressed: () {
-          print("click refresh");
+          Navigator.push(
+            context,
+            FadeRoute(page: Join()),
+          );
         },
         child: null,
       ),
