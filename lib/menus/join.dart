@@ -249,6 +249,7 @@ class DynamicBlueListState extends State<DynamicBlueList> {
     Widget yesButton = FlatButton(
         child: Text("Yes"),
         onPressed: () async {
+          Navigator.of(context).pop();
           bool connected = await multiplayer.join(name);
             if(connected) {
               await multiplayer.start();
@@ -274,7 +275,6 @@ class DynamicBlueListState extends State<DynamicBlueList> {
               );
             }
             else {
-              Navigator.of(context).pop();
               failedDialog(context);
             }
           }

@@ -5,6 +5,8 @@ import 'package:smashlike/main.dart';
 import 'package:smashlike/menus/credits.dart';
 import 'package:smashlike/menus/selection.dart';
 import 'package:smashlike/menus/join.dart';
+import 'package:smashlike/game.dart';
+import 'package:smashlike/game/game_assets.dart';
 
 class MenuPage extends StatelessWidget {
   @override
@@ -25,12 +27,20 @@ class MenuPage extends StatelessWidget {
           child: Stack(
             children: [
               Align(
-                alignment: Alignment(0, -0.1),
-                child: PlayButton(),
+                alignment: Alignment(0, -0.2),
+                child: TrainingButton(),
               ),
               Align(
-                alignment: Alignment(0, 0.45),
+                alignment: Alignment(0, 0.2),
+                child: MultiplayerButton(),
+              ),
+              Align(
+                alignment: Alignment(0, 0.6),
                 child: CreditsButton(),
+              ),
+              Align(
+                alignment: Alignment(0, 1),
+                child: ReturnButton(),
               ),
               Align(
                 alignment: Alignment(0, -0.89),
@@ -78,7 +88,7 @@ class SecondMenuPage extends StatelessWidget {
             ),
             Align(
               alignment: Alignment(0, 0.9),
-              child: ReturnButton(),
+              child: SecondReturnButton(),
             ),
           ],
         ),
@@ -102,15 +112,39 @@ class Title extends StatelessWidget {
   }
 }
 
-class PlayButton extends StatelessWidget {
+class TrainingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil.unitHeight * 15,
-      width: ScreenUtil.unitWidth * 20,
+      height: ScreenUtil.unitHeight * 14,
+      width: ScreenUtil.unitWidth * 25,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/menus/play.png'),
+          image: AssetImage('assets/images/menus/training.png'),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: FlatButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            FadeRoute(page: Game(playerId: 0,mapId: 2,side: GameAssetsFactory.LEFT_SIDE,multiplayer: false,)),
+          ); // switch to game page
+        },
+        child: null,
+      ),
+    );
+  }
+}
+class MultiplayerButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil.unitHeight * 14,
+      width: ScreenUtil.unitWidth * 30,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/menus/multiplayer.png'),
           fit: BoxFit.fill,
         ),
       ),
@@ -119,6 +153,30 @@ class PlayButton extends StatelessWidget {
           Navigator.push(
             context,
             FadeRoute(page: SecondMenuPage()),
+          ); // switch to game page
+        },
+        child: null,
+      ),
+    );
+  }
+}
+class CreditsButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil.unitHeight * 14,
+      width: ScreenUtil.unitWidth * 25,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/menus/credits.png'),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: FlatButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            FadeRoute(page: Credits()),
           ); // switch to game page
         },
         child: null,
@@ -142,6 +200,30 @@ class ReturnButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
+            FadeRoute(page: HomePage()),
+          ); // switch to game page
+        },
+        child: null,
+      ),
+    );
+  }
+}
+class SecondReturnButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil.unitHeight * 15,
+      width: ScreenUtil.unitWidth * 10,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/menus/return.png'),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: FlatButton(
+        onPressed: () {
+          Navigator.push(
+            context,
             FadeRoute(page: MenuPage()),
           ); // switch to game page
         },
@@ -150,6 +232,7 @@ class ReturnButton extends StatelessWidget {
     );
   }
 }
+
 class CreateGameButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -191,30 +274,6 @@ class JoinGameButton extends StatelessWidget {
           Navigator.push(
             context,
             FadeRoute(page: PreJoin()),
-          ); // switch to game page
-        },
-        child: null,
-      ),
-    );
-  }
-}
-class CreditsButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: ScreenUtil.unitHeight * 15,
-      width: ScreenUtil.unitWidth * 35,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/menus/credits.png'),
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: FlatButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            FadeRoute(page: Credits()),
           ); // switch to game page
         },
         child: null,

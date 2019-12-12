@@ -66,6 +66,14 @@ class HomePage extends StatelessWidget {
                   child: Title(),
                 ),
                 Align(
+                  alignment: Alignment(-0.17,0),
+                  child: KickRSanta(),
+                ),
+                Align(
+                  alignment: Alignment(0.17,0),
+                  child: KickGSanta(),
+                ),
+                Align(
                   alignment: Alignment(0,0.7),
                   child: MyBlinkingButton(),
                 ),
@@ -88,7 +96,7 @@ class Title extends StatelessWidget {
       height: ScreenUtil.unitHeight * 18,
       width: ScreenUtil.unitWidth * 60,
       child: FittedBox(
-        child: Image.asset('assets/images/menus/smashlike.png'),
+        child: Image.asset('assets/images/menus/santa_clash.png'),
         fit: BoxFit.fill,
       ),
     );
@@ -129,7 +137,184 @@ class _MyBlinkingButtonState extends State<MyBlinkingButton>
     super.dispose();
   }
 }
+class KickRSanta extends StatefulWidget {
+  @override
+  _KickRSantaState createState() => _KickRSantaState();
+}
 
+class _KickRSantaState extends State<KickRSanta> with TickerProviderStateMixin{
+  AnimationController _idleFrame;
+  @override
+  void initState() {
+    _idleFrame = AnimationController(
+      value:0,
+      lowerBound: 0,
+      upperBound: 23,
+      duration: Duration(seconds: 2),
+      vsync: this,
+    );
+    _idleFrame.repeat();
+    super.initState();
+  }
+  Widget frameNeeded(AnimationController frameNbr){
+
+    if(frameNbr.value>=0 && frameNbr.value<1) {
+      return Image.asset('assets/images/fighters/red_santaclaus/smash_attack_r_1.png');
+    }
+    else if(frameNbr.value>=1 && frameNbr.value<2) {
+      return Image.asset('assets/images/fighters/red_santaclaus/smash_attack_r_2.png');
+    }
+    else if(frameNbr.value>=2 && frameNbr.value<3) {
+      return Image.asset('assets/images/fighters/red_santaclaus/smash_attack_r_3.png');
+    }
+    else if(frameNbr.value>=3 && frameNbr.value<4) {
+      return Image.asset('assets/images/fighters/red_santaclaus/smash_attack_r_4.png');
+    }
+    else if(frameNbr.value>=4 && frameNbr.value<5) {
+      return Image.asset('assets/images/fighters/red_santaclaus/smash_attack_r_5.png');
+    }
+    else if(frameNbr.value>=5 && frameNbr.value<6) {
+      return Image.asset('assets/images/fighters/red_santaclaus/smash_attack_r_6.png');
+    }
+    else if(frameNbr.value>=6 && frameNbr.value<7) {
+      return Image.asset('assets/images/fighters/red_santaclaus/smash_attack_r_7.png');
+    }
+    else if(frameNbr.value>=7 && frameNbr.value<8) {
+      return Image.asset('assets/images/fighters/red_santaclaus/smash_attack_r_8.png');
+    }
+    else if(frameNbr.value>=8 && frameNbr.value<9) {
+      return Image.asset('assets/images/fighters/red_santaclaus/smash_attack_r_9.png');
+    }
+    else if(frameNbr.value>=17 && frameNbr.value<18) {
+      return Image.asset('assets/images/fighters/red_santaclaus/stun_r_1.png');
+    }
+    else if(frameNbr.value>=18 && frameNbr.value<19) {
+      return Image.asset('assets/images/fighters/red_santaclaus/stun_r_2.png');
+    }
+    else if(frameNbr.value>=19 && frameNbr.value<20) {
+      return Image.asset('assets/images/fighters/red_santaclaus/stun_r_3.png');
+    }
+    else if(frameNbr.value>=20 && frameNbr.value<21) {
+      return Image.asset('assets/images/fighters/red_santaclaus/stun_r_4.png');
+    }
+    else {
+      return Image.asset('assets/images/fighters/red_santaclaus/idle_r_1.png');
+    }
+
+
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil.unitHeight * 50,
+      width: ScreenUtil.unitWidth * 20,
+      child: FittedBox(
+        child: AnimatedBuilder(
+          animation: _idleFrame,
+          builder: (context,child){
+            return frameNeeded(_idleFrame);
+          },
+          child: Image.asset('assets/images/fighters/red_santaclaus/idle_r_1.png'),
+        ),
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+  @override
+  void dispose() {
+    _idleFrame.dispose();
+    super.dispose();
+  }
+}
+class KickGSanta extends StatefulWidget {
+  @override
+  _KickGSantaState createState() => _KickGSantaState();
+}
+
+class _KickGSantaState extends State<KickGSanta> with TickerProviderStateMixin{
+  AnimationController _idleFrame;
+  @override
+  void initState() {
+    _idleFrame = AnimationController(
+      value:0,
+      lowerBound: 0,
+      upperBound: 23,
+      duration: Duration(seconds: 2),
+      vsync: this,
+    );
+    _idleFrame.repeat();
+    super.initState();
+  }
+  Widget frameNeeded(AnimationController frameNbr){
+
+    if(frameNbr.value>=5 && frameNbr.value<6) {
+      return Image.asset('assets/images/fighters/green_santaclaus/stun_l_1.png');
+    }
+    else if(frameNbr.value>=6 && frameNbr.value<7) {
+      return Image.asset('assets/images/fighters/green_santaclaus/stun_l_2.png');
+    }
+    else if(frameNbr.value>=7 && frameNbr.value<8) {
+      return Image.asset('assets/images/fighters/green_santaclaus/stun_l_3.png');
+    }
+    else if(frameNbr.value>=8 && frameNbr.value<9) {
+      return Image.asset('assets/images/fighters/green_santaclaus/stun_l_4.png');
+    }
+    else if(frameNbr.value>=12 && frameNbr.value<13) {
+      return Image.asset('assets/images/fighters/green_santaclaus/smash_attack_l_1.png');
+    }
+    else if(frameNbr.value>=13 && frameNbr.value<14) {
+      return Image.asset('assets/images/fighters/green_santaclaus/smash_attack_l_2.png');
+    }
+    else if(frameNbr.value>=14 && frameNbr.value<15) {
+      return Image.asset('assets/images/fighters/green_santaclaus/smash_attack_l_3.png');
+    }
+    else if(frameNbr.value>=15 && frameNbr.value<16) {
+      return Image.asset('assets/images/fighters/green_santaclaus/smash_attack_l_4.png');
+    }
+    else if(frameNbr.value>=16 && frameNbr.value<17) {
+      return Image.asset('assets/images/fighters/green_santaclaus/smash_attack_l_5.png');
+    }
+    else if(frameNbr.value>=17 && frameNbr.value<18) {
+      return Image.asset('assets/images/fighters/green_santaclaus/smash_attack_l_6.png');
+    }
+    else if(frameNbr.value>=18 && frameNbr.value<19) {
+      return Image.asset('assets/images/fighters/green_santaclaus/smash_attack_l_7.png');
+    }
+    else if(frameNbr.value>=19 && frameNbr.value<20) {
+      return Image.asset('assets/images/fighters/green_santaclaus/smash_attack_l_8.png');
+    }
+    else if(frameNbr.value>=20 && frameNbr.value<21) {
+      return Image.asset('assets/images/fighters/green_santaclaus/smash_attack_l_9.png');
+    }
+    else {
+      return Image.asset('assets/images/fighters/green_santaclaus/idle_l_1.png');
+    }
+
+
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil.unitHeight * 50,
+      width: ScreenUtil.unitWidth * 20,
+      child: FittedBox(
+        child: AnimatedBuilder(
+          animation: _idleFrame,
+          builder: (context,child){
+            return frameNeeded(_idleFrame);
+          },
+          child: Image.asset('assets/images/fighters/green_santaclaus/idle_l_1.png'),
+        ),
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+  @override
+  void dispose() {
+    _idleFrame.dispose();
+    super.dispose();
+  }
+}
 class FadeRoute extends PageRouteBuilder {
   final Widget page;
   FadeRoute({this.page})
