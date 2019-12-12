@@ -214,60 +214,56 @@ class SmashLikeLogic extends GameLogic {
   Future multiplayerUpdate(String playerInput, Fighter player, 
                            Fighter opponent) async {
     // player
-    int pPosX = player.posX.round();
-    int pPosY = player.posY.round();
+    double pPosX = player.posX;//.round();
+    double pPosY = player.posY;//.round();
     switch(playerInput) {
       case "press_left_start":
-        multiplayer.send(List<double>.from([Multiplayer.LEFT_START, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.LEFT_START.toDouble(), pPosX, pPosY]);
       break;
 
       case "press_left_end":
-        multiplayer.send(List<double>.from([Multiplayer.LEFT_END, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.LEFT_END.toDouble(), pPosX, pPosY]);
       break;
 
       case "press_right_start":
-        multiplayer.send(List<double>.from([Multiplayer.RIGHT_START, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.RIGHT_START.toDouble(), pPosX, pPosY]);
       break;
 
       case "press_right_end":
-        multiplayer.send(List<double>.from([Multiplayer.RIGHT_END, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.RIGHT_END.toDouble(), pPosX, pPosY]);
       break;
 
       case "press_up":
-        multiplayer.send(List<double>.from([Multiplayer.UP, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.UP.toDouble(), pPosX, pPosY]);
       break;
 
       case "press_a":
-        multiplayer.send(List<double>.from([Multiplayer.A, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.A.toDouble(), pPosX, pPosY]);
       break;
 
       case "long_press_a":
-        multiplayer.send(List<double>.from([Multiplayer.LONG_A, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.LONG_A.toDouble(), pPosX, pPosY]);
       break;
         
       case "press_b_start":
-        multiplayer.send(List<double>.from([Multiplayer.B_START, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.B_START.toDouble(), pPosX, pPosY]);
       break;
 
       case "press_b_end":
-        multiplayer.send(List<double>.from([Multiplayer.B_END, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.B_END.toDouble(), pPosX, pPosY]);
       break;
         
       case "press_fireball":
-        multiplayer.send(List<double>.from([Multiplayer.FIREBALL, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.FIREBALL.toDouble(), pPosX, pPosY]);
       break;
 
       default:
-        multiplayer.send(List<double>.from([Multiplayer.NONE, pPosX, pPosY]));
+        multiplayer.send([Multiplayer.NONE.toDouble(), pPosX, pPosY]);
       break;
     }
 
     // opponent
-<<<<<<< HEAD
     List<double> values = await multiplayer.receive();
-=======
-    List<int> values = await multiplayer.receive();
->>>>>>> b690a53115491049cf87a0ddb8e5b4f092e0a7ba
     if(values.isEmpty)
       return;
     opponent.posX = values[1].toDouble();
