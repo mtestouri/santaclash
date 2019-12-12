@@ -6,7 +6,6 @@ import 'package:smashlike/game/game_assets.dart';
 import 'package:smashlike/game/multiplayer/multiplayer.dart';
 import 'package:smashlike/menus/endscreen.dart';
 import 'package:smashlike/smash_engine/asset.dart';
-import 'package:smashlike/smash_engine/physics.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 // TODO
@@ -23,6 +22,9 @@ import 'package:smashlike/smash_engine/smash_engine.dart';
 class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();
   bool useMultiplayer = true;
+  
+  int counter = 0;
+  int max_counter = 5;
 
   SmashLikeLogic({this.useMultiplayer});
 
@@ -35,87 +37,51 @@ class SmashLikeLogic extends GameLogic {
     List<Fireball> fireballs = assets.fireballs;
   
     // player inputs
+    String playerInput = '';
     if(inputs.length > 0) {
-      switch(inputs.removeFirst()) { // one input per frame
-        case "press_left_start": {
+      playerInput = inputs.removeFirst(); // one input per frame
+      switch(playerInput) {
+        case "press_left_start":
           player.move(Fighter.LEFT);
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.LEFT_START);
-        }
         break;
 
-        case "press_left_end": {
+        case "press_left_end":
           player.stopMove();
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.LEFT_END);
-        }
         break;
 
-        case "press_right_start": {
+        case "press_right_start":
           player.move(Fighter.RIGHT);
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.RIGHT_START);
-        }
         break;
 
-        case "press_right_end": {
+        case "press_right_end":
           player.stopMove();
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.RIGHT_END);
-        }
         break;
 
-        case "press_up": {
+        case "press_up":
           player.jump();
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.UP);
-        }
         break;
 
-        case "press_a": {
+        case "press_a":
           player.basicAttack();
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.A);
-        }
         break;
 
-        case "long_press_a": {
+        case "long_press_a":
           player.smashAttack();
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.LONG_A);
-        }
         break;
         
-        case "press_b_start": {
+        case "press_b_start":
           player.block();
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.B_START);
-        }
         break;
 
-        case "press_b_end": {
+        case "press_b_end":
           player.stopBlock();
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.B_END);
-        }
         break;
         
-        case "press_fireball": {
+        case "press_fireball":
           player.fireball();
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.FIREBALL);
-        }
-        break;
-
-        default: {
-          if(useMultiplayer)
-            multiplayer.send(Multiplayer.NONE);
-        }
         break;
       }
     }
-    else if(useMultiplayer)
-      multiplayer.send(Multiplayer.NONE);
 
     if(useMultiplayer) {
       // check connection failure
@@ -123,54 +89,8 @@ class SmashLikeLogic extends GameLogic {
         endGameScreen = EndScreen(status: EndScreen.CONNECTION_LOST);
         return GameLogic.FINISHED;
       }
-
-      // multiplayer opponent inputs
-      switch(await multiplayer.receive()) {
-        case Multiplayer.LEFT_START:
-          opponent.move(Fighter.LEFT);
-        break;
-
-        case Multiplayer.LEFT_END:
-          opponent.stopMove();
-        break;
-
-        case Multiplayer.RIGHT_START:
-          opponent.move(Fighter.RIGHT);
-        break;
-
-        case Multiplayer.RIGHT_END:
-          opponent.stopMove();
-        break;
-
-        case Multiplayer.UP:
-          opponent.jump(); 
-        break;
-
-        case Multiplayer.A:
-          opponent.basicAttack();
-        break;
-
-        case Multiplayer.LONG_A:
-          opponent.smashAttack();
-        break;
-        
-        case Multiplayer.B_START:
-          opponent.block();
-        break;
-
-        case Multiplayer.B_END:
-          opponent.stopBlock();
-        break;
-        
-        case Multiplayer.FIREBALL:
-          opponent.fireball();
-        break;
-      }
-
-      // exchange the current FPS
-      multiplayer.send(Physics().currFps.round());
-      int opponentCurrFPS = await multiplayer.receive();
-      Physics().currFps = min(Physics().currFps.round(), opponentCurrFPS).toDouble();
+      // synchronize fighters
+      await multiplayerUpdate(playerInput, player, opponent);
     }
 
     // basic attacks
@@ -288,5 +208,103 @@ class SmashLikeLogic extends GameLogic {
     else
       fighter.velX += intensityX*(fighter.damage/100);
     fighter.velY += intensityY*(fighter.damage/100);
+  }
+
+  Future multiplayerUpdate(String playerInput, Fighter player, 
+                           Fighter opponent) async {
+    // player
+    int pPosX = player.posX.round();
+    int pPosY = player.posY.round();
+    switch(playerInput) {
+      case "press_left_start":
+        multiplayer.send([Multiplayer.LEFT_START, pPosX, pPosY]);
+      break;
+
+      case "press_left_end":
+        multiplayer.send([Multiplayer.LEFT_END, pPosX, pPosY]);
+      break;
+
+      case "press_right_start":
+        multiplayer.send([Multiplayer.RIGHT_START, pPosX, pPosY]);
+      break;
+
+      case "press_right_end":
+        multiplayer.send([Multiplayer.RIGHT_END, pPosX, pPosY]);
+      break;
+
+      case "press_up":
+        multiplayer.send([Multiplayer.UP, pPosX, pPosY]);
+      break;
+
+      case "press_a":
+        multiplayer.send([Multiplayer.A, pPosX, pPosY]);
+      break;
+
+      case "long_press_a":
+        multiplayer.send([Multiplayer.LONG_A, pPosX, pPosY]);
+      break;
+        
+      case "press_b_start":
+        multiplayer.send([Multiplayer.B_START, pPosX, pPosY]);
+      break;
+
+      case "press_b_end":
+        multiplayer.send([Multiplayer.B_END, pPosX, pPosY]);
+      break;
+        
+      case "press_fireball":
+        multiplayer.send([Multiplayer.FIREBALL, pPosX, pPosY]);
+      break;
+
+      default:
+        multiplayer.send([Multiplayer.NONE, pPosX, pPosY]);
+      break;
+    }
+
+    // opponent
+    List<int> values = await multiplayer.receive();
+    opponent.posX = values[1].toDouble();
+    opponent.posY = values[2].toDouble();
+    switch(values[0]) {
+      case Multiplayer.LEFT_START:
+        opponent.move(Fighter.LEFT);
+      break;
+
+      case Multiplayer.LEFT_END:
+        opponent.stopMove();
+      break;
+
+      case Multiplayer.RIGHT_START:
+        opponent.move(Fighter.RIGHT);
+      break;
+
+      case Multiplayer.RIGHT_END:
+        opponent.stopMove();
+      break;
+
+      case Multiplayer.UP:
+        opponent.jump(); 
+      break;
+
+      case Multiplayer.A:
+        opponent.basicAttack();
+      break;
+
+      case Multiplayer.LONG_A:
+        opponent.smashAttack();
+      break;
+        
+      case Multiplayer.B_START:
+        opponent.block();
+      break;
+
+      case Multiplayer.B_END:
+        opponent.stopBlock();
+      break;
+        
+      case Multiplayer.FIREBALL:
+        opponent.fireball();
+      break;
+    }
   }
 }

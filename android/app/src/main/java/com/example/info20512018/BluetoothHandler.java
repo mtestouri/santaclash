@@ -167,14 +167,14 @@ class BluetoothHandler {
     }
 
     /**
-     * Send a byte to the connected device
-     * @param data the byte to send
+     * 
      */
-    boolean write(int data) {
+    boolean write(List<Integer> data) {
         if(outputStream == null)
             return false;
         try {
-            outputStream.write(data);
+            for(int i=0; i < data.size(); i++)
+                outputStream.write(data.get(i));
             return true;
         }
         catch(IOException e) {
@@ -190,14 +190,18 @@ class BluetoothHandler {
     }
 
     /**
-     * Read a byte from the connected device
-     * @return the byte read
+     * 
      */
-    int read() {
-        if(inputStream == null)
-            return -1;
+    List<Integer> read(int nb) {
+        List<Integer> values = new ArrayList<>();
+        if(inputStream == null) {
+            //values.add(-1);
+            return values;
+        }
         try {
-            return inputStream.read();
+            for(int i=0; i < nb; i++)
+                values.add(inputStream.read());
+            return values;
         }
         catch(IOException e) {
             try {
@@ -206,7 +210,8 @@ class BluetoothHandler {
             catch(IOException e1) {
                 e.printStackTrace();
             }
-            return -1;
+            //values.add(-1);
+            return values;
         }
     }
 }

@@ -65,7 +65,7 @@ public class MainActivity extends FlutterActivity {
                 break;
 
               case "read":
-                result.success(bluetoothHandler.read());
+                result.success(bluetoothHandler.read(call.argument("nb")));
                 break;
               
               default:

@@ -186,7 +186,7 @@ class EasterEgg extends StatelessWidget{
               children:[
                 Align(
                   alignment: Alignment(0, -0.8),
-                  child: Text("Well played ! You find the EasterEgg page !", textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
+                  child: Text("Well played ! You found the EasterEgg page !", textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 30),),
                 ),
                 Align(
                   alignment: Alignment(0, 0.15),
@@ -414,7 +414,7 @@ class ScrollText extends StatelessWidget{
             "Indeed the modern image of Santa Claus as the jolly man in the red suit was seared into American pop culture in 1931 by the artist Haddon Sundblom "
             "for a Coca-Cola campaign.\n\n"
             "Did you know that one of the developper of this app is half German and half Tunisian which is a pretty rare mix of origin\n\n"
-            "Did you know that during the developpement of this Game one of the developper use a computer that has less power than "
+            "Did you know that during the developpement of this game one of the developper used a computer that has less power than "
             "your toaster\n\n"
             "Did you know that one of the developper can talk Japanese ? \n はい！ 初めまして ！ お名前はアドリエンです。\nアニメと犬が大好きです。"
             "ジョジョの奇妙な冒険は僕の好きなアニメです。宜しくお願いします！",
