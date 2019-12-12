@@ -82,9 +82,11 @@ class RendererState extends State<Renderer> with SingleTickerProviderStateMixin 
     _physics.currFps = _currFps;
 
     // game logic update
-    if((await _gameLogic.update(
-      SmashEngine.of(context).inputs, _assets)) == GameLogic.FINISHED) {
+    if((await _gameLogic.update(SmashEngine.of(context).inputs, _assets)) 
+       == GameLogic.FINISHED) {
+      // stop renderer
       _controller.stop();
+      // show end game screen
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => _gameLogic.endGameScreen),

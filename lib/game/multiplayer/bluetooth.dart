@@ -40,11 +40,14 @@ class Bluetooth {
     return platform.invokeMethod('disconnect');
   }
 
-  Future<int> read() {
-    return platform.invokeMethod('read');
+  Future<List<double>> read(int nb) async {
+    List<dynamic> values = await platform.invokeMethod('read', <String, dynamic>{
+      'nb': nb
+    });
+    return List<double>.from(values);
   }
 
-  Future<bool> write(int data) {
+  Future<bool> write(List<double> data) {
     return platform.invokeMethod('write', <String, dynamic>{
         'data': data
     });

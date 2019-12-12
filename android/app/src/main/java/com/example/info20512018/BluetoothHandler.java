@@ -13,6 +13,9 @@ import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.io.DataOutputStream;
+import java.io.DataInputStream;
+
 /**
  * Class used to handle the Bluetooth adapter
  */
@@ -22,8 +25,10 @@ class BluetoothHandler {
     
     private BluetoothAdapter bAdapter;
     private BluetoothSocket bSocket;
-    private OutputStream outputStream;
-    private InputStream inputStream;
+    //private OutputStream outputStream;
+    //private InputStream inputStream;
+    private DataOutputStream outputStream;
+    private DataInputStream inputStream;
 
     private BluetoothAcceptThread bAccept;
 
@@ -82,9 +87,9 @@ class BluetoothHandler {
             for(BluetoothDevice device : bondedDevices) {
                 if(device.getName().equals(deviceName)) {
                     try {
-                        bSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
-                        outputStream = bSocket.getOutputStream();
-                        inputStream = bSocket.getInputStream();
+                        this.bSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
+                        this.outputStream = new DataOutputStream(bSocket.getOutputStream());
+                        this.inputStream = new DataInputStream(bSocket.getInputStream());
                         bSocket.connect();
                         break;
                     }
@@ -133,8 +138,8 @@ class BluetoothHandler {
             if(this.bSocket != null)    
                 this.bSocket.close();
             this.bSocket = bSocket;
-            this.outputStream = bSocket.getOutputStream();
-            this.inputStream = bSocket.getInputStream();
+            this.outputStream = new DataOutputStream(bSocket.getOutputStream());
+            this.inputStream = new DataInputStream(bSocket.getInputStream());
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -167,14 +172,14 @@ class BluetoothHandler {
     }
 
     /**
-     * Send a byte to the connected device
-     * @param data the byte to send
+     * 
      */
-    boolean write(int data) {
+    boolean write(List<Double> data) {
         if(outputStream == null)
             return false;
         try {
-            outputStream.write(data);
+            for(int i=0; i < data.size(); i++)
+                outputStream.writeDouble(data.get(i));//write(data.get(i));
             return true;
         }
         catch(IOException e) {
@@ -190,14 +195,18 @@ class BluetoothHandler {
     }
 
     /**
-     * Read a byte from the connected device
-     * @return the byte read
+     * 
      */
-    int read() {
-        if(inputStream == null)
-            return -1;
+    List<Double> read(int nb) {
+        List<Double> values = new ArrayList<>();
+        if(inputStream == null) {
+            //values.add(-1);
+            return values;
+        }
         try {
-            return inputStream.read();
+            for(int i=0; i < nb; i++)
+                values.add(inputStream.readDouble());//inputStream.read());
+            return values;
         }
         catch(IOException e) {
             try {
@@ -206,7 +215,8 @@ class BluetoothHandler {
             catch(IOException e1) {
                 e.printStackTrace();
             }
-            return -1;
+            //values.add(-1);
+            return values;
         }
     }
 }
