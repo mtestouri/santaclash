@@ -8,17 +8,6 @@ import 'package:smashlike/menus/endscreen.dart';
 import 'package:smashlike/smash_engine/asset.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
-// TODO
-// bluetooth (sync)
-// init/reset method for multi before use
-// isolate multiplayer
-// Check mulitplayer start fail
-// check blocking with attacks
-// adjust animations timing and other parameters (hitboxes, hurtboxes, ...)
-// restructure menus & clean code
-// private variables and functions
-// santas fighter color
-
 class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();
   bool useMultiplayer = true;
