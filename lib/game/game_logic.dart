@@ -86,6 +86,7 @@ class SmashLikeLogic extends GameLogic {
     if(useMultiplayer) {
       // check connection failure
       if((await multiplayer.isConnected) == false) {
+
         endGameScreen = EndScreen(status: EndScreen.CONNECTION_LOST);
         return GameLogic.FINISHED;
       }
@@ -217,55 +218,57 @@ class SmashLikeLogic extends GameLogic {
     int pPosY = player.posY.round();
     switch(playerInput) {
       case "press_left_start":
-        multiplayer.send([Multiplayer.LEFT_START, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.LEFT_START, pPosX, pPosY]));
       break;
 
       case "press_left_end":
-        multiplayer.send([Multiplayer.LEFT_END, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.LEFT_END, pPosX, pPosY]));
       break;
 
       case "press_right_start":
-        multiplayer.send([Multiplayer.RIGHT_START, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.RIGHT_START, pPosX, pPosY]));
       break;
 
       case "press_right_end":
-        multiplayer.send([Multiplayer.RIGHT_END, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.RIGHT_END, pPosX, pPosY]));
       break;
 
       case "press_up":
-        multiplayer.send([Multiplayer.UP, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.UP, pPosX, pPosY]));
       break;
 
       case "press_a":
-        multiplayer.send([Multiplayer.A, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.A, pPosX, pPosY]));
       break;
 
       case "long_press_a":
-        multiplayer.send([Multiplayer.LONG_A, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.LONG_A, pPosX, pPosY]));
       break;
         
       case "press_b_start":
-        multiplayer.send([Multiplayer.B_START, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.B_START, pPosX, pPosY]));
       break;
 
       case "press_b_end":
-        multiplayer.send([Multiplayer.B_END, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.B_END, pPosX, pPosY]));
       break;
         
       case "press_fireball":
-        multiplayer.send([Multiplayer.FIREBALL, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.FIREBALL, pPosX, pPosY]));
       break;
 
       default:
-        multiplayer.send([Multiplayer.NONE, pPosX, pPosY]);
+        multiplayer.send(List<double>.from([Multiplayer.NONE, pPosX, pPosY]));
       break;
     }
 
     // opponent
-    List<int> values = await multiplayer.receive();
+    List<double> values = await multiplayer.receive();
+    if(values.isEmpty)
+      return;
     opponent.posX = values[1].toDouble();
     opponent.posY = values[2].toDouble();
-    switch(values[0]) {
+    switch(values[0].round()) {
       case Multiplayer.LEFT_START:
         opponent.move(Fighter.LEFT);
       break;

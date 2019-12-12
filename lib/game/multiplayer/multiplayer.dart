@@ -52,20 +52,20 @@ class Multiplayer {
 
   Future<void> start() async {
     if(_isServer) {
-      await bluetooth.write([mapId, firstPlayerId]);
+      await bluetooth.write([mapId.toDouble(), firstPlayerId.toDouble()]);
     }
     else {
-      List<int> values = await bluetooth.read(2);
-      mapId = values[0];
-      firstPlayerId = values[1];
+      List<double> values = await bluetooth.read(2);
+      mapId = values[0].toInt();
+      firstPlayerId = values[1].toInt();
     }
   }
 
-  Future<bool> send(List<int> value) {
+  Future<bool> send(List<double> value) {
     return bluetooth.write(value);
   }
 
-  Future<List<int>> receive() {
+  Future<List<double>> receive() {
     return bluetooth.read(3);
   }
 }
