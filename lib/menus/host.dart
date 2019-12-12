@@ -1,10 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smashlike/game/game_assets.dart';
 import 'package:smashlike/game/multiplayer/multiplayer.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
-import 'package:smashlike/menu.dart';
 import 'package:smashlike/game.dart';
+import 'package:smashlike/menus/menu.dart';
 
 class Host extends StatefulWidget {
   @override
@@ -43,8 +44,15 @@ class _HostState extends State<Host> with TickerProviderStateMixin{
 
           _multiplayer.start().then((onValue) {
             Navigator.push(
-                context,
-                FadeRoute(page: Game(mapId: widget.mapId, playerId: widget.playerId, side: GameAssetsFactory.LEFT_SIDE)),
+              context,
+              FadeRoute(
+                page: Game(
+                  mapId: widget.mapId, 
+                  playerId: widget.playerId, 
+                  side: GameAssetsFactory.LEFT_SIDE,
+                  multiplayer: true,
+                )
+              ),
             );
           });
         }

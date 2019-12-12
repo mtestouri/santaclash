@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/menu.dart';
+import 'package:smashlike/menus/menu.dart';
+
+import 'package:smashlike/game.dart';
+import 'package:smashlike/game/game_assets.dart';
 
 void main() => runApp(new App());
 
@@ -27,10 +31,18 @@ class HomePage extends StatelessWidget {
       body: WillPopScope(
         onWillPop: () => Future.value(false),
         child:GestureDetector(
-          onTap:(){
+          onTap:() {
             Navigator.push(
-                context,
-                FadeRoute(page: MenuPage())
+              context,
+              FadeRoute(page: MenuPage())
+              /*FadeRoute(
+                page: Game(
+                  playerId: 0,
+                  mapId: 1,
+                  side: GameAssetsFactory.LEFT_SIDE,
+                  multiplayer: false,
+                )
+              )*/
             );
           },
           child: Container(
@@ -44,6 +56,11 @@ class HomePage extends StatelessWidget {
             ),
             child: Stack(
               children: [
+                Align(
+                  alignment: Alignment(-0.97, -0.98),
+                  child: Text("V_1.0",style: TextStyle(color: Colors.white,fontSize: 10)),
+                
+            ),
                 Align(
                   alignment: Alignment(0, -0.89),
                   child: Title(),
@@ -112,7 +129,6 @@ class _MyBlinkingButtonState extends State<MyBlinkingButton>
     super.dispose();
   }
 }
-
 
 class FadeRoute extends PageRouteBuilder {
   final Widget page;

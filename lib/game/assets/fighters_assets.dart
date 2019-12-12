@@ -32,6 +32,10 @@ abstract class Fighter extends PhysicalAsset {
   static const int _A_FIREBALL = 6;
   static const int _A_STUN = 7;
 
+  // respawn
+  double respawnPosX = 0;
+  double respawnPosY = 0;
+
   // damage
   double damage = 0;
   int lifes = 3;
@@ -338,6 +342,7 @@ class RedSantaClaus extends Fighter {
     // id
     this.id = id;
     // visual properties
+    this.orientation = orientation;
     if(this.orientation == Fighter.LEFT)
       this.imageFile = spritesPath + 'idle_l_1.png';
     else
@@ -349,6 +354,9 @@ class RedSantaClaus extends Fighter {
     // hitboxe
     hitboxX = 6;
     hitboxY = 11;
+    // respawn
+    respawnPosX = posX;
+    respawnPosY = posY;
     // basic attack
     _hurtBasicOffsetX = 2;
     hurtBasicOffsetY = 0.25;
@@ -557,6 +565,7 @@ class GreenSantaClaus extends Fighter {
     // id
     this.id = id;
     // visual properties
+    this.orientation = orientation;
     if(this.orientation == Fighter.LEFT)
       this.imageFile = spritesPath + 'idle_l_1.png';
     else
@@ -568,6 +577,9 @@ class GreenSantaClaus extends Fighter {
     // hitboxe
     hitboxX = 6;
     hitboxY = 11;
+    // respawn
+    respawnPosX = posX;
+    respawnPosY = posY;
     // basic attack
     _hurtBasicOffsetX = 2;
     hurtBasicOffsetY = 0.25;

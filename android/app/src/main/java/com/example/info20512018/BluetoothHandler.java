@@ -146,7 +146,6 @@ class BluetoothHandler {
      * @return true if connected, false otherwise
      */
     boolean isConnected() {
-        //System.out.println("ISCONNECTED ? " + ((bSocket != null) && bSocket.isConnected()));
         return ((bSocket != null) && bSocket.isConnected());
     }
 
@@ -179,7 +178,13 @@ class BluetoothHandler {
             return true;
         }
         catch(IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            try {
+                bSocket.close();
+            }
+            catch(IOException e1) {
+                e.printStackTrace();
+            }
             return false;
         }
     }
@@ -195,7 +200,12 @@ class BluetoothHandler {
             return inputStream.read();
         }
         catch(IOException e) {
-            e.printStackTrace();
+            try {
+                bSocket.close();
+            }
+            catch(IOException e1) {
+                e.printStackTrace();
+            }
             return -1;
         }
     }
