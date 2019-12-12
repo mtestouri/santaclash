@@ -174,7 +174,7 @@ class SmashLikeLogic extends GameLogic {
   }
 
   bool outOfLimits(Fighter fighter) {
-    if(fighter.posX < -10 || fighter.posX > 110 || fighter.posY < -8)
+    if(fighter.posX.round() < -10 || fighter.posX.round() > 110 || fighter.posY.round() < -8)
       return true;
     return false;
   }
@@ -263,6 +263,8 @@ class SmashLikeLogic extends GameLogic {
 
     // opponent
     List<int> values = await multiplayer.receive();
+    if(values.isEmpty)
+      return;
     opponent.posX = values[1].toDouble();
     opponent.posY = values[2].toDouble();
     switch(values[0]) {
