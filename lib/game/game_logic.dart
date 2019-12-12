@@ -174,23 +174,15 @@ class SmashLikeLogic extends GameLogic {
     // check fireballs hits
     for(Fireball fireball in fireballs) {
       if(checkHurtFireball(player, fireball)) {
-<<<<<<< HEAD
         player.hit();
         if(player.damage < 100) {
           player.damage += 5;
-=======
-        if(player.damage < 100) {
-          opponent.damage += 5;
->>>>>>> 1205fba85ff9fbb422d9f416aad0338bcc32653c
         }
         fireball.velX = 0;
         continue;
       }
       if(checkHurtFireball(opponent, fireball)) {
-<<<<<<< HEAD
         opponent.hit();
-=======
->>>>>>> 1205fba85ff9fbb422d9f416aad0338bcc32653c
         if(opponent.damage < 100) {
           opponent.damage += 5;
         }
@@ -198,7 +190,6 @@ class SmashLikeLogic extends GameLogic {
       }
     }
 
-<<<<<<< HEAD
     if(outOfLimits(player)){
       player.posY = 26;
       player.posX = 18;
@@ -221,9 +212,6 @@ class SmashLikeLogic extends GameLogic {
         //TODO opponent win
       }
     }
-=======
-    // TODO check out of the arena limits, life and end of game
->>>>>>> 1205fba85ff9fbb422d9f416aad0338bcc32653c
   }
 }
 
