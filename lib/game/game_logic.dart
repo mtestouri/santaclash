@@ -6,18 +6,19 @@ import 'package:smashlike/game/game_assets.dart';
 import 'package:smashlike/game/multiplayer/multiplayer.dart';
 import 'package:smashlike/menus/endscreen.dart';
 import 'package:smashlike/smash_engine/asset.dart';
+import 'package:smashlike/smash_engine/physics.dart';
 import 'package:smashlike/smash_engine/smash_engine.dart';
 
 // TODO
-// santas fighter color
+// bluetooth (sync)
+// init/reset method for multi before use
 // isolate multiplayer
 // Check mulitplayer start fail
-
-// bluetooth (sync)
 // check blocking with attacks
 // adjust animations timing and other parameters (hitboxes, hurtboxes, ...)
 // restructure menus & clean code
 // private variables and functions
+// santas fighter color
 
 class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();
@@ -165,6 +166,11 @@ class SmashLikeLogic extends GameLogic {
           opponent.fireball();
         break;
       }
+
+      // exchange the current FPS
+      multiplayer.send(Physics().currFps.round());
+      int opponentCurrFPS = await multiplayer.receive();
+      Physics().currFps = min(Physics().currFps.round(), opponentCurrFPS).toDouble();
     }
 
     // basic attacks
@@ -246,41 +252,41 @@ class SmashLikeLogic extends GameLogic {
     
     return GameLogic.ON_GOING;
   }
-}
 
-bool outOfLimits (Fighter fighter){
-  if(fighter.posX < -10 || fighter.posX > 110 || fighter.posY < -8)
-    return true;
-  return false;
-}
+  bool outOfLimits(Fighter fighter) {
+    if(fighter.posX < -10 || fighter.posX > 110 || fighter.posY < -8)
+      return true;
+    return false;
+  }
 
-bool checkHurtBasic(Fighter att, Fighter def) {
-  return (max(att.hurtBasicLeft, def.hitboxLeft) 
-  < min(att.hurtBasicRight, def.hitboxRight) 
-  && max(att.hurtBasicBottom, def.hitboxBottom) 
-  < min(att.hurtBasicTop, def.hitboxTop));
-}
+  bool checkHurtBasic(Fighter att, Fighter def) {
+    return (max(att.hurtBasicLeft, def.hitboxLeft) 
+    < min(att.hurtBasicRight, def.hitboxRight) 
+    && max(att.hurtBasicBottom, def.hitboxBottom) 
+    < min(att.hurtBasicTop, def.hitboxTop));
+  }
 
-bool checkHurtSmash(Fighter att, Fighter def) {
-  return (max(att.hurtSmashLeft, def.hitboxLeft) 
-  < min(att.hurtSmashRight, def.hitboxRight) 
-  && max(att.hurtSmashBottom, def.hitboxBottom) 
-  < min(att.hurtSmashTop, def.hitboxTop));
-}
+  bool checkHurtSmash(Fighter att, Fighter def) {
+    return (max(att.hurtSmashLeft, def.hitboxLeft) 
+    < min(att.hurtSmashRight, def.hitboxRight) 
+    && max(att.hurtSmashBottom, def.hitboxBottom) 
+    < min(att.hurtSmashTop, def.hitboxTop));
+  }
 
-bool checkHurtFireball(Fighter fighter, Fireball fireball) {
-  return((fireball.id != fighter.id)
-  && (max(fighter.hitboxLeft, fireball.hitboxLeft) 
-  < min(fighter.hitboxRight, fireball.hitboxRight) 
-  && max(fighter.hitboxBottom, fireball.hitboxBottom) 
-  < min(fighter.hitboxTop, fireball.hitboxTop)));
-}
+  bool checkHurtFireball(Fighter fighter, Fireball fireball) {
+    return((fireball.id != fighter.id)
+    && (max(fighter.hitboxLeft, fireball.hitboxLeft) 
+    < min(fighter.hitboxRight, fireball.hitboxRight) 
+    && max(fighter.hitboxBottom, fireball.hitboxBottom) 
+    < min(fighter.hitboxTop, fireball.hitboxTop)));
+  }
 
-void ejectFighter(Fighter fighter, int orientation, 
-                  double intensityX, double intensityY) {
-  if(orientation == Fighter.LEFT)
-    fighter.velX -= intensityX*(fighter.damage/100);
-  else
-    fighter.velX += intensityX*(fighter.damage/100);
-  fighter.velY += intensityY*(fighter.damage/100);
+  void ejectFighter(Fighter fighter, int orientation, 
+                    double intensityX, double intensityY) {
+    if(orientation == Fighter.LEFT)
+      fighter.velX -= intensityX*(fighter.damage/100);
+    else
+      fighter.velX += intensityX*(fighter.damage/100);
+    fighter.velY += intensityY*(fighter.damage/100);
+  }
 }

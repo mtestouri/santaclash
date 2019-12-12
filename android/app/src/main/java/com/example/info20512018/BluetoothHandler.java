@@ -170,7 +170,7 @@ class BluetoothHandler {
      * Send a byte to the connected device
      * @param data the byte to send
      */
-    boolean writeByte(int data) {
+    boolean write(int data) {
         if(outputStream == null)
             return false;
         try {
@@ -193,7 +193,7 @@ class BluetoothHandler {
      * Read a byte from the connected device
      * @return the byte read
      */
-    int readByte() {
+    int read() {
         if(inputStream == null)
             return -1;
         try {
