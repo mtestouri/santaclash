@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
-import 'package:smashlike/menu/menu.dart';
-import 'package:smashlike/menu/host.dart';
+import 'package:smashlike/menus/menu.dart';
+import 'package:smashlike/menus/host.dart';
 
 class SelectionChara extends StatelessWidget {
   @override

@@ -60,12 +60,12 @@ public class MainActivity extends FlutterActivity {
                 result.success(bluetoothHandler.disconnect());
                 break;
 
-              case "writeByte":
-                result.success(bluetoothHandler.writeByte(call.argument("data")));
+              case "write":
+                result.success(bluetoothHandler.write(call.argument("data")));
                 break;
 
-              case "readByte":
-                result.success(bluetoothHandler.readByte());
+              case "read":
+                result.success(bluetoothHandler.read());
                 break;
               
               default:

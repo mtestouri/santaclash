@@ -40,12 +40,12 @@ class Bluetooth {
     return platform.invokeMethod('disconnect');
   }
 
-  Future<int> readByte() {
-    return platform.invokeMethod('readByte');
+  Future<int> read() {
+    return platform.invokeMethod('read');
   }
 
-  Future<bool> writeByte(int data) {
-    return platform.invokeMethod('writeByte', <String, dynamic>{
+  Future<bool> write(int data) {
+    return platform.invokeMethod('write', <String, dynamic>{
         'data': data
     });
   }

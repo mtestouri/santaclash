@@ -3,16 +3,16 @@ import 'package:smashlike/smash_engine/gesture.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 
 class InputGesturesFactory {
-  static List<InputGesture> build(String inputGesturesId) {
+  static List<InputGesture> build(int inputGesturesId) {
     switch(inputGesturesId) {
-      case "debug":
-        return debug();
+      case 0:
+        return inputs();
       default:
         return List();
     }
   }
 
-  static List<InputGesture>  debug() {
+  static List<InputGesture>  inputs() {
     List<InputGesture> inputGestures = List();
     inputGestures.add(ButtonLeft());
     inputGestures.add(ButtonRight());

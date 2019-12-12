@@ -55,6 +55,6 @@ class LifeIndicator extends Asset {
         "Lifes: " + _fighter.lifes.toStringAsFixed(1),
         style: TextStyle(color: color),
       ),
-      );
+    );
   }
 }

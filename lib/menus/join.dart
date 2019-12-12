@@ -3,7 +3,7 @@ import 'package:smashlike/game/game_assets.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/main.dart';
 import 'package:smashlike/game.dart';
-import 'package:smashlike/menu/menu.dart';
+import 'package:smashlike/menus/menu.dart';
 import 'package:smashlike/game/multiplayer/multiplayer.dart';
 import 'dart:async';
 
@@ -248,28 +248,30 @@ class DynamicBlueListState extends State<DynamicBlueList> {
   connectionDialog(BuildContext context,String name) {
     Widget yesButton = FlatButton(
         child: Text("Yes"),
-        onPressed: () async{
+        onPressed: () async {
           bool connected = await multiplayer.join(name);
-            print("connection: ");
-            print(connected);
-            print(await multiplayer.isConnected);
             if(connected) {
-                await multiplayer.start();
-                print("mapid: "+multiplayer.mapId.toString());
-                Navigator.of(context).pop();
-                int playerId;
-                if(multiplayer.firstPlayerId==0){
-                  playerId=1;
-                }
-                else{
-                  playerId=0;
-                }
-                Navigator.push(
-                  context,
-                  FadeRoute(page: Game(mapId: multiplayer.mapId,playerId: playerId, side: GameAssetsFactory.RIGHT_SIDE,)),
-                );
-
-
+              await multiplayer.start();
+              Navigator.of(context).pop();
+              
+              // choose the other player
+              int playerId;
+              if(multiplayer.firstPlayerId == 0)
+                playerId = 1;
+              else
+                playerId = 0;
+              
+              Navigator.push(
+                context,
+                FadeRoute(
+                  page: Game(
+                    mapId: multiplayer.mapId, 
+                    playerId: playerId, 
+                    side: GameAssetsFactory.RIGHT_SIDE,
+                    multiplayer: true,
+                  )
+                ),
+              );
             }
             else {
               Navigator.of(context).pop();
@@ -277,7 +279,6 @@ class DynamicBlueListState extends State<DynamicBlueList> {
             }
           }
           );
-
 
     Widget noButton = FlatButton(
       child: Text("No"),
@@ -345,7 +346,6 @@ class DynamicBlueListState extends State<DynamicBlueList> {
         );
       },
       itemCount: blueList.length,
-
     );
   }
 }

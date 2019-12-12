@@ -342,6 +342,7 @@ class RedSantaClaus extends Fighter {
     // id
     this.id = id;
     // visual properties
+    this.orientation = orientation;
     if(this.orientation == Fighter.LEFT)
       this.imageFile = spritesPath + 'idle_l_1.png';
     else
@@ -564,6 +565,7 @@ class GreenSantaClaus extends Fighter {
     // id
     this.id = id;
     // visual properties
+    this.orientation = orientation;
     if(this.orientation == Fighter.LEFT)
       this.imageFile = spritesPath + 'idle_l_1.png';
     else
