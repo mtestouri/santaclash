@@ -8,14 +8,14 @@ class GameAssetsFactory {
   static const int LEFT_SIDE = 0;
   static const int RIGHT_SIDE = 1;
 
-  static GameAssets build(int mapId, int playerId, int side) {
+  static GameAssets build(int mapId, int playerId, int side, bool drawHitboxes) {
     switch(mapId) {
       case 0:
         return debug();
       case 1:
-        return map1(playerId, side);
+        return map1(playerId, side, drawHitboxes);
       case 2:
-        return map2(playerId, side);
+        return map2(playerId, side, drawHitboxes);
       default:
         return debug();
     }
@@ -62,7 +62,7 @@ class GameAssetsFactory {
     );
   }
 
-  static GameAssets map1(int playerId, int side) {
+  static GameAssets map1(int playerId, int side, drawHitboxes) {
     String arenaPath = 'assets/images/arenas/map1/';
     // background assets
     List<Asset> backgroundAssets = List();
@@ -115,11 +115,11 @@ class GameAssetsFactory {
       player: player,
       opponent: opponent,
       ui: _buildUI(player, opponent),
-      drawHitboxes: true
+      drawHitboxes: drawHitboxes
     );
   }
 
-  static GameAssets map2(int playerId, int side) {
+  static GameAssets map2(int playerId, int side, bool drawHitboxes) {
     String arenaPath = 'assets/images/arenas/map2/';
     // background assets
     List<Asset> backgroundAssets = List();
@@ -180,7 +180,7 @@ class GameAssetsFactory {
       player: player,
       opponent: opponent,
       ui: _buildUI(player, opponent),
-      drawHitboxes: true
+      drawHitboxes: drawHitboxes
     );
   }
 }

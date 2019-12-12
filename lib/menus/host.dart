@@ -51,6 +51,7 @@ class _HostState extends State<Host> with TickerProviderStateMixin{
                   playerId: widget.playerId, 
                   side: GameAssetsFactory.LEFT_SIDE,
                   multiplayer: true,
+                  drawHitboxes: false,
                 )
               ),
             );

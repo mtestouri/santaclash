@@ -128,7 +128,15 @@ class TrainingButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            FadeRoute(page: Game(playerId: 0,mapId: 2,side: GameAssetsFactory.LEFT_SIDE,multiplayer: false,)),
+            FadeRoute(
+              page: Game(
+                playerId: 0,
+                mapId: 2,
+                side: GameAssetsFactory.LEFT_SIDE,
+                multiplayer: false,
+                drawHitboxes: true,
+              )
+            ),
           ); // switch to game page
         },
         child: null,

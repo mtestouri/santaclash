@@ -270,6 +270,7 @@ class DynamicBlueListState extends State<DynamicBlueList> {
                     playerId: playerId, 
                     side: GameAssetsFactory.RIGHT_SIDE,
                     multiplayer: true,
+                    drawHitboxes: false,
                   )
                 ),
               );

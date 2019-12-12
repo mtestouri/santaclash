@@ -10,12 +10,14 @@ class Game extends StatelessWidget {
   final int mapId;
   final int side;
   final bool multiplayer;
+  final bool drawHitboxes;
 
   Game({
     @required this.playerId, 
     @required this.mapId, 
     @required this.side,
-    @required this.multiplayer
+    @required this.multiplayer,
+    @required this.drawHitboxes
   });
 
   @override
@@ -26,7 +28,7 @@ class Game extends StatelessWidget {
         width: ScreenUtil.screenWidth,
         child: SmashEngine(
           inputGestures: InputGesturesFactory.build(0),
-          assets: GameAssetsFactory.build(mapId, playerId, side),
+          assets: GameAssetsFactory.build(mapId, playerId, side, drawHitboxes),
           gameLogic: SmashLikeLogic(useMultiplayer: multiplayer),
         ),
       ),
