@@ -214,13 +214,8 @@ class SmashLikeLogic extends GameLogic {
   Future multiplayerUpdate(String playerInput, Fighter player, 
                            Fighter opponent) async {
     // player
-<<<<<<< HEAD
-    double pPosX = player.posX;
-    double pPosY = player.posY;
-=======
     double pPosX = player.posX;//.round();
     double pPosY = player.posY;//.round();
->>>>>>> e645f1bbfe2374cdddc4dd1af278eab8e5a24461
     switch(playerInput) {
       case "press_left_start":
         multiplayer.send([Multiplayer.LEFT_START.toDouble(), pPosX, pPosY]);
