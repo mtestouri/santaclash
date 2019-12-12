@@ -13,6 +13,7 @@ class Physics {
   Physics._internal();
 
   set currFps(double value) => _currFps = value;
+  double get currFps => _currFps;
 
   factory Physics({double gravity}) {
     if(gravity != null)
