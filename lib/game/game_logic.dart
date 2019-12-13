@@ -22,9 +22,6 @@ import 'package:smashlike/smash_engine/smash_engine.dart';
 class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();
   bool useMultiplayer = true;
-  
-  int counter = 0;
-  int max_counter = 5;
 
   SmashLikeLogic({this.useMultiplayer});
 
@@ -95,12 +92,12 @@ class SmashLikeLogic extends GameLogic {
     }
 
     // basic attacks
-    if(checkHurtBasic(player, opponent) && (opponent.damage < 100)) {
-      opponent.damage += 0.1;
+    if(checkHurtBasic(player, opponent) && (opponent.damage < 300)) {
+      opponent.damage += 0.4;
       opponent.hit();
     }
-    if(checkHurtBasic(opponent, player) && (player.damage < 100)) {
-      player.damage += 0.1;
+    if(checkHurtBasic(opponent, player) && (player.damage < 300)) {
+      player.damage += 0.4;
       player.hit();
     }
     
@@ -108,10 +105,18 @@ class SmashLikeLogic extends GameLogic {
     bool ejectOpponent = checkHurtSmash(player, opponent);
     bool ejectPlayer = checkHurtSmash(opponent, player);
     if(ejectPlayer){
+      if(player.damage < 300) {
+        player.damage += 0.5;
+        player.hit();
+      }
       player.eject();
       ejectFighter(player, opponent.orientation, 3, 8);
     }
     if(ejectOpponent){
+      if(opponent.damage < 300) {
+        opponent.damage += 0.5;
+        opponent.hit();
+      }
       opponent.eject();
       ejectFighter(opponent, player.orientation, 3, 8);
     }
@@ -127,16 +132,16 @@ class SmashLikeLogic extends GameLogic {
     for(Fireball fireball in fireballs) {
       if(checkHurtFireball(player, fireball)) {
         player.hit();
-        if(player.damage < 100) {
-          player.damage += 5;
+        if(player.damage < 300) {
+          player.damage += 10;
         }
         fireball.velX = 0;
         continue;
       }
       if(checkHurtFireball(opponent, fireball)) {
         opponent.hit();
-        if(opponent.damage < 100) {
-          opponent.damage += 5;
+        if(opponent.damage < 300) {
+          opponent.damage += 10;
         }
         fireball.velX = 0;
       }
