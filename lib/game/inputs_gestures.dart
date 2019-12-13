@@ -148,9 +148,9 @@ class ButtonA extends InputGesture {
         onTapDown: (details) {
           this.pushInput(context, "press_a");
         },
-        onLongPress: () {
+        /*onLongPress: () {
           this.pushInput(context, "long_press_a");
-        },
+        },*/
         child: Container(
           height: ScreenUtil.unitHeight*13,
           width: ScreenUtil.unitWidth*9,
@@ -172,6 +172,9 @@ class ButtonB extends InputGesture {
       left: ScreenUtil.unitWidth*74,
       child: GestureDetector(
         onTapDown: (details) {
+          this.pushInput(context, "long_press_a");
+        },
+        /*onTapDown: (details) {
           this.pushInput(context, "press_b_start");
         },
         onTapCancel: () {
@@ -179,7 +182,7 @@ class ButtonB extends InputGesture {
         },
         onTapUp: (details) {
           this.pushInput(context, "press_b_end");
-        },
+        },*/
         child: Container(
           height: ScreenUtil.unitHeight*13,
           width: ScreenUtil.unitWidth*9,
