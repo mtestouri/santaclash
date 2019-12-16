@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
+
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 
@@ -24,8 +25,11 @@ class BluetoothHandler {
     
     private BluetoothAdapter bAdapter;
     private BluetoothSocket bSocket;
+    //private OutputStream outputStream;
+    //private InputStream inputStream;
     private DataOutputStream outputStream;
     private DataInputStream inputStream;
+
     private BluetoothAcceptThread bAccept;
 
     /**
@@ -78,12 +82,14 @@ class BluetoothHandler {
      */
     boolean connectToPaired(String deviceName) {
         Set<BluetoothDevice> bondedDevices = bAdapter.getBondedDevices();
-        
+
         if(!bondedDevices.isEmpty()) {
             for(BluetoothDevice device : bondedDevices) {
                 if(device.getName().equals(deviceName)) {
                     try {
-                        setBluetoothSocket(device.createRfcommSocketToServiceRecord(MY_UUID));
+                        this.bSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
+                        this.outputStream = new DataOutputStream(bSocket.getOutputStream());
+                        this.inputStream = new DataInputStream(bSocket.getInputStream());
                         bSocket.connect();
                         break;
                     }
@@ -108,6 +114,7 @@ class BluetoothHandler {
      * Wait for a Bluetooth connection
      */
     boolean waitConnection() {
+        // close existing accepting thread
         if(bAccept != null)
             bAccept.cancel();
         // create and run the accepting thread
@@ -165,46 +172,40 @@ class BluetoothHandler {
     }
 
     /**
-     * Write data
+     * 
      */
     boolean write(List<Double> data) {
         if(outputStream == null)
             return false;
         try {
             for(int i=0; i < data.size(); i++)
-                outputStream.writeDouble(data.get(i));
+                outputStream.writeDouble(data.get(i));//write(data.get(i));
             return true;
         }
         catch(IOException e) {
+            //e.printStackTrace();
             try {
                 bSocket.close();
             }
             catch(IOException e1) {
-                bSocket = null;
+                e.printStackTrace();
             }
             return false;
         }
     }
 
     /**
-     * Read data
+     * 
      */
     List<Double> read(int nb) {
         List<Double> values = new ArrayList<>();
-        // check existing input stream
         if(inputStream == null) {
-            values.add(-1.);
+            //values.add(-1);
             return values;
         }
-        // check connection
-        if(isConnected() == false) {
-            values.add(-1.);
-            return values;
-        }
-        // read data
         try {
             for(int i=0; i < nb; i++)
-                values.add(inputStream.readDouble());
+                values.add(inputStream.readDouble());//inputStream.read());
             return values;
         }
         catch(IOException e) {
@@ -212,9 +213,9 @@ class BluetoothHandler {
                 bSocket.close();
             }
             catch(IOException e1) {
-                bSocket = null;
+                e.printStackTrace();
             }
-            values.add(-1.);
+            //values.add(-1);
             return values;
         }
     }

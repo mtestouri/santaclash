@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:smashlike/smash_engine/screen_util.dart';
 import 'package:smashlike/menus/menu.dart';
 
+import 'package:smashlike/game.dart';
+import 'package:smashlike/game/game_assets.dart';
+
 void main() => runApp(new App());
 
 class App extends StatelessWidget {

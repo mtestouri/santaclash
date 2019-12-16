@@ -53,7 +53,7 @@ class BluetoothAcceptThread extends Thread {
             bServerSocket.close();
         }
         catch (IOException e) {
-            bServerSocket = null;
+            e.printStackTrace();
         }
     }
 }
