@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:collection';
 import 'dart:math';
 import 'package:smashlike/game/assets/fighters_assets.dart';
@@ -11,14 +10,11 @@ import 'package:smashlike/smash_engine/smash_engine.dart';
 class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();
   bool useMultiplayer = true;
-  
-  int counter = 0;
-  int max_counter = 5;
 
   SmashLikeLogic({this.useMultiplayer});
 
   @override
-  Future<int> update(Queue<String> inputs, GameAssets gameAssets) async {
+  int update(Queue<String> inputs, GameAssets gameAssets) {
     // extract the assets
     SmashLikeAssets assets = gameAssets;
     Fighter player = assets.player;
@@ -73,23 +69,21 @@ class SmashLikeLogic extends GameLogic {
     }
 
     if(useMultiplayer) {
-      // check connection failure
-      if((await multiplayer.isConnected) == false) {
-
+       // synchronize fighters
+      if(multiplayerUpdate(playerInput, player, opponent) 
+         == Multiplayer.CONNECTION_LOST) {
         endGameScreen = EndScreen(status: EndScreen.CONNECTION_LOST);
         return GameLogic.FINISHED;
       }
-      // synchronize fighters
-      await multiplayerUpdate(playerInput, player, opponent);
     }
 
     // basic attacks
-    if(checkHurtBasic(player, opponent) && (opponent.damage < 100)) {
-      opponent.damage += 0.1;
+    if(checkHurtBasic(player, opponent) && (opponent.damage < 300)) {
+      opponent.damage += 0.5;
       opponent.hit();
     }
-    if(checkHurtBasic(opponent, player) && (player.damage < 100)) {
-      player.damage += 0.1;
+    if(checkHurtBasic(opponent, player) && (player.damage < 300)) {
+      player.damage += 0.5;
       player.hit();
     }
     
@@ -97,10 +91,16 @@ class SmashLikeLogic extends GameLogic {
     bool ejectOpponent = checkHurtSmash(player, opponent);
     bool ejectPlayer = checkHurtSmash(opponent, player);
     if(ejectPlayer){
+      if(player.damage < 300) {
+        player.damage += 0.1;
+    }
       player.eject();
       ejectFighter(player, opponent.orientation, 3, 8);
     }
     if(ejectOpponent){
+      if(opponent.damage < 300) {
+        opponent.damage += 0.1;
+    }
       opponent.eject();
       ejectFighter(opponent, player.orientation, 3, 8);
     }
@@ -116,16 +116,16 @@ class SmashLikeLogic extends GameLogic {
     for(Fireball fireball in fireballs) {
       if(checkHurtFireball(player, fireball)) {
         player.hit();
-        if(player.damage < 100) {
-          player.damage += 5;
+        if(player.damage < 300) {
+          player.damage += 25;
         }
         fireball.velX = 0;
         continue;
       }
       if(checkHurtFireball(opponent, fireball)) {
         opponent.hit();
-        if(opponent.damage < 100) {
-          opponent.damage += 5;
+        if(opponent.damage < 300) {
+          opponent.damage += 25;
         }
         fireball.velX = 0;
       }
@@ -164,7 +164,7 @@ class SmashLikeLogic extends GameLogic {
   }
 
   bool outOfLimits(Fighter fighter) {
-    if(fighter.posX.round() < -10 || fighter.posX.round() > 110 || fighter.posY.round() < -8)
+    if(fighter.posX < -10 || fighter.posX > 110 || fighter.posY < -8)
       return true;
     return false;
   }
@@ -200,63 +200,70 @@ class SmashLikeLogic extends GameLogic {
     fighter.velY += intensityY*(fighter.damage/100);
   }
 
-  Future multiplayerUpdate(String playerInput, Fighter player, 
-                           Fighter opponent) async {
+  int multiplayerUpdate(String playerInput, Fighter player, Fighter opponent) {
     // player
-    double pPosX = player.posX;//.round();
-    double pPosY = player.posY;//.round();
+    double pPosX = player.posX;
+    double pPosY = player.posY;
+    double pDamage = player.damage;
+    double pLifes = player.lifes.toDouble();
     switch(playerInput) {
       case "press_left_start":
-        multiplayer.send([Multiplayer.LEFT_START.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.LEFT_START.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
 
       case "press_left_end":
-        multiplayer.send([Multiplayer.LEFT_END.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.LEFT_END.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
 
       case "press_right_start":
-        multiplayer.send([Multiplayer.RIGHT_START.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.RIGHT_START.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
 
       case "press_right_end":
-        multiplayer.send([Multiplayer.RIGHT_END.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.RIGHT_END.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
 
       case "press_up":
-        multiplayer.send([Multiplayer.UP.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.UP.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
 
       case "press_a":
-        multiplayer.send([Multiplayer.A.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.A.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
 
       case "long_press_a":
-        multiplayer.send([Multiplayer.LONG_A.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.LONG_A.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
         
       case "press_b_start":
-        multiplayer.send([Multiplayer.B_START.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.B_START.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
 
       case "press_b_end":
-        multiplayer.send([Multiplayer.B_END.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.B_END.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
         
       case "press_fireball":
-        multiplayer.send([Multiplayer.FIREBALL.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.FIREBALL.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
 
       default:
-        multiplayer.send([Multiplayer.NONE.toDouble(), pPosX, pPosY]);
+        multiplayer.send([Multiplayer.NONE.toDouble(), pPosX, pPosY, pDamage, pLifes]);
       break;
     }
 
-    // opponent
-    List<double> values = await multiplayer.receive();
+    // receive values
+    List<double> values = multiplayer.receive();
     if(values.isEmpty)
-      return;
-    opponent.posX = values[1].toDouble();
-    opponent.posY = values[2].toDouble();
+      return Multiplayer.CONTINUE;
+    if(values[0] == -1)
+      return Multiplayer.CONNECTION_LOST;
+    
+    // opponent
+    opponent.posX = values[1];
+    opponent.posY = values[2];
+    opponent.damage = values[3];
+    opponent.lifes = values[4].toInt();
     switch(values[0].round()) {
       case Multiplayer.LEFT_START:
         opponent.move(Fighter.LEFT);
@@ -298,5 +305,6 @@ class SmashLikeLogic extends GameLogic {
         opponent.fireball();
       break;
     }
+    return Multiplayer.CONTINUE;
   }
 }

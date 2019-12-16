@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'dart:collection';
 import 'package:smashlike/game/multiplayer/bluetooth.dart';
 
 class Multiplayer {
-  static const int START = 1;
-  static const int END = 2;
+  static const int CONTINUE = 1;
+  static const int CONNECTION_LOST = 2;
   static const int NONE = 3;
   static const int LEFT_START = 4;
   static const int LEFT_END = 5;
@@ -59,13 +60,31 @@ class Multiplayer {
       mapId = values[0].toInt();
       firstPlayerId = values[1].toInt();
     }
+    // reset
+    _nbRead = 0;
+    inputBuffer = Queue();
   }
 
   Future<bool> send(List<double> value) {
     return bluetooth.write(value);
   }
 
-  Future<List<double>> receive() {
-    return bluetooth.read(3);
+  int _nbRead = 0;
+  Queue<List<double>> inputBuffer = Queue();
+  
+  List<double> receive() {
+    // check max number of reading
+    if(_nbRead < 3) {
+      _nbRead++;
+      bluetooth.read(5).then((onValue) {
+        inputBuffer.add(onValue);
+        _nbRead--;
+      });
+    }
+    // read input buffer
+    if(inputBuffer.isNotEmpty)
+      return inputBuffer.removeFirst();
+    else
+      return List();
   }
 }

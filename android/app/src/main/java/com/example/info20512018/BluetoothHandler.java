@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
-
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 
@@ -25,11 +24,8 @@ class BluetoothHandler {
     
     private BluetoothAdapter bAdapter;
     private BluetoothSocket bSocket;
-    //private OutputStream outputStream;
-    //private InputStream inputStream;
     private DataOutputStream outputStream;
     private DataInputStream inputStream;
-
     private BluetoothAcceptThread bAccept;
 
     /**
@@ -81,15 +77,13 @@ class BluetoothHandler {
      * @return true if the connection is successful, false otherwise
      */
     boolean connectToPaired(String deviceName) {
+        reset();
         Set<BluetoothDevice> bondedDevices = bAdapter.getBondedDevices();
-
         if(!bondedDevices.isEmpty()) {
             for(BluetoothDevice device : bondedDevices) {
                 if(device.getName().equals(deviceName)) {
                     try {
-                        this.bSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
-                        this.outputStream = new DataOutputStream(bSocket.getOutputStream());
-                        this.inputStream = new DataInputStream(bSocket.getInputStream());
+                        setBluetoothSocket(device.createRfcommSocketToServiceRecord(MY_UUID));
                         bSocket.connect();
                         break;
                     }
@@ -114,9 +108,7 @@ class BluetoothHandler {
      * Wait for a Bluetooth connection
      */
     boolean waitConnection() {
-        // close existing accepting thread
-        if(bAccept != null)
-            bAccept.cancel();
+        reset();
         // create and run the accepting thread
         try {
             bAccept = new BluetoothAcceptThread(this, NAME, MY_UUID);
@@ -163,49 +155,57 @@ class BluetoothHandler {
             return true;
         try {
             bSocket.close();
+            reset();
             return true;
         }
         catch(IOException e) {
             e.printStackTrace();
+            reset();
             return false;
         }
     }
 
     /**
-     * 
+     * Write data
      */
     boolean write(List<Double> data) {
         if(outputStream == null)
             return false;
         try {
             for(int i=0; i < data.size(); i++)
-                outputStream.writeDouble(data.get(i));//write(data.get(i));
+                outputStream.writeDouble(data.get(i));
             return true;
         }
         catch(IOException e) {
-            //e.printStackTrace();
             try {
                 bSocket.close();
             }
             catch(IOException e1) {
-                e.printStackTrace();
+                bSocket = null;
             }
             return false;
         }
     }
 
     /**
-     * 
+     * Read data
      */
     List<Double> read(int nb) {
         List<Double> values = new ArrayList<>();
+        // check existing input stream
         if(inputStream == null) {
-            //values.add(-1);
+            values.add(-1.);
             return values;
         }
+        // check connection
+        if(isConnected() == false) {
+            values.add(-1.);
+            return values;
+        }
+        // read data
         try {
             for(int i=0; i < nb; i++)
-                values.add(inputStream.readDouble());//inputStream.read());
+                values.add(inputStream.readDouble());
             return values;
         }
         catch(IOException e) {
@@ -213,10 +213,39 @@ class BluetoothHandler {
                 bSocket.close();
             }
             catch(IOException e1) {
-                e.printStackTrace();
+                bSocket = null;
             }
-            //values.add(-1);
+            values.add(-1.);
             return values;
         }
+    }
+
+    /**
+     * Reset the handler
+     */
+    void reset() {
+        try {
+            if(bSocket != null)
+                bSocket.close();
+        }
+        catch(IOException e) {
+            //e.printStackTrace();
+        }
+        try {
+            if(outputStream != null)
+                outputStream.close();
+        }
+        catch(IOException e) {
+            //e.printStackTrace();
+        }
+        try {
+            if(inputStream != null)
+                inputStream.close();
+        }
+        catch(IOException e) {
+            //e.printStackTrace();
+        }
+        if(bAccept != null)
+            bAccept.cancel();
     }
 }
