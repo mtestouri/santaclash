@@ -2,7 +2,7 @@
 Santa Clash is a fighting game inspired from the Super Smash Bros. series.
 The game is a platformer where two players are fighting each other, the goal being to eject the opponent behind the edges of the map.
 
-<img src="assets/images/game.png" alt="drawing" width="500"/>
+<img src="assets/images/game.png" alt="drawing" width="550"/>
 
 __Android only__ because of the implementation of the Bluetooth module that has to be platform specific.
 
@@ -22,4 +22,5 @@ Install with : `flutter install`
 The main issue is the performance of the multiplayer which experiences stuttering.
 
 ## Credits
+Devs : Vasco Agnello, Adrien Chiodo, Mehdi Testouri. <br>
 Thanks for the assets : Vnitti, BigBuckBunny, Max Thorne, Ansinuz, Srip, Freepik, TheWiseHedgehog, Dusan Pavkovic WARlord, Elthen.
