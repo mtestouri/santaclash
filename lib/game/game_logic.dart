@@ -1,11 +1,11 @@
 import 'dart:collection';
 import 'dart:math';
-import 'package:smashlike/game/assets/fighters_assets.dart';
-import 'package:smashlike/game/game_assets.dart';
-import 'package:smashlike/game/multiplayer/multiplayer.dart';
-import 'package:smashlike/menus/endscreen.dart';
-import 'package:smashlike/smash_engine/asset.dart';
-import 'package:smashlike/smash_engine/smash_engine.dart';
+import 'package:santaclash/game/assets/fighters_assets.dart';
+import 'package:santaclash/game/game_assets.dart';
+import 'package:santaclash/game/multiplayer/multiplayer.dart';
+import 'package:santaclash/menus/endscreen.dart';
+import 'package:santaclash/smash_engine/asset.dart';
+import 'package:santaclash/smash_engine/smash_engine.dart';
 
 class SmashLikeLogic extends GameLogic {
   Multiplayer multiplayer = Multiplayer();

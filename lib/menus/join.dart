@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/game/game_assets.dart';
-import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/main.dart';
-import 'package:smashlike/game.dart';
-import 'package:smashlike/menus/menu.dart';
-import 'package:smashlike/game/multiplayer/multiplayer.dart';
+import 'package:santaclash/game/game_assets.dart';
+import 'package:santaclash/smash_engine/screen_util.dart';
+import 'package:santaclash/main.dart';
+import 'package:santaclash/game.dart';
+import 'package:santaclash/menus/menu.dart';
+import 'package:santaclash/game/multiplayer/multiplayer.dart';
 import 'dart:async';
 
 class Join extends StatelessWidget {

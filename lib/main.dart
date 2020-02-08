@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/menus/menu.dart';
+import 'package:santaclash/smash_engine/screen_util.dart';
+import 'package:santaclash/menus/menu.dart';
 
 void main() => runApp(new App());
 

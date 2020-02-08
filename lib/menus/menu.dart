@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/main.dart';
-import 'package:smashlike/menus/credits.dart';
-import 'package:smashlike/menus/selection.dart';
-import 'package:smashlike/menus/join.dart';
-import 'package:smashlike/game.dart';
-import 'package:smashlike/game/game_assets.dart';
+import 'package:santaclash/smash_engine/screen_util.dart';
+import 'package:santaclash/main.dart';
+import 'package:santaclash/menus/credits.dart';
+import 'package:santaclash/menus/selection.dart';
+import 'package:santaclash/menus/join.dart';
+import 'package:santaclash/game.dart';
+import 'package:santaclash/game/game_assets.dart';
 
 class MenuPage extends StatelessWidget {
   @override
@@ -134,7 +134,7 @@ class TrainingButton extends StatelessWidget {
                 mapId: 2,
                 side: GameAssetsFactory.LEFT_SIDE,
                 multiplayer: false,
-                drawHitboxes: true,
+                drawHitboxes: false,
               )
             ),
           ); // switch to game page

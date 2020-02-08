@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/game/game_assets.dart';
-import 'package:smashlike/game/game_logic.dart';
-import 'package:smashlike/game/inputs_gestures.dart';
-import 'package:smashlike/smash_engine/smash_engine.dart';
-import 'package:smashlike/smash_engine/screen_util.dart';
+import 'package:santaclash/game/game_assets.dart';
+import 'package:santaclash/game/game_logic.dart';
+import 'package:santaclash/game/inputs_gestures.dart';
+import 'package:santaclash/smash_engine/smash_engine.dart';
+import 'package:santaclash/smash_engine/screen_util.dart';
 
 class Game extends StatelessWidget {
   final int playerId;

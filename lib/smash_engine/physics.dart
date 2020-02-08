@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:smashlike/smash_engine/asset.dart';
+import 'package:santaclash/smash_engine/asset.dart';
 
 class Physics {
   // TODO 

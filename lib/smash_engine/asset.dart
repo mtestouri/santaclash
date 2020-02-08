@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:smashlike/smash_engine/screen_util.dart';
+import 'package:santaclash/smash_engine/screen_util.dart';
 
 abstract class Asset {
   // visual properties

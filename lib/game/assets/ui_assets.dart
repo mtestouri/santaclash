@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/game/assets/fighters_assets.dart';
-import 'package:smashlike/smash_engine/asset.dart';
-import 'package:smashlike/smash_engine/screen_util.dart';
+import 'package:santaclash/game/assets/fighters_assets.dart';
+import 'package:santaclash/smash_engine/asset.dart';
+import 'package:santaclash/smash_engine/screen_util.dart';
 
 class DamageIndicator extends Asset {
   Fighter _fighter;

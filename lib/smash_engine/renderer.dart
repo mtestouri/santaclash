@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/smash_engine/asset.dart';
-import 'package:smashlike/smash_engine/physics.dart';
-import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/smash_engine/smash_engine.dart';
+import 'package:santaclash/smash_engine/asset.dart';
+import 'package:santaclash/smash_engine/physics.dart';
+import 'package:santaclash/smash_engine/screen_util.dart';
+import 'package:santaclash/smash_engine/smash_engine.dart';
 
 class Renderer extends StatefulWidget {
   final Physics _physics;

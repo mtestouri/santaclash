@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:smashlike/smash_engine/screen_util.dart';
-import 'package:smashlike/main.dart';
-import 'package:smashlike/menus/menu.dart';
+import 'package:santaclash/smash_engine/screen_util.dart';
+import 'package:santaclash/main.dart';
+import 'package:santaclash/menus/menu.dart';
 
 class Credits extends StatelessWidget {
   @override

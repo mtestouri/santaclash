@@ -1,4 +1,4 @@
-import 'package:smashlike/smash_engine/asset.dart';
+import 'package:santaclash/smash_engine/asset.dart';
 
 class ArenaObject extends PhysicalAsset {
   ArenaObject(String image, double width, double height,

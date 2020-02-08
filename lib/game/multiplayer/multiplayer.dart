@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
-import 'package:smashlike/game/multiplayer/bluetooth.dart';
+import 'package:santaclash/game/multiplayer/bluetooth.dart';
 
 class Multiplayer {
   static const int CONTINUE = 1;

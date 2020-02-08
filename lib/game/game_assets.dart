@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:smashlike/game/assets/arenas_assets.dart';
-import 'package:smashlike/game/assets/fighters_assets.dart';
-import 'package:smashlike/game/assets/ui_assets.dart';
-import 'package:smashlike/smash_engine/asset.dart';
+import 'package:santaclash/game/assets/arenas_assets.dart';
+import 'package:santaclash/game/assets/fighters_assets.dart';
+import 'package:santaclash/game/assets/ui_assets.dart';
+import 'package:santaclash/smash_engine/asset.dart';
 
 class GameAssetsFactory {
   static const int LEFT_SIDE = 0;

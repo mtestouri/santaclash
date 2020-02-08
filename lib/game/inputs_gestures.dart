@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/smash_engine/gesture.dart';
-import 'package:smashlike/smash_engine/screen_util.dart';
+import 'package:santaclash/smash_engine/gesture.dart';
+import 'package:santaclash/smash_engine/screen_util.dart';
 
 class InputGesturesFactory {
   static List<InputGesture> build(int inputGesturesId) {

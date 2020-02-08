@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smashlike/smash_engine/smash_engine.dart';
+import 'package:santaclash/smash_engine/smash_engine.dart';
 
 class Gesture extends StatelessWidget {
   final List<InputGesture> _inputGestures;

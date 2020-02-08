@@ -1,9 +1,9 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
-import 'package:smashlike/smash_engine/asset.dart';
-import 'package:smashlike/smash_engine/gesture.dart';
-import 'package:smashlike/smash_engine/physics.dart';
-import 'package:smashlike/smash_engine/renderer.dart';
+import 'package:santaclash/smash_engine/asset.dart';
+import 'package:santaclash/smash_engine/gesture.dart';
+import 'package:santaclash/smash_engine/physics.dart';
+import 'package:santaclash/smash_engine/renderer.dart';
 
 class SmashEngine extends InheritedWidget {
   final Queue<String> inputs = new Queue();
