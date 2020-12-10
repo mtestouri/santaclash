@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://src/DisplayFPS.gd" type="Script" id=1]
 [ext_resource path="res://src/Game.gd" type="Script" id=2]
@@ -20,13 +20,34 @@
 [ext_resource path="res://assets/art/fighters/red_santaclaus/jump_r_5.png" type="Texture" id=18]
 [ext_resource path="res://assets/art/fighters/red_santaclaus/fall_r_1.png" type="Texture" id=19]
 [ext_resource path="res://assets/art/arenas/map1/ground.png" type="Texture" id=20]
+[ext_resource path="res://assets/art/arenas/map2/grassy_background.png" type="Texture" id=21]
 [ext_resource path="res://assets/art/fighters/red_santaclaus/jump_r_2.png" type="Texture" id=22]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/smash_attack_r_4.png" type="Texture" id=23]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/attack_r_1.png" type="Texture" id=24]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/smash_attack_r_7.png" type="Texture" id=25]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/smash_attack_r_6.png" type="Texture" id=26]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/smash_attack_r_2.png" type="Texture" id=27]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/attack_r_2.png" type="Texture" id=28]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/smash_attack_r_1.png" type="Texture" id=29]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/smash_attack_r_5.png" type="Texture" id=30]
 [ext_resource path="res://assets/art/fighters/red_santaclaus/jump_r_1.png" type="Texture" id=31]
 [ext_resource path="res://assets/art/fighters/red_santaclaus/jump_r_4.png" type="Texture" id=32]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/attack_r_5.png" type="Texture" id=33]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/smash_attack_r_3.png" type="Texture" id=34]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/attack_r_4.png" type="Texture" id=35]
 [ext_resource path="res://assets/art/fighters/red_santaclaus/jump_r_6.png" type="Texture" id=36]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/attack_r_3.png" type="Texture" id=37]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/smash_attack_r_8.png" type="Texture" id=38]
+[ext_resource path="res://assets/art/fighters/red_santaclaus/smash_attack_r_9.png" type="Texture" id=39]
 [ext_resource path="res://assets/art/fighters/red_santaclaus/jump_r_3.png" type="Texture" id=41]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 663.577, 84.955 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 53.4756, 18.3557 )
+
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 15 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 9 ) ],
 "loop": true,
@@ -47,16 +68,20 @@ animations = [ {
 "loop": true,
 "name": "fall",
 "speed": 1.0
+}, {
+"frames": [ ExtResource( 24 ), ExtResource( 28 ), ExtResource( 37 ), ExtResource( 35 ), ExtResource( 33 ) ],
+"loop": true,
+"name": "attack_basic",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 29 ), ExtResource( 27 ), ExtResource( 34 ), ExtResource( 23 ), ExtResource( 30 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 38 ), ExtResource( 39 ) ],
+"loop": true,
+"name": "attack_smash",
+"speed": 9.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 20.2631, 26.1778 )
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 663.577, 84.955 )
-
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 53.4756, 18.3557 )
+extents = Vector2( 20.2631, 26.1778 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
@@ -93,20 +118,12 @@ __meta__ = {
 
 [node name="HUD" type="Node2D" parent="."]
 
-[node name="Player" type="KinematicBody2D" parent="."]
-script = ExtResource( 17 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
-position = Vector2( 591.943, 119.778 )
-scale = Vector2( 2, 2 )
-frames = SubResource( 1 )
-animation = "idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2( 592.974, 121.43 )
-shape = SubResource( 2 )
-
 [node name="Arena" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite" parent="Arena"]
+position = Vector2( 640.639, 281.428 )
+scale = Vector2( 3.34229, 2.61063 )
+texture = ExtResource( 21 )
 
 [node name="Base" type="StaticBody2D" parent="Arena"]
 
@@ -117,7 +134,7 @@ texture = ExtResource( 20 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Base"]
 position = Vector2( 640.869, 630.476 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="Plateform" type="StaticBody2D" parent="Arena"]
 
@@ -128,7 +145,7 @@ texture = ExtResource( 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Plateform"]
 position = Vector2( 424.521, 426.3 )
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 
 [node name="Plateform2" type="StaticBody2D" parent="Arena"]
 
@@ -139,5 +156,18 @@ texture = ExtResource( 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Plateform2"]
 position = Vector2( 743.55, 420.637 )
+shape = SubResource( 2 )
+
+[node name="Player" type="KinematicBody2D" parent="."]
+script = ExtResource( 17 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
+position = Vector2( 591.943, 119.778 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 3 )
+animation = "attack_smash"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 592.974, 121.43 )
 shape = SubResource( 4 )
 [connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
