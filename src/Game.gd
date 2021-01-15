@@ -25,19 +25,13 @@ func _ready():
 	get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_2D, 
 								  SceneTree.STRETCH_ASPECT_IGNORE, 
 								  Vector2(1280, 720))
-	var screen_size = get_viewport_rect().size
-
-	get_node("Button").connect("pressed", self, "_on_Button_pressed")
-	
-	
+	var screen_size = get_viewport_rect().size	
 	# /!\ get_tree().get_root() and get_node("/root") are also possible /!\
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
-func _on_Button_pressed():
-	get_node("DisplayAction").text = "JUMP"
 	
 #func _physics_process(delta):
    # This is called every physics frame.

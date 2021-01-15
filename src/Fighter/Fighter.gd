@@ -7,6 +7,7 @@ const S_MOVE = 1
 const S_JUMP = 2
 const S_ATTACK_BASIC = 3
 const S_ATTACK_SMASH = 4
+const S_STUN = 5
 # actions
 const A_NONE = 0
 const A_MOVE_R = 1
@@ -14,12 +15,15 @@ const A_MOVE_L = 2
 const A_JUMP = 3
 const A_ATTACK_BASIC = 4
 const A_ATTACK_SMASH = 5
+const A_STUN_BASIC = 6
+const A_STUN_SMASH = 7
 # motion
 const SPEED = 300
 const JUMP_SPEED = 500
 const GRAVITY = 1000
 
 # init
+var id = 0
 var orientation = 1
 var state = S_IDLE
 var is_on_ground = true
@@ -29,6 +33,8 @@ var _lock_orientation = false
 
 var _jump_counter = 0
 var _attack_counter = 0
+var _action_done = false
+
 
 func _switch_animation(animation):
 	$AnimatedSprite.stop()
@@ -59,17 +65,24 @@ func _get_end_animation_flag():
 
 func _switch_state(n_state, action):
 	state = n_state
-	_fsm_step(action)
+	_fsm(action)
 
 
-func _fsm(actions, delta):
+func do_actions(actions, delta):
+	_action_done = true
 	velocity.x = 0
 
+	# check for actions in the buffer
+	if not _actions_buffer.empty():
+		for action in _actions_buffer:
+			actions.append(action)
+		_actions_buffer = []
+	# default action
 	if actions.empty():
 		actions.append(A_NONE)
 	
 	for action in actions:
-		_fsm_step(action)
+		_fsm(action)
 
 	# update animation orientation
 	_update_anim_orientation()
@@ -77,8 +90,17 @@ func _fsm(actions, delta):
 	# apply gravity
 	velocity.y -= GRAVITY * delta
 
+	# motion
+	move_and_slide(Vector2(velocity.x, -velocity.y), Vector2(0, -1))
+	#move_and_slide_with_snap()
 
-func _fsm_step(action):
+	# check is on ground
+	is_on_ground = is_on_floor()
+	if is_on_ground:
+		velocity.y = 0
+
+
+func _fsm(action):
 	#if _curr_animation() == "fall":
 		#print("STATE " + str(state))
 		#print(action)
@@ -110,6 +132,15 @@ func _fsm_step(action):
 
 		if action == A_ATTACK_SMASH:
 			_switch_state(S_ATTACK_SMASH, action)
+
+		if action == A_STUN_BASIC:
+			_switch_state(S_STUN, action)
+
+		if action == A_STUN_SMASH:
+			_switch_state(S_STUN, action)
+
+		#TODO stun from other states
+		#TODO stun doesn't work from another orientation
 
 	elif state == S_MOVE:
 		if (action == A_MOVE_R) or (action == A_MOVE_L):
@@ -154,6 +185,7 @@ func _fsm_step(action):
 		if (action == A_ATTACK_BASIC) and _attack_counter < 1:
 			_attack_counter += 1
 			_lock_orientation = true
+			$HitBasic/HitBasic.disabled = false
 			_get_end_animation_flag()
 			_switch_animation("attack_basic")
 
@@ -165,12 +197,14 @@ func _fsm_step(action):
 		if _get_end_animation_flag():
 			_attack_counter = 0
 			_lock_orientation = false
+			$HitBasic/HitBasic.disabled = true
 			_switch_state(S_IDLE, action)
 
 	elif state == S_ATTACK_SMASH:
 		if (action == A_ATTACK_SMASH) and _attack_counter < 1:
 			_attack_counter += 1
 			_lock_orientation = true
+			$HitSmash/HitSmash.disabled = false
 			_get_end_animation_flag()
 			_switch_animation("attack_smash")
 
@@ -182,40 +216,51 @@ func _fsm_step(action):
 		if _get_end_animation_flag():
 			_attack_counter = 0
 			_lock_orientation = false
+			$HitSmash/HitSmash.disabled = true
+			_switch_state(S_IDLE, action)
+
+	elif state == S_STUN:
+		if action == A_STUN_BASIC:
+			_lock_orientation = true
+			_switch_animation("stun")
+
+		if action == A_STUN_SMASH:
+			_lock_orientation = true
+			_switch_animation("stun")
+
+		if _get_end_animation_flag():
+			_lock_orientation = false
 			_switch_state(S_IDLE, action)
 
 
-# Called when the node enters the scene tree for the first time.
+var _actions_buffer = []
+
+#TODO use signals for each action ?
+func get_area_action(area_name):
+	if area_name == "HitBasic":
+		return A_STUN_BASIC
+	if area_name == "HitSmash":
+		return A_STUN_SMASH
+	return A_NONE
+
+
+func _on_area_entered(area):
+	if area.get_parent().id != self.id:
+		var action = area.get_parent().get_area_action(area.name)
+		if action != A_NONE:
+			_actions_buffer.append(action)
+
+
 func _ready():
 	$AnimatedSprite.connect("animation_finished", self, "_animation_finished")
-	#pass # Replace with function body.
-
+	$Hurtbox.connect("area_entered", self, "_on_area_entered")
+	$HitBasic/HitBasic.disabled = true
+	$HitSmash/HitSmash.disabled = true
 
 func _physics_process(delta):
-	# detect actions
-	var actions = []
-	if Input.is_action_pressed("ui_right"):
-		actions.append(A_MOVE_R)
-	if Input.is_action_pressed("ui_left"):
-		actions.append(A_MOVE_L)
-	if Input.is_action_just_pressed("ui_up"):
-		actions.append(A_JUMP)
-	if Input.is_action_just_pressed("attack_basic"):
-		actions.append(A_ATTACK_BASIC)
-	if Input.is_action_just_pressed("attack_smash"):
-		actions.append(A_ATTACK_SMASH)
-
-	# finite state machine
-	_fsm(actions, delta)
-
-	# motion
-	move_and_slide(Vector2(velocity.x, -velocity.y), Vector2(0, -1))
-	#move_and_slide_with_snap()
-
-	# check is on ground
-	is_on_ground = is_on_floor()
-	if is_on_ground:
-		velocity.y = 0
+	if !_action_done:
+		do_actions([], delta)
+	_action_done = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
