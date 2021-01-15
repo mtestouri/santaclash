@@ -141,6 +141,7 @@ func _fsm(action):
 
 		#TODO stun from other states
 		#TODO stun doesn't work from another orientation
+		#	--> need to add hitboxes or move them
 
 	elif state == S_MOVE:
 		if (action == A_MOVE_R) or (action == A_MOVE_L):
@@ -185,7 +186,7 @@ func _fsm(action):
 		if (action == A_ATTACK_BASIC) and _attack_counter < 1:
 			_attack_counter += 1
 			_lock_orientation = true
-			$HitBasic/HitBasic.disabled = false
+			$HitBasic/HitBasic.set_deferred("disabled", false)
 			_get_end_animation_flag()
 			_switch_animation("attack_basic")
 
@@ -197,14 +198,14 @@ func _fsm(action):
 		if _get_end_animation_flag():
 			_attack_counter = 0
 			_lock_orientation = false
-			$HitBasic/HitBasic.disabled = true
+			$HitBasic/HitBasic.set_deferred("disabled", true)
 			_switch_state(S_IDLE, action)
 
 	elif state == S_ATTACK_SMASH:
 		if (action == A_ATTACK_SMASH) and _attack_counter < 1:
 			_attack_counter += 1
 			_lock_orientation = true
-			$HitSmash/HitSmash.disabled = false
+			$HitSmash/HitSmash.set_deferred("disabled", false)
 			_get_end_animation_flag()
 			_switch_animation("attack_smash")
 
@@ -216,7 +217,7 @@ func _fsm(action):
 		if _get_end_animation_flag():
 			_attack_counter = 0
 			_lock_orientation = false
-			$HitSmash/HitSmash.disabled = true
+			$HitSmash/HitSmash.set_deferred("disabled", true)
 			_switch_state(S_IDLE, action)
 
 	elif state == S_STUN:
@@ -254,8 +255,8 @@ func _on_area_entered(area):
 func _ready():
 	$AnimatedSprite.connect("animation_finished", self, "_animation_finished")
 	$Hurtbox.connect("area_entered", self, "_on_area_entered")
-	$HitBasic/HitBasic.disabled = true
-	$HitSmash/HitSmash.disabled = true
+	$HitBasic/HitBasic.set_deferred("disabled", true)
+	$HitSmash/HitSmash.set_deferred("disabled", true)
 
 func _physics_process(delta):
 	if !_action_done:
